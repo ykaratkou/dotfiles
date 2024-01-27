@@ -1,0 +1,28 @@
+{
+	"name": "example-snippets",
+	"contributes": {
+		"snippets": [
+			{
+				"language": [
+					"ruby"
+				],
+				"path": "./ruby.json"
+			},
+      {
+				"language": [
+					"javascript",
+					"javascriptreact"
+				],
+				"path": "./javascript.json"
+			},
+      {
+				"language": [
+					"ruby",
+          "eruby"
+				],
+				"path": "./eruby.json"
+			}
+
+		]
+	}
+}

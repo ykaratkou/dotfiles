@@ -1,0 +1,12 @@
+--glob=!node_modules/*
+--glob=!.git/*
+--hidden
+
+--multiline
+
+--type-add
+ruby:*.{jbuilder}*
+
+--line-number
+--no-heading
+--sort=path

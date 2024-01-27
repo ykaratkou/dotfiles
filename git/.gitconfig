@@ -1,0 +1,24 @@
+[color]
+	ui = true
+
+[user]
+	name = Evgeny Korotkov
+	email = evgn.korotkov@gmail.com
+  signingkey = ~/.ssh/personal.pub
+
+[core]
+	editor = nvim -u ~/.dotfiles/nvim/mini.lua
+	excludesFile = ~/.gitignore
+
+[github]
+	user = evkorotkov
+
+[gpg]
+  format = ssh
+
+[gpg "ssh"]
+  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+
+[commit]
+  gpgsign = true
+

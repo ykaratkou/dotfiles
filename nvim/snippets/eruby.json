@@ -1,0 +1,14 @@
+{
+  "erb insert value": {
+    "prefix": "=",
+    "body": "<%= ${0} %>"
+  },
+  "erb no insert value": {
+    "prefix": "-",
+    "body": "<% ${0} %>"
+  },
+  "erb with comment": {
+    "prefix": "#",
+    "body": "<%# ${0} %>"
+  }
+}
