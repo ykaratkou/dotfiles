@@ -1,5 +1,6 @@
 local cmp = require('cmp')
 local cmp_select = {behavior = cmp.SelectBehavior.Select}
+local cmp_insert = {behavior = cmp.SelectBehavior.Insert}
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline('/', {
@@ -58,7 +59,7 @@ cmp.setup({
       local col = vim.fn.col('.') - 1
 
       if cmp.visible() then
-        cmp.select_next_item(cmp_select)
+        cmp.select_next_item(cmp_insert)
       elseif col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
         fallback()
       else
@@ -68,7 +69,7 @@ cmp.setup({
 
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.select_prev_item(cmp_select)
+        cmp.select_prev_item(cmp_insert)
       else
         fallback()
       end
