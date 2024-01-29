@@ -99,6 +99,14 @@ vim.keymap.set('n', '<leader>b', function()
   })
 end, { desc = 'find [b]uffers' })
 vim.keymap.set('n', '<leader>e', ":Telescope file_browser path=%:p:h select_buffer=true<CR>", { desc = 'files [e]xplorer' })
+vim.keymap.set('n', '<leader>t', function()
+  builtin.diagnostics(themes.get_ivy({
+    previewer = false,
+    layout_config = {
+      height = 20,
+    }
+  }))
+end)
 
 require('telescope').setup({
   extensions = {
@@ -114,8 +122,8 @@ require('telescope').setup({
 
       mappings = { -- extend mappings
         i = {
-          ["<C-i>"] = lga_actions.quote_prompt({ postfix = " -g " }),
-          ["<C-f>"] = lga_actions.quote_prompt({ postfix = " -F " }), -- disable regexp searcg, ie: --fixed-strings
+          ["<C-k>"] = lga_actions.quote_prompt(),
+          ["<C-f>"] = lga_actions.quote_prompt({ postfix = " -F " }), -- disable regexp search, ie: --fixed-strings
           ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
           ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
           ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
@@ -150,6 +158,7 @@ require('telescope').setup({
         ["<C-n>"] = actions.cycle_history_next,
         ["<C-p>"] = actions.cycle_history_prev,
         ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+        ["<C-i>"] = false,
         -- ["<esc>"] = actions.close,
       }
     },

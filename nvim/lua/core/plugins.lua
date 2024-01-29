@@ -141,13 +141,6 @@ local plugins = {
     end,
   },
   { 'iamcco/markdown-preview.nvim' },
-  {
-    'folke/trouble.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-    config = function()
-      require('plugins.configs.trouble')
-    end,
-  },
 
   --
   -- Git
