@@ -115,6 +115,7 @@ require('telescope').setup({
       mappings = { -- extend mappings
         i = {
           ["<C-i>"] = lga_actions.quote_prompt({ postfix = " -g " }),
+          ["<C-f>"] = lga_actions.quote_prompt({ postfix = " -F " }), -- disable regexp searcg, ie: --fixed-strings
           ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
           ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
           ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
@@ -161,3 +162,4 @@ require('telescope').setup({
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('live_grep_args')
 require('telescope').load_extension('file_browser')
+require('telescope').load_extension('ui-select')

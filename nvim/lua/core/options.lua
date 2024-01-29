@@ -89,9 +89,9 @@ vim.diagnostic.config({
   virtual_text = {
     prefix = '●',
     -- This is need for solargraph/rubocop to display diagnostics properly
-    format = function(diagnostic)
-      return string.format('%s: %s', diagnostic.code, diagnostic.message) -- display diagnostic code properly
-    end,
+    -- format = function(diagnostic)
+    --   return string.format('%s: %s', diagnostic.code, diagnostic.message)
+    -- end,
   },
   update_in_insert = true,
   float = {
