@@ -94,7 +94,7 @@ vim.keymap.set('n', '<leader>fh', builtin.help_tags)
 vim.keymap.set('n', '<leader>fo', ':Telescope oldfiles only_cwd=true<CR>', { desc = '[f]ind [o]ldfiles' })
 vim.keymap.set('n', '<leader>b', function()
   builtin.buffers({
-    sort_lastused = true,
+    sort_mru = true,
     ignore_current_buffer = true
   })
 end, { desc = 'find [b]uffers' })
