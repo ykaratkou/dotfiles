@@ -61,14 +61,14 @@ key = "Key9"
 mods = "Command"
 
 [[keyboard.bindings]]
-chars = "\u0002%"
-key = "D"
-mods = "Command"
-
-[[keyboard.bindings]]
-chars = "\u0002\""
+chars = "\u0002-"
 key = "D"
 mods = "Command|Shift"
+
+[[keyboard.bindings]]
+chars = "\u0002\\"
+key = "D"
+mods = "Command"
 
 [[keyboard.bindings]]
 chars = "\u0002z"

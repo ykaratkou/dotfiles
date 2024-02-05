@@ -122,7 +122,7 @@ require('telescope').setup({
 
       mappings = { -- extend mappings
         i = {
-          ["<C-k>"] = lga_actions.quote_prompt(),
+          ["<C-o>"] = lga_actions.quote_prompt(),
           ["<C-f>"] = lga_actions.quote_prompt({ postfix = " -F " }), -- disable regexp search, ie: --fixed-strings
           ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
           ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,

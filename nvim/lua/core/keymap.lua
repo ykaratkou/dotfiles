@@ -1,9 +1,9 @@
 vim.keymap.set("n", "<leader>a", "ggVG", { desc = "Select all" })
 
-vim.keymap.set('x', '<C-h>', '<Left>')
-vim.keymap.set('x', '<C-l>', '<Right>')
-vim.keymap.set('x', '<C-j>', '<Down>')
-vim.keymap.set('x', '<C-k>', '<Up>')
+vim.keymap.set({ 'x', 'c' }, '<C-h>', '<Left>')
+vim.keymap.set({ 'x', 'c' }, '<C-l>', '<Right>')
+vim.keymap.set({ 'x', 'c' }, '<C-j>', '<Down>')
+vim.keymap.set({ 'x', 'c' }, '<C-k>', '<Up>')
 
 vim.keymap.set('n', '<ESC>', ':noh<CR>', { silent = true })
 

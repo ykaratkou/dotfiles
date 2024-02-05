@@ -7,7 +7,7 @@ require("nvim-tree").setup({
   filters = {
     custom = {
       ".git$",
-      ".ruby-lsp",
+      "\\.ruby-lsp$",
       ".DS_Store",
     },
     git_ignored = false,

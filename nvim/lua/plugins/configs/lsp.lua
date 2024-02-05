@@ -28,7 +28,7 @@ local mason_lspconfig = require('mason-lspconfig')
 require('mason').setup()
 mason_lspconfig.setup({
   ensure_installed = {
-    'ruby_ls',
+    -- 'ruby_ls',
     'eslint',
     'tsserver',
     'lua_ls',
