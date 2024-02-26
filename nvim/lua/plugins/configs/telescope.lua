@@ -34,7 +34,7 @@ Job:new({
       local result = job:result()
 
       vim.keymap.set('n', '<leader>fL', function()
-        live_grep.live_grep_args(
+        builtin.live_grep(
           themes.get_ivy({
             search_dirs = result,
             debounce = 200,

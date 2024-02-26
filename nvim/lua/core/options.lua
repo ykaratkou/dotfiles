@@ -57,6 +57,10 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 -- Jump to last edit position on opening file
 vim.api.nvim_create_autocmd("BufReadPost", {
   callback = function()
+    if vim.bo.filetype ~= "COMMIT_EDITMSG" then
+      return
+    end
+
     local mark = vim.api.nvim_buf_get_mark(0, '"')
     if mark[1] > 1 and mark[1] <= vim.api.nvim_buf_line_count(0) then
       vim.api.nvim_win_set_cursor(0, mark)

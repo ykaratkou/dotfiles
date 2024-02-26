@@ -65,13 +65,13 @@ local plugins = {
       { 'nvim-lua/plenary.nvim' },
     }
   },
-  {
-    'lukas-reineke/indent-blankline.nvim',
-    main = 'ibl',
-    config = function()
-      require('plugins.configs.indent_blackline')
-    end,
-  },
+  -- {
+  --   'lukas-reineke/indent-blankline.nvim',
+  --   main = 'ibl',
+  --   config = function()
+  --     require('plugins.configs.indent_blackline')
+  --   end,
+  -- },
 
   --
   -- Coding
