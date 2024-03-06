@@ -25,28 +25,17 @@ local plugins = {
     end,
   },
 
-  -- {
-  --   'nvim-neo-tree/neo-tree.nvim',
-  --   branch = "v3.x",
-  --   dependencies = {
-  --     { 'nvim-lua/plenary.nvim' },
-  --     { 'MunifTanjim/nui.nvim' },
-  --     { 'nvim-tree/nvim-web-devicons' },
-  --   },
-  --   config = function()
-  --     require('plugins.configs.neotree')
-  --   end
-  -- },
   {
-    'nvim-tree/nvim-tree.lua',
-    version = "*",
-    lazy = false,
+    'nvim-neo-tree/neo-tree.nvim',
+    branch = "v3.x",
     dependencies = {
-      "nvim-tree/nvim-web-devicons",
+      { 'nvim-lua/plenary.nvim' },
+      { 'MunifTanjim/nui.nvim' },
+      { 'nvim-tree/nvim-web-devicons' },
     },
     config = function()
-      require("plugins.configs.nvim_tree")
-    end,
+      require('plugins.configs.neotree')
+    end
   },
   { 'nvim-lualine/lualine.nvim' },
   {
@@ -59,19 +48,12 @@ local plugins = {
         'nvim-telescope/telescope-fzf-native.nvim',
         build = 'make',
       },
-      { "nvim-telescope/telescope-file-browser.nvim" },
-      { 'nvim-telescope/telescope-live-grep-args.nvim' },
+      { 'nvim-telescope/telescope-file-browser.nvim' },
+      { 'fdschmidt93/telescope-egrepify.nvim' },
       { 'nvim-telescope/telescope-ui-select.nvim' },
       { 'nvim-lua/plenary.nvim' },
     }
   },
-  -- {
-  --   'lukas-reineke/indent-blankline.nvim',
-  --   main = 'ibl',
-  --   config = function()
-  --     require('plugins.configs.indent_blackline')
-  --   end,
-  -- },
 
   --
   -- Coding
@@ -109,27 +91,17 @@ local plugins = {
     end,
   },
   {
-    "windwp/nvim-autopairs",
+    'echasnovski/mini.nvim',
+    version = "*",
     config = function()
-      require("nvim-autopairs").setup()
-
-      --  cmp integration
-      local cmp_autopairs = require "nvim-autopairs.completion.cmp"
-      local cmp = require "cmp"
-      cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+      require('mini.surround').setup()
+      require('mini.pairs').setup()
     end,
-  },
-  {
-    "kylechui/nvim-surround",
-    version = "*", -- Use for stability; omit to use `main` branch for the latest features
-    config = true,
     event = "VeryLazy",
   },
   {
-    'norcalli/nvim-colorizer.lua',
-    config = function()
-      require('plugins.configs.colorizer')
-    end,
+    'brenoprata10/nvim-highlight-colors',
+    config = true,
   },
   {
     "numToStr/Comment.nvim",

@@ -2,8 +2,7 @@ local builtin = require('telescope.builtin')
 local themes = require('telescope.themes')
 local actions = require('telescope.actions')
 local action_state = require('telescope.actions.state')
-local lga_actions = require('telescope-live-grep-args.actions')
-local live_grep = require('telescope').extensions.live_grep_args
+local egrepify = require('telescope').extensions.egrepify.egrepify
 
 local function get_visual_selection()
   -- Yank current visual selection into the 'v' register
@@ -34,7 +33,7 @@ Job:new({
       local result = job:result()
 
       vim.keymap.set('n', '<leader>fL', function()
-        builtin.live_grep(
+        egrepify(
           themes.get_ivy({
             search_dirs = result,
             debounce = 200,
@@ -59,12 +58,12 @@ vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[f]ind [f]iles' 
 vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[f]ind [r]esume' })
 
 vim.keymap.set('n', '<leader>fw', function ()
-  live_grep.live_grep_args(
+  egrepify(
     themes.get_ivy({ default_text = vim.fn.expand("<cword>") })
   )
 end, { desc = '[f]ind [w]ord under cursor'})
 vim.keymap.set('v', '<leader>fw', function ()
-  live_grep.live_grep_args(
+  egrepify(
     themes.get_ivy({
       default_text = get_visual_selection(),
       layout_config = {
@@ -75,7 +74,7 @@ vim.keymap.set('v', '<leader>fw', function ()
 end, { desc = '[f]ind select [w]ord'})
 
 vim.keymap.set("n", "<leader>fl", function()
-  live_grep.live_grep_args(themes.get_ivy({
+  egrepify(themes.get_ivy({
     layout_config = {
       height = 30,
     }
@@ -117,19 +116,6 @@ require('telescope').setup({
       case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
                                        -- the default case_mode is "smart_case"
     },
-    live_grep_args = {
-      auto_quoting = true,
-
-      mappings = { -- extend mappings
-        i = {
-          ["<C-o>"] = lga_actions.quote_prompt(),
-          ["<C-f>"] = lga_actions.quote_prompt({ postfix = " -F " }), -- disable regexp search, ie: --fixed-strings
-          ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
-          ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
-          ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-        },
-      },
-    },
     file_browser = {
       auto_depth = true,
       display_stat = {},
@@ -169,6 +155,6 @@ require('telescope').setup({
 })
 
 require('telescope').load_extension('fzf')
-require('telescope').load_extension('live_grep_args')
 require('telescope').load_extension('file_browser')
 require('telescope').load_extension('ui-select')
+require('telescope').load_extension('egrepify')
