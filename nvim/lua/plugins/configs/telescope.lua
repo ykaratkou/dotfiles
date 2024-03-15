@@ -119,6 +119,7 @@ require('telescope').setup({
     file_browser = {
       auto_depth = true,
       display_stat = {},
+      respect_gitignore = true,
     },
   },
   defaults = {

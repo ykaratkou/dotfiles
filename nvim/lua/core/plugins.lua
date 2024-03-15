@@ -159,7 +159,10 @@ local plugins = {
       { 'williamboman/mason-lspconfig.nvim' },
     },
   },
-
+  {
+    'kevinhwang91/nvim-bqf',
+    config = true,
+  },
   --
   -- Completion
   --
@@ -188,7 +191,7 @@ local plugins = {
         event = "VeryLazy",
         config = function()
           require("copilot").setup({
-            suggestion = { enabled = false },
+            suggestion = { enabled = true },
             panel = { enabled = true },
           })
         end,

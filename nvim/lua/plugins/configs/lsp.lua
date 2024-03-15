@@ -6,6 +6,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local opts = { buffer = ev.buf }
 
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
     vim.keymap.set("n", "<leader>vv", function()
       vim.lsp.buf.format { async = true }
     end, opts)
@@ -53,7 +55,7 @@ lspconfig.tsserver.setup({
       ignoredCodes = {
         7016, -- disable "could not find declaration file for module"
       },
-    }
+    },
   }
 })
 

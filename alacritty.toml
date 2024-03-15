@@ -110,6 +110,11 @@ Action = "None"
 key = "Q"
 mods = "Command"
 
+[[keyboard.bindings]]
+chars = "\u0002P"
+key = "P"
+mods = "Command"
+
 #
 # Colors
 #

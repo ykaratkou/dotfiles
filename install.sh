@@ -33,6 +33,7 @@ ln -s $HOME/.dotfiles/bat/config $HOME/.config/bat
 echo "Configure Bin"
 mkdir -p $HOME/.bin
 ln -s $HOME/.dotfiles/bin/tmux-windowizer $HOME/.bin
+ln -s $HOME/.dotfiles/bin/tmux-session-menu $HOME/.bin
 ln -s $HOME/.dotfiles/bin/op-aws-helper $HOME/.bin
 
 echo "Installing rtx"
