@@ -41,7 +41,7 @@ vim.api.nvim_create_autocmd({'BufEnter'}, {
 
 vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   desc = 'Setup columns',
-  callback = function(ev)
+  callback = function()
     vim.opt.colorcolumn = "120"
     vim.opt.signcolumn = 'yes'
   end
@@ -50,20 +50,22 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
 vim.wo.wrap = false
 
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-  pattern = { "*" },
   command = [[%s/\s\+$//e]],
 })
 
 -- Jump to last edit position on opening file
-vim.api.nvim_create_autocmd("BufReadPost", {
+vim.api.nvim_create_autocmd("FileType", {
   callback = function()
-    if vim.bo.filetype ~= "COMMIT_EDITMSG" then
+    local filetype = vim.bo.filetype
+
+    if vim.tbl_contains({ 'gitcommit', 'git', 'gitrebase' }, filetype) then
       return
     end
 
     local mark = vim.api.nvim_buf_get_mark(0, '"')
     if mark[1] > 1 and mark[1] <= vim.api.nvim_buf_line_count(0) then
       vim.api.nvim_win_set_cursor(0, mark)
+      vim.cmd('normal! zz')
     end
   end,
 })
