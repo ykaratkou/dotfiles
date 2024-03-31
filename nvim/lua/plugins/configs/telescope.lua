@@ -82,12 +82,6 @@ vim.keymap.set("n", "<leader>fl", function()
 end)
 
 vim.keymap.set('n', '<leader>fg', builtin.git_status, { desc = '[f]iles [g]it changes' })
-
-vim.keymap.set('n', '<leader>fd', builtin.lsp_dynamic_workspace_symbols)
-vim.keymap.set('v', '<leader>fd', function ()
-  builtin.lsp_dynamic_workspace_symbols({ default_text = get_visual_selection() })
-end)
-
 vim.keymap.set('n', '<leader>fh', builtin.help_tags)
 
 vim.keymap.set('n', '<leader>fo', ':Telescope oldfiles only_cwd=true<CR>', { desc = '[f]ind [o]ldfiles' })
@@ -144,8 +138,10 @@ require('telescope').setup({
         ["<C-k>"] = actions.move_selection_previous,
         ["<C-n>"] = actions.cycle_history_next,
         ["<C-p>"] = actions.cycle_history_prev,
-        ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-        ["<C-i>"] = false,
+        ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
+        ["<C-a>"] = actions.send_selected_to_qflist + actions.open_qflist,
+        ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
+        ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
         -- ["<esc>"] = actions.close,
       }
     },
