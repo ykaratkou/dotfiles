@@ -49,8 +49,15 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
 
 vim.wo.wrap = false
 
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-  command = [[%s/\s\+$//e]],
+vim.api.nvim_create_autocmd('BufWritePre', {
+  -- Trim trailing whitespaces
+  callback = function()
+    -- Save cursor position to restore later
+    local curpos = vim.api.nvim_win_get_cursor(0)
+    -- Search and replace trailing whitespaces
+    vim.cmd([[keeppatterns %s/\s\+$//e]])
+    vim.api.nvim_win_set_cursor(0, curpos)
+  end,
 })
 
 -- Jump to last edit position on opening file
