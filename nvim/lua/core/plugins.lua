@@ -142,6 +142,13 @@ local plugins = {
     version = "*",
     config = true,
   },
+  {
+    'FabijanZulj/blame.nvim',
+    config = function()
+      require('plugins.configs.blame')
+    end,
+  },
+
 
   -- Ruby on Rails
   { 'slim-template/vim-slim' },
