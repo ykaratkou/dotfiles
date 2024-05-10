@@ -41,7 +41,7 @@ cmp.setup({
       },
       keyword_length = 2,
     },
-    { name = 'copilot', group_index = 2 },
+    { name = 'copilot', keyword_length = 3 },
   },
   snippet = {
     expand = function(args)
@@ -52,7 +52,7 @@ cmp.setup({
     ['<C-k>'] = cmp.mapping.select_prev_item(cmp_select),
     ['<C-j>'] = cmp.mapping.select_next_item(cmp_select),
     ['<CR>'] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Replace,
+      behavior = cmp.ConfirmBehavior.Insert,
       select = false,
     }),
     ['<Tab>'] = cmp.mapping(function(fallback)

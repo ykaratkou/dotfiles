@@ -30,11 +30,11 @@ local mason_lspconfig = require('mason-lspconfig')
 require('mason').setup()
 mason_lspconfig.setup({
   ensure_installed = {
-    -- 'ruby_ls',
     'eslint',
     'tsserver',
     'lua_ls',
     'tailwindcss',
+    'emmet_ls',
   }
 })
 
@@ -67,10 +67,6 @@ lspconfig.lua_ls.setup({
       }
     }
   }
-})
-
-lspconfig.ruby_ls.setup({
-  cmd = { 'ruby-lsp' },
 })
 
 -- textDocument/diagnostic support until 0.10.0 is released
@@ -156,7 +152,8 @@ local function add_ruby_deps_command(client, bufnr)
 end
 
 
-lspconfig.ruby_ls.setup({
+lspconfig.ruby_lsp.setup({
+  cmd = { 'ruby-lsp' },
   on_attach = function(client, buffer)
     setup_diagnostics(client, buffer)
     add_ruby_deps_command(client, buffer)

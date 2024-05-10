@@ -48,7 +48,10 @@ local plugins = {
         build = 'make',
       },
       { 'nvim-telescope/telescope-file-browser.nvim' },
-      { 'fdschmidt93/telescope-egrepify.nvim' },
+      {
+        'fdschmidt93/telescope-egrepify.nvim',
+        dir = '~/projects/telescope-egrepify.nvim/'
+      },
       { 'nvim-telescope/telescope-ui-select.nvim' },
       { 'nvim-lua/plenary.nvim' },
     }
