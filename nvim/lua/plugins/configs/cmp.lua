@@ -41,7 +41,7 @@ cmp.setup({
       },
       keyword_length = 2,
     },
-    { name = 'copilot', keyword_length = 3 },
+    { name = 'copilot' },
   },
   snippet = {
     expand = function(args)

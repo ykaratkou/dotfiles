@@ -43,14 +43,15 @@ local plugins = {
       require('plugins.configs.telescope')
     end,
     dependencies = {
+      { 'nvim-tree/nvim-web-devicons' },
       {
         'nvim-telescope/telescope-fzf-native.nvim',
         build = 'make',
       },
       { 'nvim-telescope/telescope-file-browser.nvim' },
       {
-        'fdschmidt93/telescope-egrepify.nvim',
-        dir = '~/projects/telescope-egrepify.nvim/'
+        'evkorotkov/telescope-egrepify.nvim',
+        branch = 'fix-previewer',
       },
       { 'nvim-telescope/telescope-ui-select.nvim' },
       { 'nvim-lua/plenary.nvim' },
@@ -93,11 +94,21 @@ local plugins = {
     end,
   },
   {
+    "windwp/nvim-autopairs",
+    config = function()
+      require("nvim-autopairs").setup()
+
+      --  cmp integration
+      local cmp_autopairs = require "nvim-autopairs.completion.cmp"
+      local cmp = require "cmp"
+      cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+    end,
+  },
+  {
     'echasnovski/mini.nvim',
     version = "*",
     config = function()
       require('mini.surround').setup()
-      require('mini.pairs').setup()
     end,
     event = "VeryLazy",
   },
@@ -151,7 +162,6 @@ local plugins = {
       require('plugins.configs.blame')
     end,
   },
-
 
   -- Ruby on Rails
   { 'slim-template/vim-slim' },

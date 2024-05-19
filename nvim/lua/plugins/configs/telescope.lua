@@ -139,7 +139,7 @@ require('telescope').setup({
         ["<C-n>"] = actions.cycle_history_next,
         ["<C-p>"] = actions.cycle_history_prev,
         ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
-        ["<C-a>"] = actions.send_selected_to_qflist + actions.open_qflist,
+        ["<C-Q>"] = actions.send_selected_to_qflist + actions.open_qflist,
         ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
         ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
         -- ["<esc>"] = actions.close,

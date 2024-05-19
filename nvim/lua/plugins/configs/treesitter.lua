@@ -27,12 +27,14 @@ require('nvim-treesitter.configs').setup({
       end
     end,
 
-    additional_vim_regex_highlighting = false,
+    -- additional_vim_regex_highlighting = false,
+    additional_vim_regex_highlighting = { "ruby" },
   },
 
   indent = {
     enable = true,
-    -- disable = { 'ruby' },
+    -- https://github.com/nvim-treesitter/nvim-treesitter/issues/6114
+    disable = { 'ruby' },
   },
 
   endwise = {
