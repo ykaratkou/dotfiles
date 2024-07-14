@@ -13,7 +13,7 @@ require('nvim-treesitter.configs').setup({
     'sql',
   },
 
-  auto_install = true,
+  auto_install = false,
 
   highlight = {
     enable = true,

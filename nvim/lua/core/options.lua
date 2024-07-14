@@ -85,29 +85,3 @@ vim.cmd [[
   au BufNewFile,BufRead *.jbuilder,Dangerfile set ft=ruby
   au BufNewFile,BufRead *.conf.* set ft=config
 ]]
-
-local signs = {
-  { name = 'DiagnosticSignError', text = '' },
-  { name = 'DiagnosticSignWarn', text = '' },
-  { name = 'DiagnosticSignHint', text = '' },
-  { name = 'DiagnosticSignInfo', text = '' },
-}
-
-for _, sign in ipairs(signs) do
-  vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = '' })
-end
-
-vim.diagnostic.config({
-  -- underline = false, -- it breaks not used variables hightlight
-  virtual_text = {
-    prefix = '●',
-    -- This is need for solargraph/rubocop to display diagnostics properly
-    -- format = function(diagnostic)
-    --   return string.format('%s: %s', diagnostic.code, diagnostic.message)
-    -- end,
-  },
-  update_in_insert = true,
-  float = {
-    source = "always", -- Or "if_many"
-  },
-})
