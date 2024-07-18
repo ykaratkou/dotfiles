@@ -26,8 +26,8 @@ vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
 vim.keymap.set('n', '[b', ':bprevious<CR>', { silent = true })
 vim.keymap.set('n', ']b', ':bnext<CR>', { silent = true })
 
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
-vim.keymap.set("v", "<leader>s", [[y<ESC>:%s/<C-r>0/<C-r>0/gc<left><left><left>]])
+vim.keymap.set("n", "<leader>rs", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+vim.keymap.set("v", "<leader>rs", [[y<ESC>:%s/<C-r>0/<C-r>0/gc<left><left><left>]])
 
 vim.keymap.set("v", '<leader>d', [[y<cmd>let @/=escape(@", '/')<cr>"_cgn]])
 vim.keymap.set("n", '<leader>d', [[*``cgn]])
@@ -35,3 +35,5 @@ vim.keymap.set("n", '<leader>d', [[*``cgn]])
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
 vim.keymap.set('n', '<leader>q', ':wincmd p | q<CR>', { silent = true })
+
+vim.keymap.set('n', "<leader>s", ':SwitchCase<CR>')

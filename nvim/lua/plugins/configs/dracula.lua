@@ -13,6 +13,9 @@ dracula.setup({
     NvimTreeGitDeleted = { fg = colors.red },
     NvimTreeGitIgnored = { fg = '#70747f' },
 
+    NeoTreeGitUnstaged = { fg = colors.cyan },
+    NeoTreeGitModified = { fg = colors.cyan },
+
     DiagnosticUnderlineError = {},
     DiagnosticUnderlineWarn = {},
     DiagnosticUnderlineInfo = {},

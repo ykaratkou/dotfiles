@@ -25,17 +25,19 @@ local plugins = {
     end,
   },
 
-  {
-    'nvim-tree/nvim-tree.lua',
-    version = "*",
-    lazy = false,
+ {
+    'nvim-neo-tree/neo-tree.nvim',
+    branch = "v3.x",
     dependencies = {
+      { 'nvim-lua/plenary.nvim' },
+      { 'MunifTanjim/nui.nvim' },
       { 'nvim-tree/nvim-web-devicons' },
     },
     config = function()
-      require("plugins.configs.nvim_tree")
-    end,
+      require('plugins.configs.neotree')
+    end
   },
+
   { 'nvim-lualine/lualine.nvim' },
   {
     'nvim-telescope/telescope.nvim',
