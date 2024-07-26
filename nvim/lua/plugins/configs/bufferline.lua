@@ -14,4 +14,3 @@ require("bufferline").setup({
 })
 
 vim.keymap.set('n', '<leader>t', ':BufferLinePick<CR>')
-

@@ -1,0 +1,8 @@
+[
+  {
+    "label": "rspec $ZED_RELATIVE_FILE:$ZED_ROW",
+    "command": "rtx exec ruby@$(cat .tool-versions | grep ruby | cut -d \" \" -f 2) -- rspec",
+    "args": ["\"$ZED_RELATIVE_FILE:$ZED_ROW\""],
+    "tags": ["rspec-test"]
+  }
+]

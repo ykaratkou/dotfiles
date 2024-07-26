@@ -1,0 +1,114 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: Open Default Keymap`
+// from the command palette.
+[
+  {
+    "bindings": {
+      "up": "menu::SelectPrev",
+      "down": "menu::SelectNext",
+      "ctrl-k": "menu::SelectPrev",
+      "ctrl-j": "menu::SelectNext",
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      // "j k": ["workspace::SendKeystrokes", "escape"]
+      "shift-k": "editor::MoveLineUp",
+      "shift-j": "editor::MoveLineDown"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == normal",
+    "bindings": {
+      "space f f": "file_finder::Toggle",
+      "space f b": "file_finder::Toggle",
+      "space f o": "file_finder::Toggle",
+      "space tab": "file_finder::Toggle",
+      "space g b": "editor::ToggleGitBlame",
+      "space r e": "pane::RevealInProjectPanel",
+      "space w h": "pane::RevealInProjectPanel",
+      "cmd-j": "terminal_panel::ToggleFocus",
+      "= =": "editor::Format",
+      "space f l": "pane::DeploySearch",
+      "space f w": "pane::DeploySearch",
+      "space f r": ["pane::DeploySearch", { "replace_enabled": true }],
+    }
+  },
+  {
+    "context": "Editor && (showing_code_actions || showing_completions)",
+    "bindings": {
+      "tab": "editor::ContextMenuNext",
+      "shift-tab": "editor::ContextMenuPrev",
+    }
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "space w l": ["workspace::ActivatePane", 0],
+      "space f f": "file_finder::Toggle",
+      "space f b": "file_finder::Toggle",
+      "space f o": "file_finder::Toggle",
+      "a": "project_panel::NewFile",
+      "d": "project_panel::Delete",
+      "r": "project_panel::Rename",
+      "x": "project_panel::Cut",
+      "c": "project_panel::Copy",
+      "p": "project_panel::Paste",
+      "shift-j": "menu::SelectNext",
+      "shift-k": "menu::SelectPrev",
+    }
+  },
+  {
+    "context": "Editor && vim_mode == visual",
+    "bindings": {
+      "tab": "editor::SelectLargerSyntaxNode",
+      "shift-tab": "editor::SelectSmallerSyntaxNode",
+      // it does not work because zed does not support format selected
+      // "=": "editor::Format"
+    }
+  },
+  {
+    "context": "Editor && (showing_code_actions || showing_completions)",
+    "bindings": {
+      "up": "editor::ContextMenuPrev",
+      "down": "editor::ContextMenuNext",
+      "ctrl-k": "editor::ContextMenuPrev",
+      "ctrl-j": "editor::ContextMenuNext",
+      "pageup": "editor::ContextMenuFirst",
+      "pagedown": "editor::ContextMenuLast"
+    }
+  },
+  {
+    "context": "Pane",
+    "bindings": {
+      "cmd-1": ["pane::ActivateItem", 0],
+      "cmd-2": ["pane::ActivateItem", 1],
+      "cmd-3": ["pane::ActivateItem", 2],
+      "cmd-4": ["pane::ActivateItem", 3],
+      "cmd-5": ["pane::ActivateItem", 4],
+      "cmd-6": ["pane::ActivateItem", 5],
+      "cmd-7": ["pane::ActivateItem", 6],
+      "cmd-8": ["pane::ActivateItem", 7],
+      "cmd-9": ["pane::ActivateItem", 8],
+      "cmd-0": "pane::ActivateLastItem"
+    }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "cmd-k": ["workspace::ActivatePane", 0],
+      "cmd-j": "workspace::ToggleBottomDock",
+      "cmd-n": "workspace::NewTerminal",
+    }
+  }
+]
