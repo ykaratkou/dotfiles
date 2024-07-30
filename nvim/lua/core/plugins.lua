@@ -89,12 +89,12 @@ local plugins = {
       vim.keymap.set('n', '<leader>m', tsj.toggle)
     end,
   },
-  {
-    'mbbill/undotree',
-    config = function()
-      vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
-    end,
-  },
+  -- {
+  --   'mbbill/undotree',
+  --   config = function()
+  --     vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+  --   end,
+  -- },
   {
     "windwp/nvim-autopairs",
     config = function()
@@ -132,21 +132,21 @@ local plugins = {
   --
   -- Git
   --
-  {
-    'sindrets/diffview.nvim',
-    config = function()
-      require('plugins.configs.diffview')
-    end,
-  },
-  {
-    'NeogitOrg/neogit',
-    config = function()
-      require('plugins.configs.neogit')
-    end,
-    dependencies = {
-      { 'nvim-lua/plenary.nvim' },
-    },
-  },
+  -- {
+  --   'sindrets/diffview.nvim',
+  --   config = function()
+  --     require('plugins.configs.diffview')
+  --   end,
+  -- },
+  -- {
+  --   'NeogitOrg/neogit',
+  --   config = function()
+  --     require('plugins.configs.neogit')
+  --   end,
+  --   dependencies = {
+  --     { 'nvim-lua/plenary.nvim' },
+  --   },
+  -- },
   {
     'lewis6991/gitsigns.nvim',
     config = function()
