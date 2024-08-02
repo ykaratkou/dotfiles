@@ -1,0 +1,45 @@
+{
+  "Debugger": {
+    "prefix": "dg",
+    "body": [
+      "debugger"
+    ]
+  },
+  "Debugging (Irb)": {
+    "prefix": "bi",
+    "body": [
+      "binding.irb"
+    ]
+  },
+  "Debugging (Pry)": {
+    "prefix": "bp",
+    "body": [
+      "binding.pry"
+    ]
+  },
+  "Insert frozen literal string": {
+    "prefix": "fro",
+    "body": [
+      "# frozen_string_literal: true",
+      "$0"
+    ]
+  },
+  "Class definition": {
+		"prefix": "class",
+		"body": [
+			"class ${1:ClassName}",
+			"\t$0",
+			"end"
+		]
+	},
+  "Class definition with initialize": {
+		"prefix": "class init",
+		"body": [
+			"class ${1:ClassName}",
+			"\tdef initialize",
+			"\t\t$0",
+			"\tend",
+			"end"
+		]
+	}
+}

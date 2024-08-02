@@ -12,43 +12,58 @@
       "down": "menu::SelectNext",
       "ctrl-k": "menu::SelectPrev",
       "ctrl-j": "menu::SelectNext",
+      "cmd-enter": "workspace::ToggleZoom",
+      "cmd-h": ["workspace::ActivatePaneInDirection", "Left"],
+      "cmd-l": ["workspace::ActivatePaneInDirection", "Right"],
+      "cmd-k": ["workspace::ActivatePaneInDirection", "Up"],
+      "cmd-j": ["workspace::ActivatePaneInDirection", "Down"]
     }
   },
   {
     "context": "Workspace",
-    "bindings": {
-    }
+    "bindings": {}
   },
   {
     "context": "Editor",
     "bindings": {
       // "j k": ["workspace::SendKeystrokes", "escape"]
+    }
+  },
+  {
+    "context": "Editor && vim_mode != insert",
+    "bindings": {
       "shift-k": "editor::MoveLineUp",
-      "shift-j": "editor::MoveLineDown"
+      "shift-j": "editor::MoveLineDown",
+      // "space space": "editor::ShowCompletions",
+      "cmd-j": "terminal_panel::ToggleFocus",
+      // "": "editor::ToggleCodeActions",
     }
   },
   {
     "context": "Editor && vim_mode == normal",
     "bindings": {
-      "space f f": "file_finder::Toggle",
-      "space f b": "file_finder::Toggle",
-      "space f o": "file_finder::Toggle",
-      "space tab": "file_finder::Toggle",
+      // "space f f": "file_finder::Toggle",
+      // "space f b": "file_finder::Toggle",
+      // "space f o": "file_finder::Toggle",
+      // "space tab": "file_finder::Toggle",
       "space g b": "editor::ToggleGitBlame",
       "space r e": "pane::RevealInProjectPanel",
-      "space w h": "pane::RevealInProjectPanel",
-      "cmd-j": "terminal_panel::ToggleFocus",
+      // "space w h": "pane::RevealInProjectPanel",
       "= =": "editor::Format",
       "space f l": "pane::DeploySearch",
-      "space f w": "pane::DeploySearch",
-      "space f r": ["pane::DeploySearch", { "replace_enabled": true }],
+      "space r h": "editor::RevertSelectedHunks",
+      // "space g d": "editor::ToggleHunkDiff",
+      "space g d": "editor::ExpandAllHunkDiffs",
+      "space a": "editor::SelectAll",
+      // "space g d": "editor::ExpandAllHunkDiffs",
+      "space f r": ["pane::DeploySearch", { "replace_enabled": true }]
     }
   },
   {
     "context": "Editor && (showing_code_actions || showing_completions)",
     "bindings": {
-      "tab": "editor::ContextMenuNext",
-      "shift-tab": "editor::ContextMenuPrev",
+      // "tab": "editor::ContextMenuNext",
+      // "shift-tab": "editor::ContextMenuPrev"
     }
   },
   {
@@ -65,7 +80,7 @@
       "c": "project_panel::Copy",
       "p": "project_panel::Paste",
       "shift-j": "menu::SelectNext",
-      "shift-k": "menu::SelectPrev",
+      "shift-k": "menu::SelectPrev"
     }
   },
   {
@@ -73,8 +88,11 @@
     "bindings": {
       "tab": "editor::SelectLargerSyntaxNode",
       "shift-tab": "editor::SelectSmallerSyntaxNode",
+      "<": "editor::Outdent",
+      ">": "editor::Indent",
       // it does not work because zed does not support format selected
-      // "=": "editor::Format"
+      "=": "editor::Format",
+      "space r h": "editor::RevertSelectedHunks"
     }
   },
   {
@@ -106,9 +124,8 @@
   {
     "context": "Terminal",
     "bindings": {
-      "cmd-k": ["workspace::ActivatePane", 0],
       "cmd-j": "workspace::ToggleBottomDock",
-      "cmd-n": "workspace::NewTerminal",
+      "cmd-n": "workspace::NewTerminal"
     }
   }
 ]
