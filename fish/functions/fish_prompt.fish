@@ -1,22 +1,3 @@
-set fish_color_autosuggestion 4c566a
-set fish_color_cancel \x2d\x2dreverse
-set fish_color_command normal
-set fish_color_comment 434c5e
-set fish_color_cwd green
-set fish_color_cwd_root red
-set fish_color_end 88c0d0
-set fish_color_error ebcb8b
-set fish_color_escape 00a6b2
-set fish_color_history_current \x2d\x2dbold
-set fish_color_host normal
-set fish_color_host_remote yellow
-set fish_color_match \x2d\x2dbackground\x3dbrblue
-set fish_color_normal normal
-set fish_color_operator 00a6b2
-set fish_color_param eceff4
-set fish_color_quote a3be8c
-set fish_color_redirection b48ead
-
 function fish_prompt
   set -l cyan (set_color -o cyan)
   set -l yellow (set_color -o yellow)

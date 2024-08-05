@@ -17,5 +17,3 @@ set fish_greeting
 set fish_color_valid_path
 
 set -x RIPGREP_CONFIG_PATH $HOME/.dotfiles/.ripgreprc
-set -Ux LSCOLORS gxfxbEaEBxxEhEhBaDaCaD
-
