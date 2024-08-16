@@ -67,3 +67,6 @@ autocmd('FocusGained', {
     h('CmpItemAbbrMatch', { fg = colors.cyan, bg = colors.bg })
   end,
 })
+
+-- https://github.com/neovim/neovim/issues/23590
+vim.cmd('hi! link CurSearch Search')

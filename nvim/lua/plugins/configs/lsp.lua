@@ -52,6 +52,8 @@ mason_lspconfig.setup({
     'tsserver',
     'lua_ls',
     'tailwindcss',
+    'terraformls',
+    'tflint',
   }
 })
 

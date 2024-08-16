@@ -29,7 +29,7 @@ require('gitsigns').setup({
     map('n', '<leader>rh', gs.reset_hunk, { desc = '[r]eset [h]unk' })
     map('n', '<leader>rb', gs.reset_buffer, { desc = '[r]eset buffer' })
     map('n', '<leader>gl', gs.toggle_current_line_blame, { desc = 'toggle [g]it [l]ine blame' })
-    map('n', '<leader>gd', gs.diffthis)
+    map('n', '<leader>gd', gs.preview_hunk_inline)
     -- Text object
     map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
   end

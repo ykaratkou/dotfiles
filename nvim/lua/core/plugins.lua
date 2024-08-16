@@ -107,12 +107,10 @@ local plugins = {
     end,
   },
   {
-    'echasnovski/mini.nvim',
-    version = "*",
-    config = function()
-      require('mini.surround').setup()
-    end,
+    "kylechui/nvim-surround",
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
+    config = true,
   },
   {
     'brenoprata10/nvim-highlight-colors',
@@ -132,21 +130,6 @@ local plugins = {
   --
   -- Git
   --
-  -- {
-  --   'sindrets/diffview.nvim',
-  --   config = function()
-  --     require('plugins.configs.diffview')
-  --   end,
-  -- },
-  -- {
-  --   'NeogitOrg/neogit',
-  --   config = function()
-  --     require('plugins.configs.neogit')
-  --   end,
-  --   dependencies = {
-  --     { 'nvim-lua/plenary.nvim' },
-  --   },
-  -- },
   {
     'lewis6991/gitsigns.nvim',
     config = function()
