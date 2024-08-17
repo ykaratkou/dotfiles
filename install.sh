@@ -2,9 +2,6 @@
 
 echo "Configuring Fish"
 ln -s $HOME/.dotfiles/fish/ $HOME/.config/
-sudo sh -c 'echo /opt/homebrew/bin/fish >> /etc/shells'
-chsh -s /opt/homebrew/bin/fish
-curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
 
 echo "Configuring NVIM"
 ln -s $HOME/.dotfiles/nvim $HOME/.config/
@@ -24,17 +21,17 @@ ln -s $HOME/.dotfiles/.gemrc $HOME/.gemrc
 
 echo "Configuring Alacritty"
 mkdir -p $HOME/.config/alacritty
-ln -s $HOME/.dotfiles/alacritty.toml $HOME/.config/alacritty
+ln -s $HOME/.dotfiles/alacritty.toml $HOME/.config/alacritty/
 
 echo "Configuring Bat"
 mkdir -p $HOME/.config/bat
-ln -s $HOME/.dotfiles/bat/config $HOME/.config/bat
+ln -s $HOME/.dotfiles/bat/config $HOME/.config/bat/
 
 echo "Configure Bin"
 mkdir -p $HOME/.bin
-ln -s $HOME/.dotfiles/bin/tmux-windowizer $HOME/.bin
-ln -s $HOME/.dotfiles/bin/tmux-session-menu $HOME/.bin
-ln -s $HOME/.dotfiles/bin/op-aws-helper $HOME/.bin
+ln -s $HOME/.dotfiles/bin/tmux-windowizer $HOME/.bin/
+ln -s $HOME/.dotfiles/bin/tmux-session-menu $HOME/.bin/
+ln -s $HOME/.dotfiles/bin/op-aws-helper $HOME/.bin/
 
 echo "Installing rtx"
 curl https://rtx.pub/install.sh | sh
