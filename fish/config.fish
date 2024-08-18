@@ -17,3 +17,10 @@ set fish_greeting
 set fish_color_valid_path
 
 set -x RIPGREP_CONFIG_PATH $HOME/.dotfiles/.ripgreprc
+
+# pnpm
+set -gx PNPM_HOME "$HOME/Library/pnpm"
+if not string match -q -- $PNPM_HOME $PATH
+  set -gx PATH "$PNPM_HOME" $PATH
+end
+# pnpm end
