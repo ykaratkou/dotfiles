@@ -22,8 +22,9 @@ alias gfo='git fetch origin'
 
 alias gco='git checkout'
 alias gcb='git checkout -b'
-alias gcm='git checkout master'
+alias gcm='git checkout $(main_branch)'
 
+alias grbm='git rebase $(main_branch)'
 alias grbi='git rebase -i'
 alias grbc='git rebase --continue'
 alias grba='git rebase --abort'
@@ -54,6 +55,10 @@ function current_branch
     git symbolic-ref HEAD; or \
     git rev-parse --short HEAD; or return
   end 2>/dev/null | sed -e 's|^refs/heads/||'
+end
+
+function main_branch
+  git branch -r | grep -E -i '^\s.origin\/(master|main)' | cut -d/ -f2
 end
 
 alias ggpull='git pull origin (current_branch)'
