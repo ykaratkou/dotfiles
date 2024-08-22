@@ -127,5 +127,11 @@
       "cmd-j": "workspace::ToggleBottomDock",
       "cmd-n": "workspace::NewTerminal"
     }
+  },
+  {
+    "context": "ContextEditor > Editor",
+    "bindings": {
+      "cmd-enter": "assistant::Assist",
+    }
   }
 ]
