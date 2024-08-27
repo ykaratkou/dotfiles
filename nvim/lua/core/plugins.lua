@@ -209,6 +209,12 @@ local plugins = {
       },
 	  },
   },
+  {
+    "robitx/gp.nvim",
+    config = function()
+      require("plugins.configs.gp")
+    end,
+  }
 }
 
 require("lazy").setup(plugins, require "plugins.configs.lazy")
