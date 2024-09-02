@@ -27,6 +27,10 @@ echo "Configuring Bat"
 mkdir -p $HOME/.config/bat
 ln -s $HOME/.dotfiles/bat/config $HOME/.config/bat/
 
+echo "Configuring lazygit"
+mkdir -p $HOME/.config/lazygit
+ln -s $HOME/lazygit/config.yml $HOME/.config/lazygit/
+
 echo "Configure Bin"
 mkdir -p $HOME/.bin
 ln -s $HOME/.dotfiles/bin/tmux-windowizer $HOME/.bin/

@@ -1,0 +1,7 @@
+gui:
+  showFileTree: true
+os:
+  editCommand: 'nvim'
+  editCommandTemplate: '{{editor}} --server /tmp/current-neovim-server --remote-send ":e {{filename}}<CR>"'
+promptToReturnFromSubprocess: false
+quitOnTopLevelReturn: true

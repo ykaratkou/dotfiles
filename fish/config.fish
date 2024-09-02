@@ -8,6 +8,7 @@ end
 source $HOME/.dotfiles/fish/overrides.d/*.fish
 
 set PATH $HOME/.bin $PATH
+set XDG_CONFIG_HOME $HOME/.config
 
 if test -d $HOME/.fzf/bin/
   set PATH $HOME/.fzf/bin/ $PATH
