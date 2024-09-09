@@ -30,4 +30,4 @@ require("gp").setup({
 
 vim.keymap.set('n', '<leader>gg', ':GpChatToggle<CR>', { silent = true })
 vim.keymap.set('n', '<leader>gn', ':GpChatNew<CR>', { silent = true })
-vim.keymap.set('n', '<leader>gf', ':GpChatFinder<CR>', { silent = true })
+vim.keymap.set('n', '<leader>go', ':GpChatFinder<CR>', { silent = true })

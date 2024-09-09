@@ -54,7 +54,9 @@ Job:new({
   end),
 }):start()
 
-vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[f]ind [f]iles' })
+vim.keymap.set('n', '<leader>ff', function()
+  require('telescope').extensions['recent-files'].recent_files({})
+end, { desc = '[f]ind [f]iles' })
 vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[f]ind [r]esume' })
 
 vim.keymap.set('n', '<leader>fw', function ()
@@ -84,7 +86,10 @@ end)
 vim.keymap.set('n', '<leader>fg', builtin.git_status, { desc = '[f]iles [g]it changes' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags)
 
-vim.keymap.set('n', '<leader>fo', ':Telescope oldfiles only_cwd=true<CR>', { desc = '[f]ind [o]ldfiles' })
+vim.keymap.set('n', '<leader>fo', function()
+  require('telescope').extensions['recent-files'].recent_files({})
+end, { desc = '[f]ind [o]ldfiles' })
+
 vim.keymap.set('n', '<leader>b', function()
   builtin.buffers({
     sort_mru = true,
@@ -154,4 +159,5 @@ require('telescope').setup({
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('file_browser')
 require('telescope').load_extension('ui-select')
+require('telescope').load_extension('recent-files')
 require('telescope').load_extension('egrepify')

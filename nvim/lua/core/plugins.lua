@@ -56,6 +56,7 @@ local plugins = {
         branch = 'fix-previewer',
       },
       { 'nvim-telescope/telescope-ui-select.nvim' },
+      { 'mollerhoj/telescope-recent-files.nvim' },
       { 'nvim-lua/plenary.nvim' },
     }
   },
