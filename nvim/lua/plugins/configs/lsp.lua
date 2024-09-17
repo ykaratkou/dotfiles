@@ -54,6 +54,7 @@ mason_lspconfig.setup({
     'tailwindcss',
     'terraformls',
     'tflint',
+    'yamlls'
   }
 })
 
@@ -127,4 +128,19 @@ lspconfig.lua_ls.setup({
 
 lspconfig.ruby_lsp.setup({
   cmd = { 'ruby-lsp' },
+})
+
+lspconfig.yamlls.setup({
+  settings = {
+    yaml = {
+      validate = true,
+      schemaStore = {
+        enable = false,
+        url = "",
+      },
+      schemas = {
+        ['https://json.schemastore.org/github-workflow.json'] = '.github/workflows/*.{yml,yaml}',
+      }
+    }
+  }
 })
