@@ -1,3 +1,2 @@
 return {
-  install = { colorscheme = { "dracula" } },
 }

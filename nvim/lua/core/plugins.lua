@@ -25,7 +25,31 @@ local plugins = {
     end,
   },
 
- {
+  -- {
+  --   "rose-pine/neovim",
+  --   name = "rose-pine",
+  --   config = function()
+  --     require("rose-pine").setup({
+  --         variant = "auto", -- auto, main, moon, or dawn
+  --         dark_variant = "moon", -- main, moon, or dawn
+  --         dim_inactive_windows = true,
+  --         extend_background_behind_borders = true,
+  --     })
+  --     vim.cmd("colorscheme rose-pine")
+  --   end,
+  -- },
+
+  -- {
+  --   "mistricky/codesnap.nvim",
+  --   build = "make",
+  --   config = function()
+  --     require("codesnap").setup({
+  --       bg_padding = 0,
+  --     })
+  --   end,
+  -- },
+
+  {
     'nvim-neo-tree/neo-tree.nvim',
     branch = "v3.x",
     dependencies = {
@@ -173,21 +197,21 @@ local plugins = {
   --
   {
     'hrsh7th/nvim-cmp',
-	  event = { "BufReadPre", "BufNewFile" },
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
       require('plugins.configs.cmp')
     end,
     dependencies = {
-		  -- Autocompletion
-		  {'hrsh7th/cmp-buffer'},
-		  {'hrsh7th/cmp-path'},
-		  {'hrsh7th/cmp-nvim-lsp'},
-		  {'hrsh7th/cmp-nvim-lua'},
+      -- Autocompletion
+      {'hrsh7th/cmp-buffer'},
+      {'hrsh7th/cmp-path'},
+      {'hrsh7th/cmp-nvim-lsp'},
+      {'hrsh7th/cmp-nvim-lua'},
       {'saadparwaiz1/cmp_luasnip'},
       {'hrsh7th/cmp-cmdline'},
 
-		  -- Snippets
-		  {'L3MON4D3/LuaSnip'},
+      -- Snippets
+      {'L3MON4D3/LuaSnip'},
 
       -- Copilot
       {
@@ -208,7 +232,7 @@ local plugins = {
           require("copilot_cmp").setup()
         end
       },
-	  },
+    },
   },
   {
     "robitx/gp.nvim",

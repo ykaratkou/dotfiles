@@ -4,26 +4,40 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- Buffer local mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
 
-    local function on_list(options)
-      local items = {}
-      local set = {}
-      -- Filter not unique filenames because of issue with duplicates in ruby-lsp after saving files
-      for i, v in pairs(options.items) do
-        if not set[v.filename] then
-          set[v.filename] = true
-          table.insert(items, v)
+    local function go_to_unique_definition()
+      -- Call the original 'textDocument/definition' method
+      vim.lsp.buf_request(0, 'textDocument/definition', vim.lsp.util.make_position_params(), function(_, result, _, _)
+        if not result or vim.tbl_isempty(result) then
+          print("No definitions found")
+          return
         end
-      end
 
-      vim.fn.setqflist({}, ' ', vim.tbl_extend("keep", { items = items }, options))
-      vim.cmd.cfirst()
+        -- If there are multiple results, filter out duplicates by file path
+        local unique_results = {}
+        local seen = {}
+
+        for _, def in ipairs(result) do
+          local uri = def.uri or def.targetUri -- Support both Location and LocationLink
+          if not seen[uri] then
+            seen[uri] = true
+            table.insert(unique_results, def)
+          end
+        end
+
+        -- Now use the filtered unique results
+        if #unique_results == 1 then
+          vim.lsp.util.jump_to_location(unique_results[1], 'utf-8')
+        else
+          local items = vim.lsp.util.locations_to_items(unique_results, 'utf-8')
+          vim.fn.setqflist({}, 'r', { title = 'LSP Definitions', items = items })
+          vim.api.nvim_command("copen")
+        end
+      end)
     end
 
     local opts = { buffer = ev.buf }
 
-    vim.keymap.set('n', 'gd', function()
-      vim.lsp.buf.definition(vim.tbl_extend("keep", { on_list = on_list }, opts))
-    end)
+    vim.keymap.set('n', 'gd', go_to_unique_definition, opts)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
     vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
     vim.keymap.set("n", "<leader>vv", function()
