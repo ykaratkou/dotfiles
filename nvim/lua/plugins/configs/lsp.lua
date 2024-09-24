@@ -5,26 +5,24 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- See `:help vim.lsp.*` for documentation on any of the below functions
 
     local function go_to_unique_definition()
-      -- Call the original 'textDocument/definition' method
       vim.lsp.buf_request(0, 'textDocument/definition', vim.lsp.util.make_position_params(), function(_, result, _, _)
         if not result or vim.tbl_isempty(result) then
           print("No definitions found")
           return
         end
 
-        -- If there are multiple results, filter out duplicates by file path
         local unique_results = {}
         local seen = {}
 
         for _, def in ipairs(result) do
-          local uri = def.uri or def.targetUri -- Support both Location and LocationLink
-          if not seen[uri] then
-            seen[uri] = true
-            table.insert(unique_results, def)
-          end
+          local uri = def.uri or def.targetUri
+          seen[uri] = def
         end
 
-        -- Now use the filtered unique results
+        for _, def in pairs(seen) do
+          table.insert(unique_results, def)
+        end
+
         if #unique_results == 1 then
           vim.lsp.util.jump_to_location(unique_results[1], 'utf-8')
         else
