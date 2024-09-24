@@ -24,31 +24,42 @@ cmp.setup.cmdline(':', {
     })
 })
 
-cmp.setup({
-  sources = {
-    { name = 'nvim_lsp', keyword_length = 1 },
-    { name = 'nvim_lua' },
-    { name = 'luasnip', keyword_length = 2 },
-    { name = 'path' },
-    {
-      name = 'buffer',
-      option = {
-        get_bufnrs = function()
-          return vim.tbl_filter(function(buf_num)
-            return vim.bo[buf_num].filetype == vim.bo.filetype
-          end, vim.api.nvim_list_bufs())
-        end
-      },
-      keyword_length = 2,
+local editor_sources = {
+  { name = 'nvim_lsp', keyword_length = 1 },
+  { name = 'nvim_lua' },
+  { name = 'luasnip', keyword_length = 2 },
+  { name = 'path' },
+  {
+    name = 'buffer',
+    option = {
+      get_bufnrs = function()
+        return vim.tbl_filter(function(buf_num)
+          return vim.bo[buf_num].filetype == vim.bo.filetype
+        end, vim.api.nvim_list_bufs())
+      end
     },
-    { name = 'copilot' },
+    keyword_length = 2,
   },
+}
+
+cmp.setup({
+  sources = editor_sources,
   snippet = {
     expand = function(args)
       require('luasnip').lsp_expand(args.body)
     end,
   },
   mapping = {
+    -- trigger copilot manually
+    ['<C-s>'] = cmp.mapping.complete({
+      config = {
+        sources = vim.tbl_deep_extend(
+          'force',
+          editor_sources,
+          { { name = 'copilot' } }
+        )
+      }
+    }),
     ['<C-k>'] = cmp.mapping.select_prev_item(cmp_select),
     ['<C-j>'] = cmp.mapping.select_next_item(cmp_select),
     ['<CR>'] = cmp.mapping.confirm({
