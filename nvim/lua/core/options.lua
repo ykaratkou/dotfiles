@@ -30,6 +30,16 @@ vim.wo.number = true
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.undofile = true
 
+-- Don't show the mode, since it's already in the status line
+vim.opt.showmode = false
+
+-- Decrease update time
+vim.opt.updatetime = 250
+
+-- Decrease mapped sequence wait time
+-- Displays which-key popup sooner
+vim.opt.timeoutlen = 300
+
 vim.opt.spelllang = 'en'
 local spell_group = vim.api.nvim_create_augroup('spell', {clear = false})
 vim.api.nvim_create_autocmd({'BufEnter'}, {
@@ -76,12 +86,3 @@ vim.api.nvim_create_autocmd("FileType", {
     end
   end,
 })
-
-vim.cmd [[
-  autocmd FileType ruby setlocal indentkeys-=.
-]]
-
-vim.cmd [[
-  au BufNewFile,BufRead *.jbuilder,Dangerfile set ft=ruby
-  au BufNewFile,BufRead *.conf.* set ft=config
-]]
