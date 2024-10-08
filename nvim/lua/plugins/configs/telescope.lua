@@ -120,6 +120,9 @@ require('telescope').setup({
       display_stat = {},
       respect_gitignore = true,
     },
+    egrepify = {
+      results_ts_hl = false,
+    },
   },
   defaults = {
     sorting_strategy = "ascending",

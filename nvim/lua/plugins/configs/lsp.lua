@@ -61,7 +61,7 @@ require('mason').setup()
 mason_lspconfig.setup({
   ensure_installed = {
     'eslint',
-    'tsserver',
+    'ts_ls',
     'lua_ls',
     'tailwindcss',
     'terraformls',
@@ -118,7 +118,7 @@ vim.diagnostic.config({
 })
 
 -- override tsserver settings
-lspconfig.tsserver.setup({
+lspconfig.ts_ls.setup({
   settings = {
     diagnostics = {
       ignoredCodes = {

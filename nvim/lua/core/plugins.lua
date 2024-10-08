@@ -41,6 +41,7 @@ local plugins = {
   { 'nvim-lualine/lualine.nvim' },
   {
     'nvim-telescope/telescope.nvim',
+    tag = "0.1.8",
     config = function()
       require('plugins.configs.telescope')
     end,
@@ -51,10 +52,7 @@ local plugins = {
         build = 'make',
       },
       { 'nvim-telescope/telescope-file-browser.nvim' },
-      {
-        'evkorotkov/telescope-egrepify.nvim',
-        branch = 'fix-previewer',
-      },
+      { 'fdschmidt93/telescope-egrepify.nvim' },
       { 'nvim-telescope/telescope-ui-select.nvim' },
       { 'mollerhoj/telescope-recent-files.nvim' },
       { 'nvim-lua/plenary.nvim' },
