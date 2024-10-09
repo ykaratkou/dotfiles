@@ -188,17 +188,23 @@ local plugins = {
         event = "VeryLazy",
         config = function()
           require("copilot").setup({
-            suggestion = { enabled = false },
+            suggestion = {
+              enabled = true,
+              auto_trigger = true,
+              hide_during_completion = true,
+              debounce = 150,
+              keymap = {
+                accept = "<Tab>",
+                accept_word = "<C-l>",
+                accept_line = false,
+                next = "<C-j>",
+                prev = "<C-k>",
+                dismiss = "<C-e>",
+              },
+            },
             panel = { enabled = false },
           })
         end,
-      },
-      {
-        "zbirenbaum/copilot-cmp",
-        after = { "copilot.lua" },
-        config = function ()
-          require("copilot_cmp").setup()
-        end
       },
     },
   },

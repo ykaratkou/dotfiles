@@ -50,31 +50,18 @@ cmp.setup({
     end,
   },
   mapping = {
-    -- trigger copilot manually
-    ['<C-s>'] = cmp.mapping.complete({
-      config = {
-        sources = vim.tbl_deep_extend(
-          'force',
-          editor_sources,
-          { { name = 'copilot' } }
-        )
-      }
-    }),
     ['<C-k>'] = cmp.mapping.select_prev_item(cmp_select),
     ['<C-j>'] = cmp.mapping.select_next_item(cmp_select),
     ['<CR>'] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Insert,
       select = false,
     }),
+    ['<C-e>'] = cmp.mapping.abort(),
     ['<Tab>'] = cmp.mapping(function(fallback)
-      local col = vim.fn.col('.') - 1
-
       if cmp.visible() then
         cmp.select_next_item(cmp_insert)
-      elseif col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
-        fallback()
       else
-        cmp.complete()
+        fallback()
       end
     end, {'i', 's'}),
 
@@ -111,5 +98,12 @@ cmp.setup({
   },
 })
 
+cmp.event:on("menu_opened", function()
+  vim.b.copilot_suggestion_hidden = true
+end)
+
+cmp.event:on("menu_closed", function()
+  vim.b.copilot_suggestion_hidden = false
+end)
 
 require("luasnip.loaders.from_vscode").lazy_load({ paths = { "./snippets" } })
