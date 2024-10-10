@@ -5,7 +5,7 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
 end
 
-source $HOME/.dotfiles/fish/overrides.d/*.fish
+source $HOME/.config/fish/overrides.d/*.fish
 
 set PATH $HOME/.bin $PATH
 set XDG_CONFIG_HOME $HOME/.config
@@ -17,7 +17,8 @@ end
 set fish_greeting
 set fish_color_valid_path
 
-set -x RIPGREP_CONFIG_PATH $HOME/.dotfiles/.ripgreprc
+set -gx RIPGREP_CONFIG_PATH $HOME/.ripgreprc
+set -gx SHELL $(which fish)
 
 # pnpm
 set -gx PNPM_HOME "$HOME/Library/pnpm"
