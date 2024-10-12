@@ -194,7 +194,7 @@ local plugins = {
               hide_during_completion = true,
               debounce = 150,
               keymap = {
-                accept = "<Tab>",
+                accept = false,
                 accept_word = "<C-l>",
                 accept_line = false,
                 next = "<C-j>",
@@ -204,6 +204,15 @@ local plugins = {
             },
             panel = { enabled = false },
           })
+
+          vim.keymap.set('i', '<Tab>', function()
+            local copilot = require("copilot.suggestion")
+            if copilot.is_visible() then
+              copilot.accept()
+            else
+              vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, true, true), 'n')
+            end
+          end, { noremap = true, silent = true })
         end,
       },
     },
