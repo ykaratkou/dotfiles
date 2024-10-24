@@ -36,10 +36,6 @@ vim.opt.showmode = false
 -- Decrease update time
 vim.opt.updatetime = 250
 
--- Decrease mapped sequence wait time
--- Displays which-key popup sooner
-vim.opt.timeoutlen = 300
-
 vim.opt.spelllang = 'en'
 local spell_group = vim.api.nvim_create_augroup('spell', {clear = false})
 vim.api.nvim_create_autocmd({'BufEnter'}, {

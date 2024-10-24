@@ -15,8 +15,8 @@
   },
   "assistant": {
     "default_model": {
-      "provider": "zed.dev",
-      "model": "claude-3-5-sonnet-20240620"
+      "provider": "copilot_chat",
+      "model": "gpt-4o"
     },
     "version": "2",
     "provider": null
@@ -91,6 +91,8 @@
         "diagnostics": false
       }
     },
+    "helm-ls": {
+    },
     "rubocop": {
       "initialization_options": {
         "safeAutocorrect": false
@@ -125,6 +127,13 @@
     }
   },
   "file_types": {
-    "Ruby": ["rbs", "Dangerfile"]
-  },
+    "Ruby": ["rbs", "Dangerfile"],
+    "Helm": [
+       "**/templates/**/*.tpl",
+       "**/templates/**/*.yaml",
+       "**/templates/**/*.yml",
+       "**/helmfile.d/**/*.yaml",
+       "**/helmfile.d/**/*.yml"
+     ]
+   }
 }

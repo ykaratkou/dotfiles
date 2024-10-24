@@ -1,6 +1,7 @@
 require("gp").setup({
   providers = {
 		openai = {
+      disable = true,
 			endpoint = "https://api.openai.com/v1/chat/completions",
       secret = { "op", "read", "op://Private/6uzg7fnpd6zhrounkm7nfmsfri/token", "--no-newline" },
 		},
@@ -17,7 +18,6 @@ require("gp").setup({
 		},
 
     copilot = {
-      disable = true,
 			endpoint = "https://api.githubcopilot.com/chat/completions",
 			secret = {
 				"bash",
@@ -28,6 +28,5 @@ require("gp").setup({
 	},
 })
 
-vim.keymap.set('n', '<leader>gg', ':GpChatToggle<CR>', { silent = true })
+vim.keymap.set('n', '<leader>go', ':GpChatToggle<CR>', { silent = true })
 vim.keymap.set('n', '<leader>gn', ':GpChatNew<CR>', { silent = true })
-vim.keymap.set('n', '<leader>go', ':GpChatFinder<CR>', { silent = true })
