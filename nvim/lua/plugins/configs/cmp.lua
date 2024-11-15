@@ -27,7 +27,7 @@ cmp.setup.cmdline(':', {
 local editor_sources = {
   { name = 'nvim_lsp', keyword_length = 1 },
   { name = 'nvim_lua' },
-  { name = 'luasnip', keyword_length = 2 },
+  { name = 'luasnip', keyword_length = 1 },
   { name = 'path' },
   {
     name = 'buffer',

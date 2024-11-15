@@ -45,13 +45,7 @@ vim.api.nvim_create_autocmd({'BufEnter'}, {
   desc = 'Set spell for text files'
 })
 
-vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
-  desc = 'Setup columns',
-  callback = function()
-    vim.opt.colorcolumn = "120"
-    vim.opt.signcolumn = 'yes'
-  end
-})
+vim.opt.signcolumn = 'yes'
 
 vim.wo.wrap = false
 
