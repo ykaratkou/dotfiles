@@ -116,6 +116,9 @@ require('telescope').setup({
     egrepify = {
       results_ts_hl = false,
     },
+    ["ui-select"] = {
+      require("telescope.themes").get_dropdown({})
+    },
   },
   defaults = {
     sorting_strategy = "ascending",

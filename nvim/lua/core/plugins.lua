@@ -118,7 +118,10 @@ local plugins = {
       }
     end,
   },
-  { 'iamcco/markdown-preview.nvim' },
+  {
+    "iamcco/markdown-preview.nvim",
+    build = "cd app && yarn install",
+  },
 
   --
   -- Git
