@@ -22,11 +22,10 @@ vim.opt.smartcase = true
 -- System clipboard
 vim.opt.clipboard = 'unnamedplus'
 
-vim.opt.swapfile = true
-
 --Line numbers
 vim.wo.number = true
 
+vim.opt.swapfile = false
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.undofile = true
 
@@ -36,6 +35,11 @@ vim.opt.showmode = false
 -- Decrease update time
 vim.opt.updatetime = 250
 
+vim.opt.signcolumn = 'yes'
+vim.opt.colorcolumn = "120"
+
+vim.wo.wrap = false
+
 vim.opt.spelllang = 'en'
 local spell_group = vim.api.nvim_create_augroup('spell', {clear = false})
 vim.api.nvim_create_autocmd({'BufEnter'}, {
@@ -44,10 +48,6 @@ vim.api.nvim_create_autocmd({'BufEnter'}, {
   command = 'setlocal spell',
   desc = 'Set spell for text files'
 })
-
-vim.opt.signcolumn = 'yes'
-
-vim.wo.wrap = false
 
 vim.api.nvim_create_autocmd('BufWritePre', {
   -- Trim trailing whitespaces
