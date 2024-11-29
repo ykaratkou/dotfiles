@@ -157,6 +157,27 @@ lspconfig.ts_ls.setup({
   },
 })
 
+lspconfig.tailwindcss.setup({
+  filetypes = { 'ruby' },
+  settings = {
+    tailwindCSS = {
+      includeLanguages = {
+        ruby = "erb",
+      },
+      experimental = {
+        classRegex = {
+          [[class= "([^"]*)]],
+          [[class: "([^"]*)]],
+          [[class= '([^"]*)]],
+          [[class: '([^"]*)]],
+          '~H""".*class="([^"]*)".*"""',
+          '~F""".*class="([^"]*)".*"""',
+        },
+      }
+    }
+  }
+})
+
 lspconfig.lua_ls.setup({
   settings = {
     Lua = {
@@ -174,13 +195,15 @@ lspconfig.ruby_lsp.setup({
 lspconfig.yamlls.setup({
   settings = {
     yaml = {
-      validate = true,
+      validate = false,
       schemaStore = {
         enable = false,
         url = "",
       },
       schemas = {
         ['https://json.schemastore.org/github-workflow.json'] = '.github/workflows/*.{yml,yaml}',
+        ["https://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
+        kubernetes = "templates/**",
       }
     }
   }

@@ -2,7 +2,7 @@
 	ui = true
 
 [user]
-	name = Evgeny Korotkov
+	name = Yauhen Karatkou
 	email = evgn.korotkov@gmail.com
   signingkey = ~/.ssh/personal.pub
 

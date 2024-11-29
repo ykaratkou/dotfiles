@@ -1,18 +1,8 @@
 local dracula = require("dracula")
-local colors = vim.tbl_extend(
-  "error",
-  dracula.colors(),
-  {
-    bg_dim = "#323543",
-  }
-)
+local colors = dracula.colors()
 
 dracula.setup({
   overrides = {
-    NvimTreeGitDirty = { fg = colors.cyan },
-    NvimTreeGitDeleted = { fg = colors.red },
-    NvimTreeGitIgnored = { fg = '#70747f' },
-
     NeoTreeGitUnstaged = { fg = colors.cyan },
     NeoTreeGitModified = { fg = colors.cyan },
 

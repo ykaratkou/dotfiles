@@ -146,6 +146,7 @@ local plugins = {
 
   -- Ruby on Rails
   { 'slim-template/vim-slim' },
+  { 'towolf/vim-helm' },
 
   -- LSP Support
   {
