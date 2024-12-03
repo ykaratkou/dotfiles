@@ -43,37 +43,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
     vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
     vim.keymap.set({ 'n', 'v' }, '<space>co', vim.lsp.buf.code_action, opts)
-
-    local function apply_all_quickfixes()
-      local params = vim.lsp.util.make_range_params()
-      params.context = { diagnostics = vim.lsp.diagnostic.get_line_diagnostics() }
-
-      vim.lsp.buf_request(0, 'textDocument/codeAction', params, function(err, actions, ctx)
-        if err then
-          vim.notify("Error fetching code actions: " .. err.message, vim.log.levels.ERROR)
-          return
-        end
-
-        local preferred_actions = vim.tbl_filter(function(action) return action.isPreferred end, actions)
-
-        if vim.tbl_isempty(preferred_actions) then
-          vim.notify("No code actions available", vim.log.levels.INFO)
-          return
-        end
-
-        local client = vim.lsp.get_client_by_id(ctx.client_id)
-        if not client then return end
-
-        for _, action in ipairs(preferred_actions) do
-          if action.edit then
-            vim.lsp.util.apply_workspace_edit(action.edit, client.offset_encoding)
-          elseif action.command then
-            vim.lsp.buf.execute_command(action)
-          end
-        end
-      end)
-    end
-    vim.keymap.set("n", "<leader>cc", apply_all_quickfixes, { noremap = true, silent = true })
   end
 })
 

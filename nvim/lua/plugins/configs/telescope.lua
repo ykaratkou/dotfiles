@@ -97,7 +97,7 @@ vim.keymap.set('n', '<leader>b', function()
   })
 end, { desc = 'find [b]uffers' })
 vim.keymap.set('n', '<leader>e', ":Telescope file_browser path=%:p:h select_buffer=true<CR>", { desc = 'files [e]xplorer' })
-vim.keymap.set('n', '<leader>od', vim.diagnostic.setloclist)
+vim.keymap.set('n', '<leader>fd', ":Telescope diagnostics bufnr=0<CR>", { silent = true })
 
 require('telescope').setup({
   extensions = {
