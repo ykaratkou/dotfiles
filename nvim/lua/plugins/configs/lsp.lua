@@ -130,18 +130,13 @@ for _, sign in ipairs(signs) do
 end
 
 vim.diagnostic.config({
-  underline = false, -- it breaks not used variables hightlight
-  virtual_text = {
-    prefix = '●',
-    -- This is need for solargraph/rubocop to display diagnostics properly
-    -- format = function(diagnostic)
-    --   return string.format('%s: %s', diagnostic.code, diagnostic.message)
-    -- end,
-  },
+  underline = true,
+  virtual_text = false,
   signs = true,
   update_in_insert = false,
   float = {
-    source = "always", -- Or "if_many"
+    source = "always",
+    border = "rounded",
   },
   severity_sort = false,
 })

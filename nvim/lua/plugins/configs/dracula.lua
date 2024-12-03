@@ -5,11 +5,6 @@ dracula.setup({
   overrides = {
     NeoTreeGitUnstaged = { fg = colors.cyan },
     NeoTreeGitModified = { fg = colors.cyan },
-
-    DiagnosticUnderlineError = {},
-    DiagnosticUnderlineWarn = {},
-    DiagnosticUnderlineInfo = {},
-    DiagnosticUnderlineHint = {},
   }
 })
 

@@ -143,6 +143,17 @@ local plugins = {
       require('plugins.configs.blame')
     end,
   },
+  {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",         -- required
+      "sindrets/diffview.nvim",        -- optional - Diff integration
+      "nvim-telescope/telescope.nvim", -- optional
+    },
+    config = function()
+      require('plugins.configs.neogit')
+    end,
+  },
 
   -- Ruby on Rails
   { 'slim-template/vim-slim' },
