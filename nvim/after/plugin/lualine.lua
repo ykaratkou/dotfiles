@@ -4,6 +4,7 @@ require('lualine').setup({
     disabled_filetypes = {
       'neo-tree',
       'NvimTree',
+      'copilot-chat',
     }
   },
   sections = {

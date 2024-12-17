@@ -233,11 +233,16 @@ local plugins = {
     },
   },
   {
-    "robitx/gp.nvim",
+    "CopilotC-Nvim/CopilotChat.nvim",
+    dependencies = {
+      { "zbirenbaum/copilot.lua" },
+      { "nvim-lua/plenary.nvim", branch = "master" },
+    },
+    build = "make tiktoken",
     config = function()
-      require("plugins.configs.gp")
+      require("plugins.configs.copilot_chat")
     end,
-  }
+  },
 }
 
 require("lazy").setup(plugins, require "plugins.configs.lazy")
