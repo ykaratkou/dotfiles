@@ -41,7 +41,6 @@ local plugins = {
   { 'nvim-lualine/lualine.nvim' },
   {
     'nvim-telescope/telescope.nvim',
-    tag = "0.1.8",
     config = function()
       require('plugins.configs.telescope')
     end,
