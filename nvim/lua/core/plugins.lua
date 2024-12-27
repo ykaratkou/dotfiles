@@ -154,9 +154,6 @@ local plugins = {
     end,
   },
 
-  -- Ruby on Rails
-  { 'towolf/vim-helm' },
-
   -- LSP Support
   {
     'neovim/nvim-lspconfig',

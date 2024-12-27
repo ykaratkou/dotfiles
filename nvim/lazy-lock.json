@@ -41,6 +41,5 @@
   "telescope-recent-files.nvim": { "branch": "main", "commit": "23b29aa701cd07c723282b3094e1a4dfc231f557" },
   "telescope-ui-select.nvim": { "branch": "master", "commit": "6e51d7da30bd139a6950adf2a47fda6df9fa06d2" },
   "telescope.nvim": { "branch": "master", "commit": "2eca9ba22002184ac05eddbe47a7fe2d5a384dfc" },
-  "treesj": { "branch": "main", "commit": "94f6df623f2d15630b1b617abff39962024cb501" },
-  "vim-helm": { "branch": "master", "commit": "ae1ebc160d2b9b90108477ab10df7a4fc501e358" }
+  "treesj": { "branch": "main", "commit": "94f6df623f2d15630b1b617abff39962024cb501" }
 }
