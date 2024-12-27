@@ -1,0 +1,151 @@
+#!/usr/bin/env bash
+
+PANE_PATH=$(tmux display-message -p -F "#{pane_current_path}")
+cd $PANE_PATH
+
+git_action() {
+    local git_dir="$1"
+    if [ -d "$git_dir/rebase-merge" ] || [ -d "$git_dir/rebase-apply" ]; then
+        echo "rebase"
+    elif [ -f "$git_dir/MERGE_HEAD" ]; then
+        echo "merge"
+    elif [ -f "$git_dir/CHERRY_PICK_HEAD" ]; then
+        echo "cherry-pick"
+    elif [ -f "$git_dir/BISECT_LOG" ]; then
+        echo "bisect"
+    fi
+}
+
+git_changes() {
+  # Define color codes
+  green='#[fg=#50fa7b]'
+  yellow='#[fg=#f1fa8c]'
+  orange='#[fg=#ffb86c]'
+  white='#[fg=#f8f8f2]'
+  cyan='#[fg=#8be9fd]'
+  red='#[fg=#ff5555]'
+  blue='#[fg=#8be9fd]'
+  magenta='#[fg=#ff79c6]'
+
+  local result=()
+
+  git_dir=$(git rev-parse --git-dir 2>/dev/null)
+  # Get the current action and commit hash if an action is in progress
+  action=$(git_action "$git_dir")
+  commit=''
+  if [ -n "$action" ]; then
+    commit=$(git rev-parse HEAD 2>/dev/null | cut -c1-7)
+  fi
+
+  # Get the branch name or descriptor
+  branch_detached=0
+  if ! branch=$(git symbolic-ref --short HEAD 2>/dev/null); then
+    branch_detached=1
+    branch=$(git describe --contains --all HEAD 2>/dev/null)
+  fi
+
+  # Get the commit difference counts between local and remote
+  if output=$(git rev-list --count --left-right 'HEAD...@{upstream}' 2>/dev/null); then
+    IFS=$'\t' read -r status_ahead status_behind <<< "$output"
+  else
+    status_ahead=0
+    status_behind=0
+  fi
+
+  porcelain_status=$(git status --porcelain | cut -c1-2)
+
+  # Initialize status variables
+  status_added=0
+  if echo "$porcelain_status" | grep -Eq '[ACDMT][ MT]|[ACMT]D'; then
+      status_added=1
+  fi
+
+  status_deleted=0
+  if echo "$porcelain_status" | grep -Eq '[ ACMRT]D'; then
+      status_deleted=1
+  fi
+
+  status_modified=0
+  if echo "$porcelain_status" | grep -Eq '[MT]$'; then
+      status_modified=1
+  fi
+
+  status_renamed=0
+  if echo "$porcelain_status" | grep -q 'R'; then
+      status_renamed=1
+  fi
+
+  status_unmerged=0
+  if echo "$porcelain_status" | grep -Eq 'AA|DD|U'; then
+      status_unmerged=1
+  fi
+
+  status_untracked=0
+  if echo "$porcelain_status" | grep -q '??'; then
+      status_untracked=1
+  fi
+
+  # Display branch name with appropriate color
+  if [ -n "$branch" ]; then
+      if [ $branch_detached -ne 0 ]; then
+        result+=("${magenta}")
+      else
+        result+=("${white}")
+      fi
+      result+=("⎇ $branch")
+  fi
+
+  # Display commit hash if available
+  if [ -n "$commit" ]; then
+    result+=("${yellow}$commit")
+  fi
+
+  # Display current action if any
+  if [ -n "$action" ]; then
+    result+=("${red}[$action]")
+  fi
+
+  # Output status indicators
+  if [ $status_ahead -ne 0 ]; then
+    result+=("${magenta}↑·${status_ahead}")
+  fi
+  if [ $status_behind -ne 0 ]; then
+    result+=("${magenta}↓·${status_behind}")
+  fi
+  if [ $status_added -ne 0 ]; then
+    result+=("${green}")
+  fi
+  if [ $status_deleted -ne 0 ]; then
+    result+=("${red}✖")
+  fi
+  if [ $status_modified -ne 0 ]; then
+    result+=("${blue}~")
+  fi
+  if [ $status_renamed -ne 0 ]; then
+    result+=("${magenta}")
+  fi
+  if [ $status_unmerged -ne 0 ]; then
+    result+=("${yellow}…")
+  fi
+  if [ $status_untracked -ne 0 ]; then
+    result+=("${orange}󰄱 ")
+  fi
+
+  local joined=$(printf " %s" "${result[@]}")
+  local joined=${joined:1}
+
+  if [[ -n $joined ]]; then
+    echo "$joined "
+  fi
+}
+
+git_status() {
+  local status=$(git rev-parse --abbrev-ref HEAD)
+  local changes=$(git_changes)
+
+  if [[ -n $status ]]; then
+    printf " #[fg=#f8f8f2,bold]$changes"
+  fi
+}
+
+git_status
