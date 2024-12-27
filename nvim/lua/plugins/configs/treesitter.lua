@@ -1,3 +1,14 @@
+local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+parser_config.slim = {
+  install_info = {
+    url = "https://github.com/kolen/tree-sitter-slim",
+    files = {"src/parser.c", "src/scanner.c"},
+    revision = "7a5135779d784b38d9bb1975e6eaa19dffcdec2d",
+  },
+  filetype = "slim",
+  used_by = {"slim"},
+}
+
 require('nvim-treesitter.configs').setup({
   ensure_installed = {
     'ruby',
