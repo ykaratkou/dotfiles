@@ -16,6 +16,9 @@ y = 3
 startup_mode = "Maximized"
 option_as_alt = "BOTH"
 
+#
+# xxd -psd
+#
 [[keyboard.bindings]]
 chars = "\u00021"
 key = "Key1"
@@ -76,6 +79,9 @@ chars = "\u0002z"
 key = "Return"
 mods = "Command"
 
+#
+# Better movements
+#
 [[keyboard.bindings]]
 chars = "\u0002l"
 key = "L"
@@ -94,6 +100,37 @@ mods = "Command"
 [[keyboard.bindings]]
 chars = "\u0002k"
 key = "K"
+mods = "Command"
+
+#
+# Resize panes
+#
+[[keyboard.bindings]]
+chars = "\u0002\u0008"
+key = "H"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
+chars = "\u0002\u000a"
+key = "J"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
+chars = "\u0002\u000b"
+key = "K"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
+chars = "\u0002\u000c"
+key = "L"
+mods = "Command|Shift"
+
+#
+# Create new pane
+#
+[[keyboard.bindings]]
+chars = "\u0002c"
+key = "T"
 mods = "Command"
 
 [[keyboard.bindings]]
