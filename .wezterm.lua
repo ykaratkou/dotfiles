@@ -5,14 +5,17 @@ local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
 -- This is where you actually apply your config choices
-config.font = wezterm.font('CodeNewRoman Nerd Font Propo')
+-- config.font = wezterm.font('CodeNewRoman Nerd Font Propo')
+-- config.font = wezterm.font("Monaco")
 config.font_size = 14
 config.freetype_load_target = "Normal"
 config.line_height = 1.05
+config.status_update_interval = 10000
 
 config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
 config.tab_max_width = 100
+config.enable_scroll_bar = true
 
 -- For example, changing the color scheme:
 config.color_scheme = 'Dracula (Official)'
@@ -183,16 +186,31 @@ local function execute(command)
   return result
 end
 
-local function git_branch(file_path)
-  return execute("git -C " .. file_path .. " branch --show-current 2>/dev/null")
+local function git_branch(pane)
+  local file_path = pane:get_current_working_dir()
+
+  -- local success, stdout, stderr = wezterm.run_child_process { "git", "-C", file_path, "branch", "--show-current", "2" }
+  local success, result, _ = wezterm.run_child_process { "sh", "-c", "echo 'hello'" }
+  -- wezterm.sleep_ms(1000)
+  -- return execute("git -C " .. file_path .. " branch --show-current 2>/dev/null")
+  -- return "abc"
+  --
+  -- return type(stdout)
+
+  if not success then
+    wezterm.log_error("Error running subprocess: " .. result)
+  else
+    wezterm.log_info("Subprocess output: " .. result)
+  end
+
+  return result
 end
 
-local function segments_for_right_status(window, branch)
+local function segments_for_right_status(window, pane)
   local segments = {}
 
-  if branch and branch ~= "" then
-    table.insert(segments, branch)
-  end
+  local success, result, _ = wezterm.run_child_process { "sh", "-c", "echo 'hello'" }
+  table.insert(segments, result)
 
   table.insert(segments, wezterm.strftime('%a %b %-d %H:%M'))
   table.insert(segments, window:active_workspace())
@@ -200,62 +218,69 @@ local function segments_for_right_status(window, branch)
   return segments
 end
 
-wezterm.on('update-status', function(window, pane)
-  local SOLID_LEFT_ARROW = utf8.char(0xe0b2)
-  local cwd_uri = pane:get_current_working_dir()
-  local branch
+-- wezterm.on('update-status', function(window, pane)
+--   local segments = segments_for_right_status(window, pane)
+--
+--   local color_scheme = window:effective_config().resolved_palette
+--   -- Note the use of wezterm.color.parse here, this returns
+--   -- a Color object, which comes with functionality for lightening
+--   -- or darkening the colour (amongst other things).
+--   local bg = wezterm.color.parse(color_scheme.background)
+--   local fg = color_scheme.foreground
+--
+--   -- Each powerline segment is going to be coloured progressively
+--   -- darker/lighter depending on whether we're on a dark/light colour
+--   -- scheme. Let's establish the "from" and "to" bounds of our gradient.
+--   local gradient_to, gradient_from = bg
+--   if is_dark() then
+--     gradient_from = gradient_to:lighten(0.2)
+--   else
+--     gradient_from = gradient_to:darken(0.2)
+--   end
+--
+--   -- Yes, WezTerm supports creating gradients, because why not?! Although
+--   -- they'd usually be used for setting high fidelity gradients on your terminal's
+--   -- background, we'll use them here to give us a sample of the powerline segment
+--   -- colours we need.
+--   local gradient = wezterm.color.gradient(
+--     {
+--       orientation = 'Horizontal',
+--       colors = { gradient_from, gradient_to },
+--     },
+--     #segments -- only gives us as many colours as we have segments.
+--   )
+--
+--   -- We'll build up the elements to send to wezterm.format in this table.
+--   local elements = {}
+--
+--   for i, seg in ipairs(segments) do
+--     local is_first = i == 1
+--
+--     if is_first then
+--       table.insert(elements, { Background = { Color = 'none' } })
+--     end
+--     table.insert(elements, { Foreground = { Color = gradient[i] } })
+--     table.insert(elements, { Foreground = { Color = fg } })
+--     table.insert(elements, { Background = { Color = gradient[i] } })
+--     table.insert(elements, { Text = ' ' .. seg .. ' ' })
+--   end
+--   window:set_right_status(wezterm.format(elements))
+-- end)
 
-  if cwd_uri then
-    branch = git_branch(cwd_uri.file_path)
-  end
 
-  local segments = segments_for_right_status(window, branch)
+local function right_status_test()
+  local date = wezterm.strftime("%a %b %-d %_I:%M:%S");
+  local _, result, _ = wezterm.run_child_process { "echo", "hello" }
 
-  local color_scheme = window:effective_config().resolved_palette
-  -- Note the use of wezterm.color.parse here, this returns
-  -- a Color object, which comes with functionality for lightening
-  -- or darkening the colour (amongst other things).
-  local bg = wezterm.color.parse(color_scheme.background)
-  local fg = color_scheme.foreground
+  return result .. " | " .. date
+end
 
-  -- Each powerline segment is going to be coloured progressively
-  -- darker/lighter depending on whether we're on a dark/light colour
-  -- scheme. Let's establish the "from" and "to" bounds of our gradient.
-  local gradient_to, gradient_from = bg
-  if is_dark() then
-    gradient_from = gradient_to:lighten(0.2)
-  else
-    gradient_from = gradient_to:darken(0.2)
-  end
-
-  -- Yes, WezTerm supports creating gradients, because why not?! Although
-  -- they'd usually be used for setting high fidelity gradients on your terminal's
-  -- background, we'll use them here to give us a sample of the powerline segment
-  -- colours we need.
-  local gradient = wezterm.color.gradient(
-    {
-      orientation = 'Horizontal',
-      colors = { gradient_from, gradient_to },
-    },
-    #segments -- only gives us as many colours as we have segments.
-  )
-
-  -- We'll build up the elements to send to wezterm.format in this table.
-  local elements = {}
-
-  for i, seg in ipairs(segments) do
-    local is_first = i == 1
-
-    if is_first then
-      table.insert(elements, { Background = { Color = 'none' } })
-    end
-    table.insert(elements, { Foreground = { Color = gradient[i] } })
-    table.insert(elements, { Foreground = { Color = fg } })
-    table.insert(elements, { Background = { Color = gradient[i] } })
-    table.insert(elements, { Text = ' ' .. seg .. ' ' })
-  end
-
-  window:set_right_status(wezterm.format(elements))
+wezterm.on("update-status", function(window)
+  window:set_right_status(wezterm.format({
+    -- {Text= result .. " | " .. date},
+    -- {Text= date .. " | " .. result},
+    {Text= right_status_test()},
+  }));
 end)
 
 -- and finally, return the configuration to wezterm
