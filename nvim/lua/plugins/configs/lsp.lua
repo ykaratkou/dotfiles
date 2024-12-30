@@ -122,7 +122,7 @@ lspconfig.ts_ls.setup({
 })
 
 lspconfig.tailwindcss.setup({
-  filetypes = { 'ruby', 'slim' },
+  filetypes = { 'ruby', 'eruby', 'slim' },
   settings = {
     tailwindCSS = {
       includeLanguages = {
@@ -153,7 +153,7 @@ lspconfig.lua_ls.setup({
 })
 
 lspconfig.ruby_lsp.setup({
-  filetypes = { 'slim' },
+  filetypes = { 'ruby', 'eruby', 'slim' },
   cmd = { 'ruby-lsp' },
 })
 
