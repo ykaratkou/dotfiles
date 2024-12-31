@@ -15,15 +15,8 @@ local plugins = {
   --
   -- UI
   --
-  {
-    'Mofiqul/dracula.nvim',
-    lazy = false, -- make sure we load this during startup if it is your main colorscheme
-    priority = 1000, -- make sure to load this before all the other start plugins
-    config = function()
-      require('plugins.configs.dracula')
-    end,
-  },
-  { 'nvim-lualine/lualine.nvim' },
+  require 'plugins.configs.dracula',
+  require 'plugins.configs.lualine',
 }
 
-require("lazy").setup(plugins, require "plugins.configs.lazy")
+require("lazy").setup(plugins, {})

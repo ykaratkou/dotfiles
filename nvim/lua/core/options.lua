@@ -40,6 +40,9 @@ vim.opt.colorcolumn = "120"
 
 vim.wo.wrap = false
 
+--
+-- Spell
+--
 vim.opt.spelllang = 'en'
 local spell_group = vim.api.nvim_create_augroup('spell', {clear = false})
 vim.api.nvim_create_autocmd({'BufEnter'}, {
@@ -49,8 +52,10 @@ vim.api.nvim_create_autocmd({'BufEnter'}, {
   desc = 'Set spell for text files'
 })
 
+--
+-- Trim trailing whitespaces
+--
 vim.api.nvim_create_autocmd('BufWritePre', {
-  -- Trim trailing whitespaces
   callback = function()
     -- Save cursor position to restore later
     local curpos = vim.api.nvim_win_get_cursor(0)
@@ -60,7 +65,9 @@ vim.api.nvim_create_autocmd('BufWritePre', {
   end,
 })
 
+--
 -- Jump to last edit position on opening file
+--
 vim.api.nvim_create_autocmd("FileType", {
   callback = function()
     local filetype = vim.bo.filetype
@@ -75,4 +82,16 @@ vim.api.nvim_create_autocmd("FileType", {
       vim.cmd('normal! zz')
     end
   end,
+})
+
+--
+-- Current server
+--
+vim.api.nvim_create_autocmd({"FocusGained", "VimEnter"}, {
+  callback = function()
+    local servername = vim.api.nvim_get_vvar("servername")
+    local symlink_path = "/tmp/current-neovim-server"
+
+    os.execute(string.format("ln -sf %s %s", servername, symlink_path))
+  end
 })
