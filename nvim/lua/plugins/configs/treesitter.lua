@@ -5,7 +5,10 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       { 'RRethy/nvim-treesitter-endwise' },
-      { 'windwp/nvim-ts-autotag' },
+      {
+        'windwp/nvim-ts-autotag',
+        config = true,
+      },
       { 'JoosepAlviste/nvim-ts-context-commentstring' },
       { 'nvim-treesitter/nvim-treesitter-textobjects' },
       {
@@ -65,8 +68,7 @@ return {
             end
           end,
 
-          -- additional_vim_regex_highlighting = false,
-          additional_vim_regex_highlighting = { "ruby" },
+          additional_vim_regex_highlighting = false,
         },
 
         indent = {
@@ -103,18 +105,6 @@ return {
               ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
             },
           },
-        },
-      })
-
-
-      require('nvim-ts-autotag').setup({
-        filetypes = {
-          'html',
-          'xml',
-          'eruby',
-          'embedded_template',
-          'javascript',
-          'javascriptreact',
         },
       })
     end,
