@@ -40,6 +40,8 @@ vim.opt.colorcolumn = "120"
 
 vim.wo.wrap = false
 
+vim.opt.shortmess:append("I")
+
 --
 -- Spell
 --
@@ -94,4 +96,14 @@ vim.api.nvim_create_autocmd({"FocusGained", "VimEnter"}, {
 
     os.execute(string.format("ln -sf %s %s", servername, symlink_path))
   end
+})
+
+--
+-- Quick close quickfix window
+--
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = { 'qf' },
+    callback = function()
+        vim.keymap.set('n', 'q', '<cmd>bd<cr>', { silent = true, buffer = true })
+    end,
 })
