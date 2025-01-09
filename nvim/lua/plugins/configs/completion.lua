@@ -1,6 +1,7 @@
 return {
   {
-    'hrsh7th/nvim-cmp',
+    "iguanacucumber/magazine.nvim",
+    name = "nvim-cmp", -- Otherwise highlighting gets messed up
     event = "InsertEnter",
     config = function()
       local cmp = require('cmp')
@@ -30,7 +31,7 @@ return {
       })
 
       local editor_sources = {
-        { name = 'nvim_lsp', keyword_length = 1, max_item_count = 10 },
+        { name = 'nvim_lsp', keyword_length = 1 },
         { name = 'nvim_lua' },
         { name = 'luasnip', keyword_length = 1 },
         { name = 'path' },
@@ -89,6 +90,9 @@ return {
               copilot = ' ',
               nvim_lua = '󰢱 ',
             }
+
+            -- truncate menu entries
+            item.abbr = string.sub(item.abbr, 1, 40)
 
             item.menu = menu_icon[entry.source.name]
             return item

@@ -19,6 +19,9 @@ vim.opt.incsearch = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
+-- Maximum number of items to show in the popup menu
+vim.opt.pumheight = 10
+
 -- System clipboard
 vim.opt.clipboard = 'unnamedplus'
 
