@@ -48,9 +48,10 @@ return {
           vim.keymap.set("n", "<leader>vv", function()
             vim.lsp.buf.format { async = true }
           end, opts)
-          vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+          vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
           vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
           vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+          vim.keymap.set('n', '<leader>t', vim.diagnostic.open_float)
           vim.keymap.set({ 'n', 'v' }, '<space>co', vim.lsp.buf.code_action, opts)
         end
       })
@@ -82,12 +83,12 @@ return {
       local get_servers = mason_lspconfig.get_installed_servers
 
       vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-      vim.lsp.handlers.hover,
-      { border = 'rounded' }
+        vim.lsp.handlers.hover,
+        { border = 'rounded' }
       )
       vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-      vim.lsp.handlers.signature_help,
-      { border = 'rounded' }
+        vim.lsp.handlers.signature_help,
+        { border = 'rounded' }
       )
 
       for _, server_name in ipairs(get_servers()) do

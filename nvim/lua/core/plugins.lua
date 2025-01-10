@@ -32,10 +32,7 @@ local plugins = {
   require 'plugins.configs.autopairs',
   require 'plugins.configs.surround',
   require 'plugins.configs.comment',
-  {
-    'brenoprata10/nvim-highlight-colors',
-    config = true,
-  },
+  require 'plugins.configs.colorizer',
   {
     "iamcco/markdown-preview.nvim",
     build = "cd app && yarn install",
