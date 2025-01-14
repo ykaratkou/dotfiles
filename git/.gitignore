@@ -29,3 +29,4 @@ tags
 fish/conf.d/custom.fish
 
 Brewfile.lock.json
+.aider*

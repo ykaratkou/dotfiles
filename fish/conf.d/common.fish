@@ -1,7 +1,7 @@
 if test (uname) = "Linux"
-  alias cat='batcat'
+  alias bat='batcat'
 else
-  alias cat='bat'
+  alias bat='bat'
 end
 
 alias vim='nvim'
