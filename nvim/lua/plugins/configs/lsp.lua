@@ -57,6 +57,13 @@ return {
         end
       })
 
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(args)
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          client.server_capabilities.semanticTokensProvider = nil
+        end,
+      })
+
       --
       -- Diagnostics UI
       --
@@ -158,16 +165,18 @@ return {
             }
           }
         },
-        sourcekit = {
-          capabilities = {
-            workspace = {
-              didChangeWatchedFiles = {
-                dynamicRegistration = true,
-              },
+      }
+
+      local lspconfig = require('lspconfig')
+      lspconfig.sourcekit.setup({
+        capabilities = {
+          workspace = {
+            didChangeWatchedFiles = {
+              dynamicRegistration = true,
             },
           },
-        },
-      }
+        }
+      })
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
@@ -180,14 +189,15 @@ return {
           'tailwindcss',
           'terraformls',
           'tflint',
-          'yamlls'
+          'yamlls',
+          'ruby_lsp',
         },
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
 
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
+            lspconfig[server_name].setup(server)
           end,
         },
       })

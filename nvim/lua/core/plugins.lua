@@ -38,6 +38,7 @@ local plugins = {
     "iamcco/markdown-preview.nvim",
     build = "cd app && yarn install",
   },
+  require 'plugins.configs.xcodebuild',
 
   --
   -- Git
