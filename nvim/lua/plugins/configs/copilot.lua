@@ -9,7 +9,7 @@ return {
           enabled = true,
           auto_trigger = true,
           hide_during_completion = true,
-          debounce = 500,
+          debounce = 150,
           keymap = {
             accept = false,
             accept_word = "<C-l>",

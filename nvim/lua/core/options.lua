@@ -19,7 +19,7 @@ vim.opt.incsearch = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
-vim.opt.scrolloff = 5
+vim.opt.scrolloff = 10
 
 -- Maximum number of items to show in the popup menu
 vim.opt.pumheight = 10
