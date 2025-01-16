@@ -51,9 +51,9 @@ return {
           map('n', '<leader>rn', vim.lsp.buf.rename, opts)
           map('n', '[d', vim.diagnostic.goto_prev)
           map('n', ']d', vim.diagnostic.goto_next)
-          map('n', '<leader>tt', vim.diagnostic.setqflist)
+          map('n', '<leader>to', vim.diagnostic.setqflist)
           map('n', '<leader>tl', vim.diagnostic.open_float)
-          map({ 'n', 'v' }, '<space>co', vim.lsp.buf.code_action, opts)
+          map({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
         end
       })
 

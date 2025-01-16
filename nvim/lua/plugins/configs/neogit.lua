@@ -22,7 +22,7 @@ return {
         },
       })
 
-      vim.keymap.set('n', '<leader>gg', ':Neogit<CR>', { silent=true })
+      vim.keymap.set('n', '<leader>go', ':Neogit<CR>', { silent=true })
     end,
   },
 }

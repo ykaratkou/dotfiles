@@ -16,7 +16,7 @@ return {
         highlight_selection = false,
       })
 
-      vim.keymap.set('n', '<leader>go', ':CopilotChatToggle<CR>', { silent = true })
+      vim.keymap.set('n', '<leader>co', ':CopilotChatToggle<CR>', { silent = true })
     end,
   },
 }

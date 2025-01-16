@@ -52,7 +52,6 @@ local plugins = {
     config = true,
   },
 
-
   --
   -- LSP Support
   --
