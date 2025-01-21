@@ -28,7 +28,7 @@ return {
                 end
                 return "󰘧 " .. table.concat(c, ' | ')
               end,
-              color = { fg = '#8be9fd' },
+              color = { fg = '#9ccfd8' },
             },
             'encoding',
             'fileformat',

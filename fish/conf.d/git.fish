@@ -58,7 +58,7 @@ function current_branch
 end
 
 function main_branch
-  git branch -r | grep -E -i '^\s.origin\/(master|main)' | cut -d/ -f2
+  git branch -r | grep -E -i '^\s.origin\/(master|main)$' | cut -d/ -f2
 end
 
 alias ggpull='git pull origin (current_branch)'

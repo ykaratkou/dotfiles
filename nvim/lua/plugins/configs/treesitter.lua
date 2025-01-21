@@ -52,6 +52,7 @@ return {
 
         ignore_install = {
           'dockerfile',
+          'ini',
         },
 
         auto_install = true,

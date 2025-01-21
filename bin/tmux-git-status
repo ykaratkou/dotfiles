@@ -17,15 +17,29 @@ git_action() {
 }
 
 git_changes() {
-  # Define color codes
-  green='#[fg=#50fa7b]'
-  yellow='#[fg=#f1fa8c]'
-  orange='#[fg=#ffb86c]'
-  white='#[fg=#f8f8f2]'
-  cyan='#[fg=#8be9fd]'
-  red='#[fg=#ff5555]'
-  blue='#[fg=#8be9fd]'
-  magenta='#[fg=#ff79c6]'
+  local theme="$(tmux show-option -gqv "@rose_pine_variant")"
+
+  if [[ $theme == "moon" ]]; then
+    black="#[fg=#393552]"
+    red="#[fg=#eb6f92]"
+    green="#[fg=#3e8fb0]"
+    yellow="#[fg=#f6c177]"
+    orange="#[fg=#f6c177]"
+    blue="#[fg=#9ccfd8]"
+    magenta="#[fg=#c4a7e7]"
+    cyan="#[fg=#ea9a97]"
+    white="#[fg=#e0def4]"
+  elif [[ $theme == "dawn" ]]; then
+    black="#[fg=#f2e9e1]"
+    red="#[fg=#b4637a]"
+    green="#[fg=#286983]"
+    yellow="#[fg=#ea9d34]"
+    orange="#[fg=#ea9d34]"
+    blue="#[fg=#56949f]"
+    magenta="#[fg=#907aa9]"
+    cyan="#[fg=#d7827e]"
+    white="#[fg=#575279]"
+  fi
 
   local result=()
 

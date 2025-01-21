@@ -15,7 +15,7 @@ local plugins = {
   --
   -- UI
   --
-  require 'plugins.configs.dracula',
+  require 'plugins.configs.themes',
   require 'plugins.configs.lualine',
   require 'plugins.configs.fidget',
 
