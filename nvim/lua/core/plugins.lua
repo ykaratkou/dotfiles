@@ -62,7 +62,7 @@ local plugins = {
   --
   require 'plugins.configs.completion',
   require 'plugins.configs.copilot',
-  require 'plugins.configs.copilot_chat',
+  require 'plugins.configs.codecompanion',
 
 }
 

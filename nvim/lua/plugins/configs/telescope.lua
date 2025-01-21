@@ -50,13 +50,14 @@ return {
             local result = job:result()
 
             vim.keymap.set('n', '<leader>fL', function()
-              egrepify(
+              builtin.live_grep(
                 themes.get_ivy({
                   search_dirs = result,
                   debounce = 200,
                   layout_config = {
                     height = 30,
                   },
+                  path_display = { "smart" },
                 })
               )
             end, { silent = true })
@@ -65,6 +66,7 @@ return {
               builtin.find_files({
                 search_dirs = result,
                 debounce = 200,
+                path_display = { "smart" },
               })
             end, { silent = true })
           end
