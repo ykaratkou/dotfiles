@@ -15,9 +15,23 @@ return {
               transparency = false,
             },
           })
-        end
+        end,
       },
     },
+    init = function()
+      local function is_dark_mode()
+        local handle = io.popen("defaults read -g AppleInterfaceStyle 2>/dev/null")
+        local result = handle:read("*a")
+        handle:close()
+        return result:match("Dark") ~= nil
+      end
+
+      if is_dark_mode() then
+        vim.cmd("colorscheme rose-pine-moon")
+      else
+        vim.cmd("colorscheme rose-pine-dawn")
+      end
+    end,
     config = function()
       local auto_dark_mode = require('auto-dark-mode')
       auto_dark_mode.setup({
