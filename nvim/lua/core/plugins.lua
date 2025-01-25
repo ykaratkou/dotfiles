@@ -39,6 +39,7 @@ local plugins = {
     build = "cd app && yarn install",
   },
   require 'plugins.configs.xcodebuild',
+  require 'plugins.configs.dap',
 
   --
   -- Git
