@@ -1,18 +1,75 @@
+-- MasonInstall codelldb
+
 return {
   {
     "mfussenegger/nvim-dap",
     config = function()
-      local xcodebuild = require("xcodebuild.integrations.dap")
-      local codelldbPath = os.getenv("HOME") .. ".bin/codelldb"
+      local mason_registry = require('mason-registry')
 
-      xcodebuild.setup(codelldbPath)
+      local codelldb = mason_registry.get_package("codelldb") -- note that this will error if you provide a non-existent package name
 
-      vim.keymap.set("n", "<leader>b", xcodebuild.toggle_breakpoint, { desc = "Toggle Breakpoint" })
-    end
+      local extension_path = codelldb:get_install_path() .. "/extension/"
+      -- local codelldb_path = extension_path .. "adapter/codelldb"
+      -- local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
+
+      -- IT WORKS but codelldb not
+      local codelldb_path = "/Applications/Xcode.app/Contents/Developer/usr/bin/lldb-dap"
+
+      local dap = require("dap")
+
+      dap.adapters.codelldb = {
+        type = 'server',
+        port = "${port}",
+        executable = {
+          command = codelldb_path,
+          args = { "--port", "${port}" },
+        },
+      }
+
+      -- dap.adapters.codelldb = {
+      --   type = "executable",
+      --   command = codelldb_path,
+      --
+      --   -- On windows you may have to uncomment this:
+      --   -- detached = false,
+      -- }
+      dap.configurations.cpp = {
+        {
+          name = "Launch file",
+          type = "codelldb",
+          request = "launch",
+          program = function()
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+          end,
+          cwd = '${workspaceFolder}',
+          stopOnEntry = false,
+        },
+      }
+
+      dap.configurations.c = dap.configurations.cpp
+      dap.configurations.swift = dap.configurations.cpp
+
+      -- local xcodebuild = require("xcodebuild.integrations.dap")
+      -- xcodebuild.setup(codelldb_path)
+
+      -- local xcodebuild = require("xcodebuild.integrations.dap")
+      -- local codelldbPath = os.getenv("HOME") .. ".bin/codelldb"
+      --
+      -- xcodebuild.setup(codelldbPath)
+      --
+      -- vim.keymap.set("n", "<leader>b", xcodebuild.toggle_breakpoint, { desc = "Toggle Breakpoint" })
+
+      vim.keymap.set('n', '<leader>dc', dap.continue)
+      vim.keymap.set('n', '<leader>dt', dap.toggle_breakpoint)
+    end,
+    dependencies = {
+      "rcarriga/nvim-dap-ui",
+      "nvim-neotest/nvim-nio",
+    },
   },
   {
     "rcarriga/nvim-dap-ui",
-    dependencies = { "mfussenegger/nvim-dap", },
+    dependencies = { "nvim-neotest/nvim-nio", },
     lazy = true,
     config = function()
       require("dapui").setup({
@@ -50,14 +107,16 @@ return {
       })
 
       local dap, dapui = require("dap"), require("dapui")
-
-      dap.listeners.after.event_initialized["dapui_config"] = function()
+      dap.listeners.before.attach.dapui_config = function()
         dapui.open()
       end
-      dap.listeners.before.event_terminated["dapui_config"] = function()
+      dap.listeners.before.launch.dapui_config = function()
+        dapui.open()
+      end
+      dap.listeners.before.event_terminated.dapui_config = function()
         dapui.close()
       end
-      dap.listeners.before.event_exited["dapui_config"] = function()
+      dap.listeners.before.event_exited.dapui_config = function()
         dapui.close()
       end
     end,
