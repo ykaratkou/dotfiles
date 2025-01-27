@@ -1,3 +1,12 @@
+# initiate the theme if macos_theme was not set
+if not set -q macos_theme
+  if defaults read -g AppleInterfaceStyle &>/dev/null
+    set --universal macos_theme dark
+  else
+    set --universal macos_theme light
+  end
+end
+
 function update_theme --on-variable macos_theme
     if [ "$macos_theme" = "dark" ]
       set -Ux FZF_DEFAULT_OPTS "
