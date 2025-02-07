@@ -11,6 +11,27 @@ return {
     config = function()
       local components = require('neo-tree.sources.common.components')
 
+      local neo_tree_win = {
+        id = -1,
+        width = -1,
+      }
+
+      local event_handlers = {
+        {
+          event = "neo_tree_window_after_open",
+          handler = function(args)
+            neo_tree_win.id = args.winid
+            neo_tree_win.width = vim.api.nvim_win_get_width(args.winid)
+          end,
+        },
+        {
+          event = "neo_tree_window_after_close",
+          handler = function()
+            neo_tree_win.id = -1
+          end,
+        },
+      }
+
       require("neo-tree").setup({
         -- hide_root_node = true,
         close_if_last_window = false,
@@ -35,10 +56,10 @@ return {
               return name
             end,
           },
-          -- follow_current_file = {
-          --   enabled = false,
-          --   leave_dirs_open = true,
-          -- },
+          follow_current_file = {
+            enabled = true,
+            leave_dirs_open = true,
+          },
         },
         default_component_configs = {
           icon = {
@@ -71,6 +92,7 @@ return {
             ["<C-k>"] = "move_cursor_up",
           },
         },
+        event_handlers = event_handlers,
       })
 
       vim.keymap.set('n', '<leader>re', ':Neotree reveal<cr>', { silent = true })
@@ -82,6 +104,15 @@ return {
         pattern = '*',
         callback = function()
           require("neo-tree.sources.git_status").refresh()
+        end,
+      })
+
+      autocmd("VimResized", {
+        pattern = '*',
+        callback = function()
+          if vim.api.nvim_win_is_valid(neo_tree_win.id) then
+            vim.schedule(function() vim.api.nvim_win_set_width(neo_tree_win.id, neo_tree_win.width) end)
+          end
         end,
       })
     end

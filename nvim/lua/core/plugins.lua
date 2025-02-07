@@ -18,6 +18,7 @@ local plugins = {
   require 'plugins.configs.themes',
   require 'plugins.configs.lualine',
   require 'plugins.configs.fidget',
+  require 'plugins.configs.bufresize',
 
   require 'plugins.configs.neotree',
   require 'plugins.configs.telescope',
