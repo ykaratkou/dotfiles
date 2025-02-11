@@ -5,4 +5,5 @@ else
 end
 
 alias vim='nvim'
-alias mc="mc --nosubshell"
+alias mc="mc --nosubshell -S nicedark"
+alias y="yazi"

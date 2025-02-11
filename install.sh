@@ -33,9 +33,8 @@ ln -s $HOME/.dotfiles/lazygit/config.yml $HOME/.config/lazygit/
 
 echo "Configure Bin"
 mkdir -p $HOME/.bin
-ln -s $HOME/.dotfiles/bin/tmux-windowizer $HOME/.bin/
-ln -s $HOME/.dotfiles/bin/tmux-session-menu $HOME/.bin/
+ln -s $HOME/.dotfiles/bin/tmux-sessionizer $HOME/.bin/
 ln -s $HOME/.dotfiles/bin/op-aws-helper $HOME/.bin/
 
-echo "Installing rtx"
-curl https://rtx.pub/install.sh | sh
+echo "Installing mise"
+curl https://mise.run | sh
