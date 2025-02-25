@@ -7,6 +7,9 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "features": {
+    "edit_prediction_provider": "zed"
+  },
   "language_models": {
     "openai": {
       "version": "1",
@@ -23,8 +26,8 @@
   },
   "theme": {
     "mode": "system",
-    "light": "Rosé Pine Dawn",
-    "dark": "Rosé Pine Moon",
+    "light": "Zed Legacy: Rosé Pine Dawn",
+    "dark": "Zed Legacy: Rosé Pine Moon",
   },
   "project_panel": {
     "scrollbar": {
