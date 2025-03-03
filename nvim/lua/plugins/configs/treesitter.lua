@@ -27,9 +27,9 @@ return {
       local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
       parser_config.slim = {
         install_info = {
-          url = "https://github.com/kolen/tree-sitter-slim",
+          url = "https://github.com/evkorotkov/tree-sitter-slim",
           files = {"src/parser.c", "src/scanner.c"},
-          revision = "7a5135779d784b38d9bb1975e6eaa19dffcdec2d",
+          revision = "af4888a8c383789e27d3fd96c2dea0d3c6685145",
         },
         filetype = "slim",
         used_by = {"slim"},
