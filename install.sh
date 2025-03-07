@@ -38,3 +38,5 @@ ln -s $HOME/.dotfiles/bin/op-aws-helper $HOME/.bin/
 
 echo "Installing mise"
 curl https://mise.run | sh
+echo 'eval "$(~/.local/bin/mise activate bash)"' >> ~/.bashrc
+echo 'eval "$(~/.local/bin/mise activate zsh)"' >> ~/.zshrc

@@ -1,6 +1,6 @@
 vim.api.nvim_create_user_command('SwitchCase',
   function()
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
     local word = vim.fn.expand('<cword>')
     local word_start = vim.fn.matchstrpos(vim.fn.getline('.'), '\\k*\\%' .. (col+1) .. 'c\\k*')[2]
 

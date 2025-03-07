@@ -46,7 +46,7 @@ vim.filetype.add({
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "slim",
   callback = function()
-    vim.diagnostic.disable(0)
+    vim.diagnostic.enable(false)
   end,
 })
 

@@ -39,7 +39,6 @@ local plugins = {
     "iamcco/markdown-preview.nvim",
     build = "cd app && yarn install",
   },
-  require 'plugins.configs.xcodebuild',
 
   --
   -- Git
@@ -63,8 +62,6 @@ local plugins = {
   --
   require 'plugins.configs.completion',
   require 'plugins.configs.copilot',
-  require 'plugins.configs.codecompanion',
-
 }
 
 require("lazy").setup(plugins, {})

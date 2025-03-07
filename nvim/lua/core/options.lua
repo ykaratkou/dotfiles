@@ -107,8 +107,8 @@ vim.api.nvim_create_autocmd({"FocusGained", "VimEnter"}, {
 -- Quick close quickfix window
 --
 vim.api.nvim_create_autocmd('FileType', {
-    pattern = { 'qf' },
-    callback = function()
-        vim.keymap.set('n', 'q', '<cmd>bd<cr>', { silent = true, buffer = true })
-    end,
+  pattern = { 'qf' },
+  callback = function()
+    vim.keymap.set('n', 'q', '<cmd>bd<cr>', { silent = true, buffer = true })
+  end,
 })

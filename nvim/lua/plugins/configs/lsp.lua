@@ -13,47 +13,53 @@ return {
           local opts = { buffer = event.buf }
           local map = vim.keymap.set
 
-          local function go_to_unique_definition()
-            vim.lsp.buf_request(0, 'textDocument/definition', vim.lsp.util.make_position_params(), function(_, result, _, _)
-              if not result or vim.tbl_isempty(result) then
-                print("No definitions found")
-                return
-              end
-
-              local unique_results = {}
-              local seen = {}
-
-              for _, def in ipairs(result) do
-                local uri = def.uri or def.targetUri
-                seen[uri] = def
-              end
-
-              for _, def in pairs(seen) do
-                table.insert(unique_results, def)
-              end
-
-              if #unique_results == 1 then
-                vim.lsp.util.jump_to_location(unique_results[1], 'utf-8')
-              else
-                local items = vim.lsp.util.locations_to_items(unique_results, 'utf-8')
-                vim.fn.setqflist({}, 'r', { title = 'LSP Definitions', items = items })
-                vim.api.nvim_command("copen")
-              end
-            end)
-          end
-
-          map('n', 'gd', go_to_unique_definition, opts)
+          map('n', 'gd', vim.lsp.buf.definition, opts)
           map('n', 'gD', vim.lsp.buf.declaration, opts)
           map('n', 'gI', vim.lsp.buf.implementation, opts)
+          map('n', 'gr', vim.lsp.buf.references, opts)
           map('n', 'K', vim.lsp.buf.hover, opts)
           map('n', '<C-k>', vim.lsp.buf.signature_help, opts)
           map("n", "<leader>vv", function() vim.lsp.buf.format { async = true } end, opts)
           map('n', '<leader>rn', vim.lsp.buf.rename, opts)
           map('n', '[d', vim.diagnostic.goto_prev)
           map('n', ']d', vim.diagnostic.goto_next)
-          map('n', '<leader>to', vim.diagnostic.setqflist)
-          map('n', '<leader>tl', vim.diagnostic.open_float)
-          map({ 'n', 'v' }, '<leader>ta', vim.lsp.buf.code_action, opts)
+          map('n', '<leader>dq', vim.diagnostic.setqflist)
+          map('n', '<leader>dd', vim.diagnostic.open_float)
+          map({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
+
+          local function client_supports_method(client, method, bufnr)
+            return client:supports_method(method, bufnr)
+          end
+
+          local client = vim.lsp.get_client_by_id(event.data.client_id)
+          if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
+            local highlight_augroup = vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
+            vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+              buffer = event.buf,
+              group = highlight_augroup,
+              callback = vim.lsp.buf.document_highlight,
+            })
+
+            vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+              buffer = event.buf,
+              group = highlight_augroup,
+              callback = vim.lsp.buf.clear_references,
+            })
+
+            vim.api.nvim_create_autocmd('LspDetach', {
+              group = vim.api.nvim_create_augroup('lsp-detach', { clear = true }),
+              callback = function(event2)
+                vim.lsp.buf.clear_references()
+                vim.api.nvim_clear_autocmds { group = 'lsp-highlight', buffer = event2.buf }
+              end,
+            })
+          end
+
+          if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
+            map('n', '<leader>th', function()
+              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
+            end, opts)
+          end
         end
       })
 
@@ -67,21 +73,17 @@ return {
       --
       -- Diagnostics UI
       --
-      local signs = {
-        { name = 'DiagnosticSignError', text = '' },
-        { name = 'DiagnosticSignWarn', text = '' },
-        { name = 'DiagnosticSignHint', text = '' },
-        { name = 'DiagnosticSignInfo', text = '' },
-      }
-
-      for _, sign in ipairs(signs) do
-        vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = '' })
-      end
-
       vim.diagnostic.config({
         underline = true,
         virtual_text = false,
-        signs = true,
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = '',
+            [vim.diagnostic.severity.WARN] = '',
+            [vim.diagnostic.severity.HINT] = '',
+            [vim.diagnostic.severity.INFO] = '',
+          },
+        },
         update_in_insert = false,
         float = {
           source = "always",
@@ -146,7 +148,7 @@ return {
 
         ruby_lsp = {
           filetypes = { 'ruby', 'eruby', 'slim' },
-          cmd = { 'ruby-lsp' },
+          cmd = { 'mise', 'exec', '--', 'ruby-lsp' }
         },
 
         yamlls = {

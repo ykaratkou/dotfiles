@@ -29,11 +29,18 @@ vim.keymap.set('n', ']b', ':bnext<CR>', { silent = true })
 vim.keymap.set("n", "<leader>rs", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set("v", "<leader>rs", [[y<ESC>:%s/<C-r>0/<C-r>0/gc<left><left><left>]])
 
-vim.keymap.set("v", '<leader>d', [[y<cmd>let @/=escape(@", '/')<cr>"_cgn]])
-vim.keymap.set("n", '<leader>d', [[*``cgn]])
+vim.keymap.set("v", '<leader>dw', [[y<cmd>let @/=escape(@", '/')<cr>"_cgn]])
+vim.keymap.set("n", '<leader>dw', [[*``cgn]])
 
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
 vim.keymap.set('n', '<leader>q', ':wincmd p | q<CR>', { silent = true })
 
-vim.keymap.set('n', "<leader>s", ':SwitchCase<CR>')
+vim.keymap.set('n', "<leader>sc", ':SwitchCase<CR>')
+
+--
+-- Toggle terminal
+--
+vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+vim.keymap.set('n', '<C-t>', require("plugins.toggle_term").toggle_terminal, { desc = 'Toggle terminal' })
+vim.keymap.set('t', '<C-t>', '<C-\\><C-n><cmd>lua require("plugins.toggle_term").toggle_terminal()<CR>', { desc = 'Toggle terminal' })
