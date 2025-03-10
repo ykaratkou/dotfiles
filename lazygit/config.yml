@@ -1,5 +1,6 @@
 gui:
   showFileTree: true
+  showCommandLog: false
 
 os:
   editCommand: 'nvim'

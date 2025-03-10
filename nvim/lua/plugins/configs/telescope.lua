@@ -30,6 +30,32 @@ return {
         return vim.fn.getreg('v')
       end
 
+      local function copy_selected_file_pathes()
+        local picker = action_state.get_current_picker(vim.api.nvim_get_current_buf())
+        local selections = picker:get_multi_selection()
+
+        if #selections > 0 then
+          -- Get paths from selections
+          local paths = {}
+          for _, selection in ipairs(selections) do
+            table.insert(paths, selection.path or selection.value or selection[1])
+          end
+
+          -- Join paths with newlines and copy to clipboard
+          local paths_str = table.concat(paths, "\n")
+          vim.fn.setreg('+', paths_str)
+          vim.notify("Copied " .. #paths .. " file path(s) to clipboard", vim.log.levels.INFO)
+        else
+          -- If no multi-selection, copy the current selection
+          local selection = action_state.get_selected_entry()
+          if selection then
+            local path = selection.path or selection.value or selection[1]
+            vim.fn.setreg('+', path)
+            vim.notify("Copied file path to clipboard", vim.log.levels.INFO)
+          end
+        end
+      end
+
       -- cdo shortcut for the last telescope input
       vim.keymap.set("n", "<leader>rp", function()
         local command = ':cdo s/' .. action_state.get_current_line() .. '/' .. action_state.get_current_line() .. '/gc | update'
@@ -161,6 +187,7 @@ return {
               ["<C-s>"] = actions.send_selected_to_qflist + actions.open_qflist,
               ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
               ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
+              ["<C-y>"] = copy_selected_file_pathes,
               -- ["<esc>"] = actions.close,
             }
           },
