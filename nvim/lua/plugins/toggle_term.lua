@@ -12,7 +12,17 @@ function M.toggle_terminal()
     -- Only close if we're in the terminal window
     if current_win == term_win then
       vim.api.nvim_win_close(term_win, true)
-      vim.api.nvim_set_current_win(previous_win)
+
+      -- If we have a previous window, focus it and check for changes
+      if previous_win ~= nil and vim.api.nvim_win_is_valid(previous_win) then
+        vim.api.nvim_set_current_win(previous_win)
+        local buf = vim.api.nvim_win_get_buf(previous_win)
+        local filename = vim.api.nvim_buf_get_name(buf)
+        if filename ~= "" then
+          vim.cmd('checktime ' .. buf)
+        end
+      end
+
       term_win = nil
     else
       -- If we're not in terminal window, focus it

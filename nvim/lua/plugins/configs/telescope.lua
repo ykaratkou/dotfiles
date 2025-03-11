@@ -134,7 +134,6 @@ return {
       vim.keymap.set('n', '<leader>ff', function()
         builtin.buffers(themes.get_dropdown({
           previewer = false,
-          ignore_current_buffer = true,
           sort_mru = true,
         }))
       end)
