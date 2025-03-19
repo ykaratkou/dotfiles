@@ -158,7 +158,7 @@ git_status() {
   local changes=$(git_changes)
 
   if [[ -n $status ]]; then
-    printf " #[fg=#f8f8f2,bold]$changes"
+    printf "#[bg=default,fg=#f8f8f2,bold]$changes"
   fi
 }
 

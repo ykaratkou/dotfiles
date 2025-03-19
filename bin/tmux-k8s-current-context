@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+current_context() {
+  local context=$(kubectl config current-context)
+  local cluster_name=$(echo "$context" | awk -F/ '{print $NF}')
+
+  if [[ -n $cluster_name ]]; then
+    printf "#[bg=#326CE5,fg=#ffffff] 󱃾 $cluster_name"
+  fi
+}
+
+current_context

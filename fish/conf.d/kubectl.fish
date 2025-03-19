@@ -5,9 +5,9 @@ function kbe
 end
 
 function kbc
-  set context (kubectl config get-contexts  --no-headers | fzf --tac) || return
+  set context (kubectl config get-contexts --output=name | fzf --tac) || return
 
-  kubectl config use-context (echo $context | awk '{print $2}')
+  kubectl config use-context $context
 end
 
 function kbl
