@@ -13,5 +13,5 @@ end
 function kbl
   set pod (kubectl get pods --no-headers --all-namespaces | fzf --tac) || return
 
-  kubectl logs -f --tail=100 -n (echo $pod | awk '{print $1}') (echo $pod | awk '{print $2}')
+  kubectl logs -f --since=5m -n (echo $pod | awk '{print $1}') (echo $pod | awk '{print $2}')
 end
