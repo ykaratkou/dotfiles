@@ -23,8 +23,8 @@ return {
           map('n', '<leader>rn', vim.lsp.buf.rename, opts)
           map('n', '[d', vim.diagnostic.goto_prev)
           map('n', ']d', vim.diagnostic.goto_next)
-          map('n', '<leader>dq', vim.diagnostic.setqflist)
-          map('n', '<leader>dd', vim.diagnostic.open_float)
+          map('n', '<leader>t', vim.diagnostic.setqflist)
+          map('n', '<leader>x', vim.diagnostic.open_float)
           map({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
 
           local function client_supports_method(client, method, bufnr)
@@ -54,19 +54,26 @@ return {
               end,
             })
           end
-
-          if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
-            map('n', '<leader>th', function()
-              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
-            end, opts)
-          end
         end
       })
 
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
           local client = vim.lsp.get_client_by_id(args.data.client_id)
+
           client.server_capabilities.semanticTokensProvider = nil
+        end,
+      })
+
+      -- Disable colorProvider for sourcekit because of the issue:
+      -- https://github.com/brenoprata10/nvim-highlight-colors/issues/123
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(args)
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+          if client and client.name == 'sourcekit' then
+            client.server_capabilities.colorProvider = false
+          end
         end,
       })
 

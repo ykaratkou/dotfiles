@@ -1,5 +1,5 @@
 [general]
-import = ["~/.config/alacritty/themes/themes/rose_pine_moon.toml"]
+import = ["~/.dotfiles/alacritty/dark.toml"]
 
 [colors]
 cursor = { text = "CellBackground", cursor = "CellForeground" }

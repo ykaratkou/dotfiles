@@ -1,5 +1,5 @@
 ## Enable caching of prompts (default: False)
-cache-prompts: true
+cache-prompts: false
 
 ## Suggested number of tokens to use for repo map, use 0 to disable
 map-tokens: 2048
@@ -8,7 +8,7 @@ map-tokens: 2048
 dark-mode: true
 
 ## Enable/disable streaming responses (default: True)
-stream: false
+stream: true
 
 ## Set the markdown code theme (default: default, other options include monokai, solarized-dark, solarized-light, or a Pygments builtin style, see https://pygments.org/styles for available themes)
 code-theme: solarized-dark
@@ -23,7 +23,7 @@ auto-commits: false
 watch-files: true
 
 ## Check for new aider versions on launch
-check-update: false
+check-update: true
 
 ## Use VI editing mode in the terminal (default: False)
 vim: true

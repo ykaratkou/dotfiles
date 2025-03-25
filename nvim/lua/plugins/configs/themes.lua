@@ -1,3 +1,13 @@
+local set_light_theme = function ()
+  vim.cmd("colorscheme solarized")
+  vim.api.nvim_set_option_value('background', 'light', {})
+end
+
+local set_dark_theme = function ()
+  vim.cmd("colorscheme dracula")
+  vim.api.nvim_set_option_value('background', 'dark', {})
+end
+
 return {
   {
     "f-person/auto-dark-mode.nvim",
@@ -5,21 +15,44 @@ return {
     priority = 1000,
     dependencies = {
       {
-        "rose-pine/neovim",
-        name = "rose-pine",
+        'maxmx03/solarized.nvim',
         config = function()
-          require("rose-pine").setup({
-            styles = {
-              bold = false,
-              italic = false,
-              transparency = false,
-            },
-            highlight_groups = {
-              ["@string.special.symbol.ruby"] = { fg = "gold" },
+          require('solarized').setup({
+            highlights = {
+              NeoTreeDirectoryName = { fg = "#268bd2" },
+              NeoTreeIndentMarker = { fg = "#586e75" },
+              NeoTreeDirectoryIcon = { fg = "#268bd2" },
+            }
+          })
+        end
+      },
+      {
+        'Mofiqul/dracula.nvim',
+        config = function()
+          local dracula = require("dracula")
+          local colors = dracula.colors()
+          dracula.setup({
+            italic_comment = false,
+            overrides = {
+              NeoTreeGitUnstaged = { fg = colors.cyan },
+              NeoTreeGitModified = { fg = colors.cyan },
+
+              LspReferenceText = { bg = colors.visual, },
+              LspReferenceRead = { bg = colors.visual, },
+              LspReferenceWrite = { bg = colors.visual, },
+
+              rubyTodo = { fg = colors.comment, bg = colors.visual },
+
+              DiffAdd = { link = "NeogitDiffAdd" },
+              DiffDelete = { link = "NeogitDiffDelete" },
+              DiffChange = { link = "NeogitDiffAdd" },
+              DiffText = { link = "NeogitDiffAdd" },
+
+              CopilotSuggestion = { fg = "#908caa" },
             },
           })
-        end,
-      },
+        end
+      }
     },
     init = function()
       local function is_dark_mode()
@@ -34,9 +67,9 @@ return {
       end
 
       if is_dark_mode() then
-        vim.cmd("colorscheme rose-pine-moon")
+        set_dark_theme()
       else
-        vim.cmd("colorscheme rose-pine-dawn")
+        set_light_theme()
       end
     end,
     config = function()
@@ -44,15 +77,12 @@ return {
       auto_dark_mode.setup({
         update_interval = 1000,
         set_dark_mode = function()
-          vim.api.nvim_set_option_value('background', 'dark', {})
-          vim.cmd("colorscheme rose-pine-moon")
-
+          set_dark_theme()
           -- https://github.com/neovim/neovim/issues/23590
           vim.cmd('hi! link CurSearch Search')
         end,
         set_light_mode = function()
-          vim.api.nvim_set_option_value('background', 'light', {})
-          vim.cmd("colorscheme rose-pine-dawn")
+          set_light_theme()
 
           -- https://github.com/neovim/neovim/issues/23590
           vim.cmd('hi! link CurSearch Search')

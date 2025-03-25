@@ -21,8 +21,6 @@ ln -s $HOME/.dotfiles/.gemrc $HOME/.gemrc
 
 echo "Configuring Alacritty"
 mkdir -p $HOME/.config/alacritty
-mkdir -p $HOME/.config/alacritty/themes
-git clone https://github.com/alacritty/alacritty-theme $HOME/.config/alacritty/themes
 ln -s $HOME/.dotfiles/alacritty.toml $HOME/.config/alacritty/
 
 echo "Configuring Bat"

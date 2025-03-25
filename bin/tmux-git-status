@@ -17,9 +17,8 @@ git_action() {
 }
 
 git_changes() {
-  local theme="$(tmux show-option -gqv "@rose_pine_variant")"
-
-  if [[ $theme == "moon" ]]; then
+  if defaults read -g AppleInterfaceStyle &>/dev/null; then
+    # Dark mode colors (Dracula theme)
     black="#[fg=#393552]"
     red="#[fg=#eb6f92]"
     green="#[fg=#3e8fb0]"
@@ -29,16 +28,17 @@ git_changes() {
     magenta="#[fg=#c4a7e7]"
     cyan="#[fg=#ea9a97]"
     white="#[fg=#e0def4]"
-  elif [[ $theme == "dawn" ]]; then
-    black="#[fg=#f2e9e1]"
-    red="#[fg=#b4637a]"
-    green="#[fg=#286983]"
-    yellow="#[fg=#ea9d34]"
-    orange="#[fg=#ea9d34]"
-    blue="#[fg=#56949f]"
-    magenta="#[fg=#907aa9]"
-    cyan="#[fg=#d7827e]"
-    white="#[fg=#575279]"
+  else
+    # Light mode colors (Solarized theme)
+    black="#[fg=#073642]"
+    red="#[fg=#dc322f]"
+    green="#[fg=#859900]"
+    yellow="#[fg=#b58900]"
+    orange="#[fg=#cb4b16]"
+    blue="#[fg=#268bd2]"
+    magenta="#[fg=#d33682]"
+    cyan="#[fg=#2aa198]"
+    white="#[fg=#657b83]"
   fi
 
   local result=()
