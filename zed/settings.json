@@ -26,7 +26,7 @@
   },
   "theme": {
     "mode": "system",
-    "light": "Zed Legacy: Rosé Pine Dawn",
+    "light": "Zed Legacy: Solarized Light",
     "dark": "Dracula Mini"
   },
   "project_panel": {
@@ -68,6 +68,9 @@
     "custom": 1.3
   },
   "load_direnv": "shell_hook",
+
+  "pane_split_direction_horizontal": "down",
+  "pane_split_direction_vertical": "right",
 
   // Terminal
   "terminal": {
@@ -145,14 +148,16 @@
     ]
   },
   "auto_install_extension": {
+    "material-icon-theme": true,
     "html": true,
     "ruby": true,
     "terraform": true,
     "scss": true,
     "lua": true,
     "swift": true,
-    "material-icon-theme": true,
     "slim": true,
-    "sql": true
+    "sql": true,
+    "toml": true,
+    "fish": true,
   }
 }

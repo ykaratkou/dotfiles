@@ -26,7 +26,8 @@
       "cmd-k": "workspace::ActivatePaneUp",
       "cmd-j": "terminal_panel::ToggleFocus",
       "cmd-e": "project_panel::ToggleFocus",
-      "cmd-a": "workspace::ToggleRightDock",
+      "cmd-g": "git_panel::ToggleFocus",
+      "cmd-r": "workspace::ToggleRightDock",
       "cmd-o": "projects::OpenRecent"
     }
   },
@@ -40,8 +41,10 @@
     }
   },
   {
-    "context": "Editor && vim_mode != insert",
+    "context": "Editor && vim_mode == insert",
     "bindings": {
+      "ctrl-j": "editor::ShowCompletions",
+      "ctrl-k": "editor::ShowCompletions"
     }
   },
   {
