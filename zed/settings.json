@@ -7,32 +7,37 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "icon_theme": "Material Icon Theme",
+  "auto_update": false,
+  "edit_predictions": {
+    "mode": "subtle",
+    "enabled_in_assistant": false
+  },
   "features": {
     "edit_prediction_provider": "zed"
   },
-  "language_models": {
-    "openai": {
-      "version": "1",
-      "available_models": []
-    }
-  },
   "assistant": {
+    "enable_experimental_live_diffs": true,
     "default_model": {
       "provider": "zed.dev",
       "model": "claude-3-7-sonnet-latest"
     },
     "version": "2",
-    "provider": null
   },
   "theme": {
     "mode": "system",
     "light": "Zed Legacy: Rosé Pine Dawn",
-    "dark": "Zed Legacy: Rosé Pine Moon",
+    "dark": "Dracula Mini"
   },
   "project_panel": {
     "scrollbar": {
       "show": "never"
-    }
+    },
+    "auto_reveal_entries": false,
+    "entry_spacing": "standard",
+  },
+  "scrollbar": {
+    "show": "never"
   },
   "cursor_blink": false,
   "git": {
@@ -68,7 +73,7 @@
   "terminal": {
     "font_family": "CodeNewRoman Nerd Font",
     "copy_on_select": false,
-    "line_height": "standard",
+    "line_height": "standard"
   },
 
   // VIM
@@ -83,19 +88,12 @@
   // Editor
   "format_on_save": "off",
   "lsp": {
-    "solargraph": {
-      "initialization_options": {
-        "diagnostics": true,
-        "formatting": true
-      }
-    },
     "ruby-lsp": {
       "initialization_options": {
         "diagnostics": false
       }
     },
-    "helm-ls": {
-    },
+    "helm-ls": {},
     "rubocop": {
       "initialization_options": {
         "safeAutocorrect": false
@@ -105,6 +103,7 @@
       "settings": {
         "includeLanguages": {
           "erb": "html",
+          "slim": "html",
           "ruby": "html"
         },
         "experimental": {
@@ -119,7 +118,7 @@
         "ruby-lsp",
         "rubocop",
         "tailwindcss-language-server",
-        "!solargraph",
+        "!solargraph"
       ]
     },
     "HTML": {
@@ -127,16 +126,33 @@
     },
     "ERB": {
       "tab_size": 2
+    },
+    "Slim": {
+      "tab_size": 2,
+      "language_servers": [
+        "tailwindcss-language-server",
+      ]
     }
   },
   "file_types": {
     "Ruby": ["rbs", "Dangerfile"],
     "Helm": [
-       "**/templates/**/*.tpl",
-       "**/templates/**/*.yaml",
-       "**/templates/**/*.yml",
-       "**/helmfile.d/**/*.yaml",
-       "**/helmfile.d/**/*.yml"
-     ]
-   }
+      "**/templates/**/*.tpl",
+      "**/templates/**/*.yaml",
+      "**/templates/**/*.yml",
+      "**/helmfile.d/**/*.yaml",
+      "**/helmfile.d/**/*.yml"
+    ]
+  },
+  "auto_install_extension": {
+    "html": true,
+    "ruby": true,
+    "terraform": true,
+    "scss": true,
+    "lua": true,
+    "swift": true,
+    "material-icon-theme": true,
+    "slim": true,
+    "sql": true
+  }
 }
