@@ -4,8 +4,6 @@ freetype-load-flags = "hinting"
 font-thicken = true
 mouse-hide-while-typing = true
 
-theme = light:rose-pine-dawn,dark:rose-pine-moon
-
 adjust-underline-position = 40%
 adjust-underline-thickness = -60%
 

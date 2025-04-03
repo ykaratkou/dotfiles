@@ -22,12 +22,11 @@
       "ctrl-j": "menu::SelectNext",
       "cmd-enter": "workspace::ToggleZoom",
       "cmd-h": "workspace::ActivatePaneLeft",
-      "cmd-l": "workspace::ActivatePaneRight",
+      "cmd-l": "assistant::ToggleFocus",
       "cmd-k": "workspace::ActivatePaneUp",
       "cmd-j": "terminal_panel::ToggleFocus",
       "cmd-e": "project_panel::ToggleFocus",
       "cmd-g": "git_panel::ToggleFocus",
-      "cmd-r": "workspace::ToggleRightDock",
       "cmd-o": "projects::OpenRecent"
     }
   },
@@ -37,8 +36,7 @@
   },
   {
     "context": "Editor",
-    "bindings": {
-    }
+    "bindings": {}
   },
   {
     "context": "Editor && vim_mode == insert",
@@ -59,6 +57,12 @@
       "space g d": "editor::ExpandAllDiffHunks",
       "space a": "editor::SelectAll",
       "space f w": ["pane::DeploySearch", { "replace_enabled": true }],
+
+      // "space w j": "workspace::ActivatePaneDown",
+      // "space w k": "workspace::ActivatePaneUp",
+      // "space w l": "workspace::ActivatePaneRight",
+      "space w h": "workspace::ActivatePaneLeft",
+      "space tab": "tab_switcher::Toggle"
     }
   },
   {
@@ -71,6 +75,7 @@
   {
     "context": "ProjectPanel && not_editing",
     "bindings": {
+      "space w l": "workspace::ActivatePaneRight",
       "a": "project_panel::NewFile",
       "d": "project_panel::Delete",
       "r": "project_panel::Rename",
@@ -124,13 +129,44 @@
     "context": "Terminal",
     "bindings": {
       "cmd-j": "workspace::ToggleBottomDock",
-      "cmd-n": "workspace::NewTerminal"
+      "cmd-t": "workspace::NewTerminal"
+
+      // terminal split
     }
   },
   {
     "context": "ContextEditor > Editor",
     "bindings": {
       "cmd-enter": "assistant::Assist"
+    }
+  },
+  {
+    "context": "AgentPanel",
+    "use_key_equivalents": true,
+    "bindings": {
+      "cmd-t": "agent::NewThread",
+      "cmd-l": "workspace::ToggleRightDock"
+    }
+  },
+  {
+    "context": "AssistantPanel",
+    // "use_key_equivalents": true,
+    "bindings": {
+      "cmd-l": "workspace::ToggleRightDock"
+    }
+  },
+  {
+    "context": "Workspace && !Terminal",
+    "use_key_equivalents": true,
+    "bindings": {
+      "cmd-t": "workspace::NewFile"
+    }
+  },
+  {
+    "context": "BufferSearchBar",
+    "use_key_equivalents": true,
+    "bindings": {
+      "ctrl-r": "search::ToggleReplace"
     }
   }
 ]
