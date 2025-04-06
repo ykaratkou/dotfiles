@@ -17,8 +17,18 @@ return {
           map('n', 'gD', vim.lsp.buf.declaration, opts)
           map('n', 'gI', vim.lsp.buf.implementation, opts)
           map('n', 'gr', vim.lsp.buf.references, opts)
-          map('n', 'K', vim.lsp.buf.hover, opts)
-          map('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+          map('n', 'K', function(_opts)
+            _opts = _opts or {}
+            return vim.lsp.buf.hover(vim.tbl_deep_extend("force", _opts, {
+              border = "rounded"
+            }))
+          end, opts)
+          map('n', '<C-k>', function(_opts)
+            _opts = _opts or {}
+            return vim.lsp.buf.signature_help(vim.tbl_deep_extend("force", _opts, {
+              border = "rounded"
+            }))
+          end, opts)
           map("n", "<leader>vv", function() vim.lsp.buf.format { async = true } end, opts)
           map('n', '<leader>rn', vim.lsp.buf.rename, opts)
           map('n', '[d', vim.diagnostic.goto_prev)
@@ -82,7 +92,7 @@ return {
       --
       vim.diagnostic.config({
         underline = true,
-        virtual_text = false,
+        virtual_text = { current_line = true },
         signs = {
           text = {
             [vim.diagnostic.severity.ERROR] = '',
@@ -98,15 +108,6 @@ return {
         },
         severity_sort = false,
       })
-
-      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-        vim.lsp.handlers.hover,
-        { border = 'rounded' }
-      )
-      vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-        vim.lsp.handlers.signature_help,
-        { border = 'rounded' }
-      )
 
       --
       -- Servers overrides

@@ -43,8 +43,6 @@ vim.opt.updatetime = 250
 vim.opt.signcolumn = 'yes'
 vim.opt.colorcolumn = "120"
 
-vim.wo.wrap = false
-
 vim.opt.shortmess:append("I")
 
 --
