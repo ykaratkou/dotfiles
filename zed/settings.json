@@ -75,6 +75,9 @@
       "update_debounce_ms": 150
     }
   },
+  "completions": {
+    "words": "enabled"
+  },
 
   "pane_split_direction_horizontal": "down",
   "pane_split_direction_vertical": "right",

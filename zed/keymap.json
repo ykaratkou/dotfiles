@@ -15,18 +15,25 @@
     }
   },
   {
+    "context": "GitPanel || ProjectPanel || CollabPanel || OutlinePanel || ChatPanel || VimControl || EmptyPane || SharedScreen || MarkdownPreview || KeyContextView",
+    "bindings": {
+      "space w h": "workspace::ActivatePaneLeft",
+      "space w l": "workspace::ActivatePaneRight",
+      "space w k": "workspace::ActivatePaneUp",
+      "space w j": "workspace::ActivatePaneDown"
+    }
+  },
+  {
     "bindings": {
       "up": "menu::SelectPrevious",
       "down": "menu::SelectNext",
       "ctrl-k": "menu::SelectPrevious",
       "ctrl-j": "menu::SelectNext",
       "cmd-enter": "workspace::ToggleZoom",
-      "cmd-h": "workspace::ActivatePaneLeft",
-      "cmd-l": "assistant::ToggleFocus",
-      "cmd-k": "workspace::ActivatePaneUp",
-      "cmd-j": "terminal_panel::ToggleFocus",
-      "cmd-e": "project_panel::ToggleFocus",
-      "cmd-g": "git_panel::ToggleFocus",
+      // "cmd-a": "assistant::ToggleFocus",
+      // "cmd-t": "terminal_panel::ToggleFocus",
+      // "cmd-e": "project_panel::ToggleFocus",
+      // "cmd-g": "git_panel::ToggleFocus",
       "cmd-o": "projects::OpenRecent"
     }
   },
@@ -50,18 +57,13 @@
     "bindings": {
       "space g b": "git::Blame",
       "space r e": "pane::RevealInProjectPanel",
-      "= =": "editor::Format",
       "space f l": "pane::DeploySearch",
       "space r h": "git::Restore",
       "space r b": "git::RestoreFile",
       "space g d": "editor::ExpandAllDiffHunks",
-      "space a": "editor::SelectAll",
+      // "space a": "editor::SelectAll",
       "space f w": ["pane::DeploySearch", { "replace_enabled": true }],
 
-      // "space w j": "workspace::ActivatePaneDown",
-      // "space w k": "workspace::ActivatePaneUp",
-      // "space w l": "workspace::ActivatePaneRight",
-      "space w h": "workspace::ActivatePaneLeft",
       "space tab": "tab_switcher::Toggle"
     }
   },
@@ -102,12 +104,12 @@
   {
     "context": "Editor && (showing_code_actions || showing_completions)",
     "bindings": {
-      "up": "editor::ContextMenuPrevious",
-      "down": "editor::ContextMenuNext",
+      // "up": "editor::ContextMenuPrevious",
+      // "down": "editor::ContextMenuNext",
       "ctrl-k": "editor::ContextMenuPrevious",
-      "ctrl-j": "editor::ContextMenuNext",
-      "pageup": "editor::ContextMenuFirst",
-      "pagedown": "editor::ContextMenuLast"
+      "ctrl-j": "editor::ContextMenuNext"
+      // "pageup": "editor::ContextMenuFirst",
+      // "pagedown": "editor::ContextMenuLast"
     }
   },
   {
@@ -128,7 +130,7 @@
   {
     "context": "Terminal",
     "bindings": {
-      "cmd-j": "workspace::ToggleBottomDock",
+      // "cmd-j": "workspace::ToggleBottomDock",
       "cmd-t": "workspace::NewTerminal"
 
       // terminal split
@@ -137,6 +139,7 @@
   {
     "context": "ContextEditor > Editor",
     "bindings": {
+      // need to override zoo
       "cmd-enter": "assistant::Assist"
     }
   },
@@ -144,15 +147,7 @@
     "context": "AgentPanel",
     "use_key_equivalents": true,
     "bindings": {
-      "cmd-t": "agent::NewThread",
-      "cmd-l": "workspace::ToggleRightDock"
-    }
-  },
-  {
-    "context": "AssistantPanel",
-    // "use_key_equivalents": true,
-    "bindings": {
-      "cmd-l": "workspace::ToggleRightDock"
+      "cmd-t": "agent::NewThread"
     }
   },
   {
