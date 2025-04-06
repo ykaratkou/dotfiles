@@ -4,5 +4,21 @@
     "command": "rtx exec ruby@$(cat .tool-versions | grep ruby | cut -d \" \" -f 2) -- rspec",
     "args": ["\"$ZED_RELATIVE_FILE:$ZED_ROW\""],
     "tags": ["rspec-test"]
+  },
+  {
+    "label": "Rails Latest Migration",
+    "command": "ls -t db/migrate/* | head -1 | xargs zed",
+    "hide": "always",
+    "reveal": "never",
+    "allow_concurrent_runs": true,
+    "use_new_terminal": true
+  },
+  {
+    "label": "test_task",
+    "command": "echo $ZED_RELATIVE_FILE:$ZED_ROW > /tmp/zed_file_finder",
+    "hide": "always",
+    "reveal": "never",
+    "allow_concurrent_runs": true,
+    "use_new_terminal": true
   }
 ]

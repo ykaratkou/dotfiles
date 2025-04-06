@@ -7,72 +7,78 @@
 // from the command palette.
 [
   {
+    "context": "VimControl && !menu",
     "bindings": {
-      "up": "menu::SelectPrev",
+      "ctrl-]": "pane::ActivateNextItem",
+      "ctrl-[": "pane::ActivatePreviousItem",
+      "shift-k": "editor::Hover"
+    }
+  },
+  {
+    "context": "GitPanel || ProjectPanel || CollabPanel || OutlinePanel || ChatPanel || VimControl || EmptyPane || SharedScreen || MarkdownPreview || KeyContextView",
+    "bindings": {
+      "space w h": "workspace::ActivatePaneLeft",
+      "space w l": "workspace::ActivatePaneRight",
+      "space w k": "workspace::ActivatePaneUp",
+      "space w j": "workspace::ActivatePaneDown"
+    }
+  },
+  {
+    "bindings": {
+      "up": "menu::SelectPrevious",
       "down": "menu::SelectNext",
-      "ctrl-k": "menu::SelectPrev",
+      "ctrl-k": "menu::SelectPrevious",
       "ctrl-j": "menu::SelectNext",
       "cmd-enter": "workspace::ToggleZoom",
-      "cmd-h": ["workspace::ActivatePaneInDirection", "Left"],
-      "cmd-l": ["workspace::ActivatePaneInDirection", "Right"],
-      "cmd-k": ["workspace::ActivatePaneInDirection", "Up"],
-      "cmd-j": ["workspace::ActivatePaneInDirection", "Down"]
+      // "cmd-a": "assistant::ToggleFocus",
+      // "cmd-t": "terminal_panel::ToggleFocus",
+      // "cmd-e": "project_panel::ToggleFocus",
+      // "cmd-g": "git_panel::ToggleFocus",
+      "cmd-o": "projects::OpenRecent"
     }
   },
   {
     "context": "Workspace",
-    "bindings": {}
-  },
-  {
-    "context": "Editor",
     "bindings": {
-      // "j k": ["workspace::SendKeystrokes", "escape"]
     }
   },
   {
-    "context": "Editor && vim_mode != insert",
+    "context": "Editor",
+    "bindings": {}
+  },
+  {
+    "context": "Editor && vim_mode == insert",
     "bindings": {
-      "shift-k": "editor::MoveLineUp",
-      "shift-j": "editor::MoveLineDown",
-      // "space space": "editor::ShowCompletions",
-      "cmd-j": "terminal_panel::ToggleFocus",
-      // "": "editor::ToggleCodeActions",
+      "ctrl-j": "editor::ShowCompletions",
+      "ctrl-k": "editor::ShowCompletions"
     }
   },
   {
     "context": "Editor && vim_mode == normal",
     "bindings": {
-      // "space f f": "file_finder::Toggle",
-      // "space f b": "file_finder::Toggle",
-      // "space f o": "file_finder::Toggle",
-      // "space tab": "file_finder::Toggle",
-      "space g b": "editor::ToggleGitBlame",
+      "space g b": "git::Blame",
       "space r e": "pane::RevealInProjectPanel",
-      // "space w h": "pane::RevealInProjectPanel",
-      "= =": "editor::Format",
       "space f l": "pane::DeploySearch",
-      "space r h": "editor::RevertSelectedHunks",
-      // "space g d": "editor::ToggleHunkDiff",
-      "space g d": "editor::ExpandAllHunkDiffs",
-      "space a": "editor::SelectAll",
-      // "space g d": "editor::ExpandAllHunkDiffs",
-      "space f r": ["pane::DeploySearch", { "replace_enabled": true }]
+      "space r h": "git::Restore",
+      "space r b": "git::RestoreFile",
+      "space g d": "editor::ExpandAllDiffHunks",
+      // "space a": "editor::SelectAll",
+      "space f w": ["pane::DeploySearch", { "replace_enabled": true }],
+
+      "space tab": "tab_switcher::Toggle"
     }
   },
   {
     "context": "Editor && (showing_code_actions || showing_completions)",
     "bindings": {
-      // "tab": "editor::ContextMenuNext",
-      // "shift-tab": "editor::ContextMenuPrev"
+      "tab": "editor::ContextMenuNext",
+      "shift-tab": "editor::ContextMenuPrevious"
     }
   },
   {
     "context": "ProjectPanel && not_editing",
     "bindings": {
-      "space w l": ["workspace::ActivatePane", 0],
-      "space f f": "file_finder::Toggle",
-      "space f b": "file_finder::Toggle",
-      "space f o": "file_finder::Toggle",
+      "space w l": "workspace::ActivatePaneRight",
       "a": "project_panel::NewFile",
       "d": "project_panel::Delete",
       "r": "project_panel::Rename",
@@ -80,7 +86,7 @@
       "c": "project_panel::Copy",
       "p": "project_panel::Paste",
       "shift-j": "menu::SelectNext",
-      "shift-k": "menu::SelectPrev"
+      "shift-k": "menu::SelectPrevious"
     }
   },
   {
@@ -90,20 +96,21 @@
       "shift-tab": "editor::SelectSmallerSyntaxNode",
       "<": "editor::Outdent",
       ">": "editor::Indent",
-      // it does not work because zed does not support format selected
-      "=": "editor::Format",
-      "space r h": "editor::RevertSelectedHunks"
+      "=": "editor::FormatSelections",
+      "space r h": "git::Restore",
+      "shift-k": "editor::MoveLineUp",
+      "shift-j": "editor::MoveLineDown"
     }
   },
   {
     "context": "Editor && (showing_code_actions || showing_completions)",
     "bindings": {
-      "up": "editor::ContextMenuPrev",
-      "down": "editor::ContextMenuNext",
-      "ctrl-k": "editor::ContextMenuPrev",
-      "ctrl-j": "editor::ContextMenuNext",
-      "pageup": "editor::ContextMenuFirst",
-      "pagedown": "editor::ContextMenuLast"
+      // "up": "editor::ContextMenuPrevious",
+      // "down": "editor::ContextMenuNext",
+      "ctrl-k": "editor::ContextMenuPrevious",
+      "ctrl-j": "editor::ContextMenuNext"
+      // "pageup": "editor::ContextMenuFirst",
+      // "pagedown": "editor::ContextMenuLast"
     }
   },
   {
@@ -124,14 +131,38 @@
   {
     "context": "Terminal",
     "bindings": {
-      "cmd-j": "workspace::ToggleBottomDock",
-      "cmd-n": "workspace::NewTerminal"
+      // "cmd-j": "workspace::ToggleBottomDock",
+      "cmd-t": "workspace::NewTerminal",
+      "ctrl-]": "pane::ActivateNextItem",
+      "ctrl-[": "pane::ActivatePreviousItem"
     }
   },
   {
     "context": "ContextEditor > Editor",
     "bindings": {
-      "cmd-enter": "assistant::Assist",
+      // need to override zoo
+      "cmd-enter": "assistant::Assist"
+    }
+  },
+  {
+    "context": "AgentPanel",
+    "use_key_equivalents": true,
+    "bindings": {
+      "cmd-t": "agent::NewThread"
+    }
+  },
+  {
+    "context": "Workspace && !Terminal",
+    "use_key_equivalents": true,
+    "bindings": {
+      "cmd-t": "workspace::NewFile"
+    }
+  },
+  {
+    "context": "BufferSearchBar",
+    "use_key_equivalents": true,
+    "bindings": {
+      "ctrl-r": "search::ToggleReplace"
     }
   }
 ]
