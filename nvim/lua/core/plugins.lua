@@ -16,6 +16,7 @@ local plugins = {
   -- UI
   --
   require 'plugins.configs.themes',
+  require 'plugins.configs.icons',
   require 'plugins.configs.lualine',
   require 'plugins.configs.fidget',
   require 'plugins.configs.bufresize',

@@ -1,12 +1,12 @@
 return {
   {
-    'nvim-neo-tree/neo-tree.nvim',
+    "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     event = "VeryLazy",
     dependencies = {
-      { 'nvim-lua/plenary.nvim' },
-      { 'MunifTanjim/nui.nvim' },
-      { 'nvim-tree/nvim-web-devicons' },
+      { "nvim-lua/plenary.nvim" },
+      { "MunifTanjim/nui.nvim" },
+      { "nvim-tree/nvim-web-devicons" },
     },
     config = function()
       local components = require('neo-tree.sources.common.components')

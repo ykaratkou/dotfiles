@@ -15,7 +15,7 @@ return {
           diffview = true,
           telescope = true,
         },
-        kind = "split",
+        kind = "floating",
         console_timeout = 5000,
         commit_editor = {
           kind = "split",

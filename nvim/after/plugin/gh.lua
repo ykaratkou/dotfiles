@@ -1,5 +1,5 @@
 local function gh_browse_file()
-  vim.fn.system("gh browse " .. vim.fn.expand("%"))
+  vim.fn.system("gh browse " .. vim.fn.expand("%:."))
 end
 
 local function gh_browse_with_args(opts)

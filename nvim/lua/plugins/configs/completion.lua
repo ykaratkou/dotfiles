@@ -7,6 +7,38 @@ return {
       local cmp = require('cmp')
       local cmp_select = {behavior = cmp.SelectBehavior.Select}
       local cmp_insert = {behavior = cmp.SelectBehavior.Insert}
+      local kind_icons = {
+        Text = '󰉿',
+        Method = '󰊕',
+        Function = '󰊕',
+        Constructor = '󰒓',
+
+        Field = '󰜢',
+        Variable = '󰆦',
+        Property = '󰖷',
+
+        Class = '󱡠',
+        Interface = '󱡠',
+        Struct = '󱡠',
+        Module = '󰅩',
+
+        Unit = '󰪚',
+        Value = '󰦨',
+        Enum = '󰦨',
+        EnumMember = '󰦨',
+
+        Keyword = '󰻾',
+        Constant = '󰏿',
+
+        Snippet = '󱄽',
+        Color = '󰏘',
+        File = '󰈔',
+        Reference = '󰬲',
+        Folder = '󰉋',
+        Event = '󱐋',
+        Operator = '󰪚',
+        TypeParameter = '󰬛',
+      }
 
       -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline('/', {
@@ -14,7 +46,10 @@ return {
         sources = {
           { name = 'buffer' },
           { name = 'cmdline_history' },
-        }
+        },
+        formatting = {
+          fields = {'abbr'},
+        },
       })
 
       -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
@@ -27,7 +62,10 @@ return {
         {
           { name = 'cmdline', keyword_length = 3 },
           { name = 'cmdline_history', keyword_length = 3 },
-        })
+        }),
+        formatting = {
+          fields = {'abbr'},
+        },
       })
 
       local editor_sources = {
@@ -80,28 +118,19 @@ return {
           end, {'i', 's'}),
         },
         formatting = {
-          fields = {'menu', 'abbr', 'kind'},
-          format = function(entry, item)
-            local menu_icon = {
-              nvim_lsp = '󰘧 ',
-              luasnip = ' ',
-              buffer = ' ',
-              path = ' ',
-              copilot = ' ',
-              nvim_lua = '󰢱 ',
-            }
+          fields = {'kind', 'abbr'},
+          format = function(_, item)
+            local icon = kind_icons[item.kind]
 
-            -- truncate menu entries
-            item.abbr = string.sub(item.abbr, 1, 40)
+            item.abbr = string.sub(item.abbr, 1, 50)
+            item.kind = icon
 
-            item.menu = menu_icon[entry.source.name]
             return item
-          end,
+          end
         },
         window = {
           completion = cmp.config.window.bordered({
             winhighlight = "Normal:Normal,FloatBorder:BorderBG,CursorLine:PmenuSel,Search:None",
-            side_padding = 0,
           }),
           documentation = cmp.config.window.bordered(),
         },
@@ -116,6 +145,12 @@ return {
       end)
 
       require("luasnip.loaders.from_vscode").lazy_load({ paths = { "./snippets" } })
+
+      require("cmp").setup.filetype({ "gitcommit", "markdown" }, {
+        sources = {
+          { name = "emoji"}
+        }
+      })
     end,
     dependencies = {
       -- Autocompletion
@@ -125,6 +160,7 @@ return {
       {'hrsh7th/cmp-nvim-lua'},
       {'saadparwaiz1/cmp_luasnip'},
       {'hrsh7th/cmp-cmdline'},
+      {'hrsh7th/cmp-emoji'},
 
       -- Snippets
       {'L3MON4D3/LuaSnip'},

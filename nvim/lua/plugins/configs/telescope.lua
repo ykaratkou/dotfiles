@@ -1,25 +1,25 @@
 return {
   {
-    'nvim-telescope/telescope.nvim',
+    "nvim-telescope/telescope.nvim",
     event = "VeryLazy",
     dependencies = {
-      { 'nvim-tree/nvim-web-devicons' },
+      { "nvim-tree/nvim-web-devicons" },
       {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        build = 'make',
+        "nvim-telescope/telescope-fzf-native.nvim",
+        build = "make",
       },
-      { 'nvim-telescope/telescope-file-browser.nvim' },
-      { 'fdschmidt93/telescope-egrepify.nvim' },
-      { 'nvim-telescope/telescope-ui-select.nvim' },
-      { 'mollerhoj/telescope-recent-files.nvim' },
-      { 'nvim-lua/plenary.nvim' },
+      { "nvim-telescope/telescope-file-browser.nvim" },
+      { "fdschmidt93/telescope-egrepify.nvim" },
+      { "nvim-telescope/telescope-ui-select.nvim" },
+      { "mollerhoj/telescope-recent-files.nvim" },
+      { "nvim-lua/plenary.nvim" },
     },
     config = function()
-      local builtin = require('telescope.builtin')
-      local themes = require('telescope.themes')
-      local actions = require('telescope.actions')
-      local action_state = require('telescope.actions.state')
-      local egrepify = require('telescope').extensions.egrepify.egrepify
+      local builtin = require("telescope.builtin")
+      local themes = require("telescope.themes")
+      local actions = require("telescope.actions")
+      local action_state = require("telescope.actions.state")
+      local egrepify = require("telescope").extensions.egrepify.egrepify
 
       local function get_visual_selection()
         -- Yank current visual selection into the 'v' register

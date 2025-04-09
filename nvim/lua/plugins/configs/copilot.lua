@@ -16,7 +16,7 @@ return {
             accept_line = false,
             next = "<C-j>",
             prev = "<C-k>",
-            dismiss = "<C-e>",
+            dismiss = "<C-]>",
           },
         },
         panel = { enabled = false },

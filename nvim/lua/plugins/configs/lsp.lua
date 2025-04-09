@@ -42,6 +42,17 @@ return {
           end
 
           local client = vim.lsp.get_client_by_id(event.data.client_id)
+
+          if client and client.server_capabilities.codeLensProvider then
+            vim.api.nvim_create_autocmd({ "LspAttach", "InsertLeave" }, {
+              callback = function()
+                vim.lsp.codelens.refresh()
+              end,
+            })
+
+            vim.keymap.set("n", "<leader>cl", vim.lsp.codelens.run, { buffer = event.buf, silent = true })
+          end
+
           if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
             local highlight_augroup = vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
@@ -156,7 +167,14 @@ return {
 
         ruby_lsp = {
           filetypes = { 'ruby', 'eruby', 'slim' },
-          cmd = { 'mise', 'exec', '--', 'ruby-lsp' }
+          cmd = { 'mise', 'exec', '--', 'ruby-lsp' },
+          init_options = {
+            addonSettings = {
+              ["Ruby LSP Rails"] = {
+                enablePendingMigrationsPrompt = false,
+              },
+            },
+          },
         },
 
         yamlls = {

@@ -16,10 +16,11 @@
     "edit_prediction_provider": "zed"
   },
   "assistant": {
-    "enable_experimental_live_diffs": true,
+    "always_allow_tool_actions": true,
+    "default_profile": "ask",
     "default_model": {
       "provider": "zed.dev",
-      "model": "claude-3-7-sonnet-latest"
+      "model": "claude-3-5-sonnet-latest"
     },
     "version": "2"
   },

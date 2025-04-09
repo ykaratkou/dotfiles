@@ -40,6 +40,11 @@ return {
               LspReferenceText = { bg = colors.visual, },
               LspReferenceRead = { bg = colors.visual, },
               LspReferenceWrite = { bg = colors.visual, },
+              LspCodeLens = { fg = "#969696" },
+
+              TelescopePromptBorder = { fg = colors.gutter_fg, },
+              TelescopeResultsBorder = { fg = colors.gutter_fg, },
+              TelescopePreviewBorder = { fg = colors.gutter_fg, },
 
               rubyTodo = { fg = colors.comment, bg = colors.visual },
 
@@ -47,6 +52,12 @@ return {
               DiffDelete = { link = "NeogitDiffDelete" },
               DiffChange = { link = "NeogitDiffAdd" },
               DiffText = { link = "NeogitDiffAdd" },
+
+
+              -- DiffAdd = { bg = "#b4fac5" },
+              -- DiffDelete = { bg = "#ffbaba" },
+              -- DiffChange = { bg = "#ffe9d1" },
+              -- DiffText = { bg = "#ffe9d1" },
 
               CopilotSuggestion = { fg = "#908caa" },
             },
@@ -71,23 +82,16 @@ return {
       else
         set_light_theme()
       end
+
+      -- https://github.com/neovim/neovim/issues/23590
+      vim.cmd('hi! link CurSearch Search')
     end,
     config = function()
       local auto_dark_mode = require('auto-dark-mode')
       auto_dark_mode.setup({
         update_interval = 1000,
-        set_dark_mode = function()
-          set_dark_theme()
-          -- https://github.com/neovim/neovim/issues/23590
-          vim.cmd('hi! link CurSearch Search')
-        end,
-        set_light_mode = function()
-          set_light_theme()
-
-          -- https://github.com/neovim/neovim/issues/23590
-          vim.cmd('hi! link CurSearch Search')
-        end,
-
+        set_dark_mode = set_dark_theme,
+        set_light_mode = set_light_theme,
       })
     end
   }

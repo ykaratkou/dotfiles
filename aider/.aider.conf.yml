@@ -2,7 +2,7 @@
 cache-prompts: false
 
 ## Suggested number of tokens to use for repo map, use 0 to disable
-map-tokens: 2048
+map-tokens: 0
 
 ## Use colors suitable for a dark terminal background (default: False)
 dark-mode: true
