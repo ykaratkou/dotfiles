@@ -30,3 +30,7 @@ fish/conf.d/custom.fish
 
 Brewfile.lock.json
 .aider*
+.claude
+
+# Zed
+.zed

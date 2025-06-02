@@ -48,16 +48,10 @@ return {
 
               rubyTodo = { fg = colors.comment, bg = colors.visual },
 
-              DiffAdd = { link = "NeogitDiffAdd" },
-              DiffDelete = { link = "NeogitDiffDelete" },
-              DiffChange = { link = "NeogitDiffAdd" },
-              DiffText = { link = "NeogitDiffAdd" },
-
-
-              -- DiffAdd = { bg = "#b4fac5" },
-              -- DiffDelete = { bg = "#ffbaba" },
-              -- DiffChange = { bg = "#ffe9d1" },
-              -- DiffText = { bg = "#ffe9d1" },
+              DiffAdd = { bg = "#38482f" },
+              DiffDelete = { bg = "#4c2b2c" },
+              DiffChange = { bg = "#5d4c2f" },
+              DiffText = { bg = "#5d4c2f" },
 
               CopilotSuggestion = { fg = "#908caa" },
             },

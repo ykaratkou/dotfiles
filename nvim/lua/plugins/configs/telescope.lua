@@ -58,7 +58,7 @@ return {
 
       -- cdo shortcut for the last telescope input
       vim.keymap.set("n", "<leader>rp", function()
-        local command = ':cdo s/' .. action_state.get_current_line() .. '/' .. action_state.get_current_line() .. '/gc | update'
+        local command = ':cdo s/' .. action_state.get_current_line() .. '/' .. action_state.get_current_line() .. '/g | update'
         local keys = vim.api.nvim_replace_termcodes(command .. string.rep('<Left>', 12), false, false, true)
 
         vim.api.nvim_feedkeys(keys, 'n', {})
@@ -135,6 +135,14 @@ return {
         builtin.buffers(themes.get_dropdown({
           previewer = false,
           sort_mru = true,
+        }))
+      end)
+      vim.keymap.set('n', '<leader>j', function()
+        builtin.jumplist(themes.get_ivy({
+          layout_config = {
+            height = 20,
+          },
+          path_display = { "smart" },
         }))
       end)
       vim.keymap.set('n', '<leader>e', ":Telescope file_browser path=%:p:h select_buffer=true<CR>", { desc = 'files [e]xplorer' })
