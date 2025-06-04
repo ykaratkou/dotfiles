@@ -167,7 +167,7 @@ return {
 
         ruby_lsp = {
           filetypes = { 'ruby', 'eruby', 'slim' },
-          cmd = { 'mise', 'exec', '--', 'ruby-lsp' },
+          -- cmd = { 'mise', 'exec', '--', 'ruby-lsp' },
           init_options = {
             addonSettings = {
               ["Ruby LSP Rails"] = {

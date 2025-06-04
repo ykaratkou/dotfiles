@@ -57,7 +57,7 @@ return {
             end,
           },
           follow_current_file = {
-            enabled = false,
+            enabled = true,
             leave_dirs_open = true,
           },
         },

@@ -154,7 +154,7 @@ git_changes() {
 }
 
 git_status() {
-  local status=$(git rev-parse --abbrev-ref HEAD)
+  local status=$(git rev-parse --abbrev-ref -- HEAD)
   local changes=$(git_changes)
 
   if [[ -n $status ]]; then
