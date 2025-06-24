@@ -12,9 +12,9 @@
     "mode": "subtle",
     "enabled_in_text_threads": false
   },
-  "features": {
-    "edit_prediction_provider": "copilot"
-  },
+  // "features": {
+  //   "edit_prediction_provider": "copilot"
+  // },
   "agent": {
     "always_allow_tool_actions": true,
     "default_profile": "write",
@@ -57,12 +57,14 @@
     "**/.settings",
     "**/.ruby-lsp"
   ],
+  "max_tabs": 10,
   "wrap_guides": [120],
   "toolbar": {
     "breadcrumbs": false,
     "quick_actions": false
   },
-  "ui_font_size": 16,
+  "ui_font_size": 17,
+  "agent_font_size": 17,
   "buffer_font_size": 14,
   "buffer_font_family": "CodeNewRoman Nerd Font",
   "buffer_line_height": {
@@ -73,11 +75,11 @@
   "diagnostics": {
     "inline": {
       "enabled": true,
-      "update_debounce_ms": 150
+      "update_debounce_ms": 500
     }
   },
   "completions": {
-    "words": "enabled"
+    "words": "fallback"
   },
 
   "pane_split_direction_horizontal": "down",
@@ -86,7 +88,7 @@
   // Terminal
   "terminal": {
     "font_family": "CodeNewRoman Nerd Font",
-    "copy_on_select": false,
+    "copy_on_select": true,
     "line_height": "standard",
     "toolbar": {
       "breadcrumbs": false
@@ -129,23 +131,16 @@
       }
     }
   },
+  "tab_size": 2,
   "languages": {
     "Ruby": {
       "language_servers": [
         "ruby-lsp",
-        "rubocop",
         "tailwindcss-language-server",
         "!solargraph"
       ]
     },
-    "HTML": {
-      "tab_size": 2
-    },
-    "ERB": {
-      "tab_size": 2
-    },
     "Slim": {
-      "tab_size": 2,
       "language_servers": ["tailwindcss-language-server"]
     }
   },
