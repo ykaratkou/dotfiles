@@ -23,10 +23,10 @@ local plugins = {
 
   require 'plugins.configs.neotree',
   require 'plugins.configs.telescope',
-  {
-    'kevinhwang91/nvim-bqf',
-    config = true,
-  },
+  -- {
+  --   'kevinhwang91/nvim-bqf',
+  --   config = true,
+  -- },
 
   --
   -- Coding
@@ -50,11 +50,11 @@ local plugins = {
   require 'plugins.configs.gitsigns',
   require 'plugins.configs.blame',
   require 'plugins.configs.diffview',
-  require 'plugins.configs.neogit',
-  {
-    'akinsho/git-conflict.nvim',
-    config = true,
-  },
+  -- require 'plugins.configs.neogit',
+  -- {
+  --   'akinsho/git-conflict.nvim',
+  --   config = true,
+  -- },
 
   --
   -- LSP Support
