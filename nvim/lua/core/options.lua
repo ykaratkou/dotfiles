@@ -51,7 +51,7 @@ vim.opt.shortmess:append("I")
 vim.opt.spelllang = 'en'
 local spell_group = vim.api.nvim_create_augroup('spell', {clear = false})
 vim.api.nvim_create_autocmd({'BufEnter'}, {
-  pattern = {'*.txt','*.md','*.markdown','COMMIT_EDITMSG'},
+  pattern = {'*.txt','COMMIT_EDITMSG'},
   group = spell_group,
   command = 'setlocal spell',
   desc = 'Set spell for text files'

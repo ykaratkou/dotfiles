@@ -62,9 +62,8 @@
       "space r h": "git::Restore",
       "space r b": "git::RestoreFile",
       "space g d": "editor::ExpandAllDiffHunks",
-      // "space a": "editor::SelectAll",
+      "space a": "editor::SelectAll",
       "space f w": ["pane::DeploySearch", { "replace_enabled": true }],
-
       "space tab": "tab_switcher::Toggle"
     }
   },

@@ -16,6 +16,10 @@ vim.keymap.set('n', '<leader>wl', '<C-w>l')
 vim.keymap.set('n', '<leader>wj', '<C-w>j')
 vim.keymap.set('n', '<leader>wk', '<C-w>k')
 
+-- let j and k move up and down lines that have been wrapped
+vim.keymap.set("n", "j", "gj")
+vim.keymap.set("n", "k", "gk")
+
 -- Don't lose selection when shifting sidewards
 vim.keymap.set('x', '<', '<gv')
 vim.keymap.set('x', '>', '>gv')

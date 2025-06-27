@@ -20,6 +20,7 @@ y = 3
 
 [window]
 option_as_alt = "BOTH"
+decorations = "Buttonless"
 dynamic_padding = true
 
 #
