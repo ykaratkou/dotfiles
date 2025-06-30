@@ -41,6 +41,13 @@ vim.api.nvim_create_autocmd("LspProgress", {
   end,
 })
 
+vim.api.nvim_create_autocmd('FocusGained', {
+  pattern = '*',
+  callback = function()
+    require("snacks.explorer.watch").refresh()
+  end,
+})
+
 return {
   "folke/snacks.nvim",
   priority = 1000,
@@ -85,6 +92,9 @@ return {
         },
         smart = {
           multi = { "buffers", "files" },
+          wo = {
+            wrap = false,
+          },
         }
       },
       layouts = {
