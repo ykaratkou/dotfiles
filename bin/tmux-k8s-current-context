@@ -5,7 +5,7 @@ current_context() {
   local cluster_name=$(echo "$context" | awk -F/ '{print $NF}')
 
   if [[ -n $cluster_name ]]; then
-    printf "#[bg=#326CE5,fg=#ffffff] 󱃾 $cluster_name "
+    printf "#[bg=#326CE5,fg=#ffffff] 󱃾 $cluster_name #[bg=default,fg=default]"
   fi
 }
 

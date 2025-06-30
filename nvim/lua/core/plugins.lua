@@ -18,15 +18,8 @@ local plugins = {
   require 'plugins.configs.themes',
   require 'plugins.configs.icons',
   require 'plugins.configs.lualine',
-  require 'plugins.configs.fidget',
-  require 'plugins.configs.bufresize',
-
-  require 'plugins.configs.neotree',
-  require 'plugins.configs.telescope',
-  -- {
-  --   'kevinhwang91/nvim-bqf',
-  --   config = true,
-  -- },
+  require 'plugins.configs.snacks',
+  require 'plugins.configs.oil',
 
   --
   -- Coding
@@ -39,10 +32,7 @@ local plugins = {
     'brenoprata10/nvim-highlight-colors',
     config = true,
   },
-  {
-    "iamcco/markdown-preview.nvim",
-    build = "cd app && yarn install",
-  },
+  require 'plugins.configs.codecompanion',
 
   --
   -- Git
@@ -50,11 +40,6 @@ local plugins = {
   require 'plugins.configs.gitsigns',
   require 'plugins.configs.blame',
   require 'plugins.configs.diffview',
-  -- require 'plugins.configs.neogit',
-  -- {
-  --   'akinsho/git-conflict.nvim',
-  --   config = true,
-  -- },
 
   --
   -- LSP Support
@@ -64,7 +49,7 @@ local plugins = {
   --
   -- Completion
   --
-  require 'plugins.configs.completion',
+  require "plugins.configs.blink",
   require 'plugins.configs.copilot',
 }
 
