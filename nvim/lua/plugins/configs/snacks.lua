@@ -2,6 +2,7 @@ return {
   "folke/snacks.nvim",
   priority = 1000,
   lazy = false,
+  version = "v2.22.0",
   opts = {
     bigfile = { enabled = false },
     dashboard = { enabled = false },
@@ -29,11 +30,21 @@ return {
       sources = {
         explorer = {
           follow_file = false,
+          hidden = true,
           layout = {
             min_width = 80,
           },
         },
         grep = {
+          hidden = true,
+          layout = {
+            preview = "main",
+            preset = "ivy",
+          },
+          regex = false,
+        },
+        grep_word = {
+          hidden = true,
           layout = {
             preview = "main",
             preset = "ivy",
@@ -41,7 +52,12 @@ return {
           regex = false,
         },
         smart = {
-          multi = { "buffers", "files" },
+          multi = { "buffers", "recent", "files" },
+          filter = { cwd = true },
+          sort = {
+            fields = { "source_id" },
+          },
+          hidden = true,
           win = {
             preview = {
               wo = {

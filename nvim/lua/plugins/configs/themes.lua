@@ -65,8 +65,9 @@ return {
               SnacksPickerPathHidden = { fg = colors.comment },
               SnacksPickerPathIgnored = { fg = colors.comment },
               SnacksPickerGitStatusUntracked = { fg = colors.bright_green },
-              -- SnacksPickerMatch = { fg = colors.orange, bg = colors.comment },
+              SnacksPickerGitStatusModified = { fg = colors.orange },
               SnacksPickerMatch = { fg = colors.black, bg = colors.orange },
+              SnacksPickerBufFlags = { fg = colors.green },
             },
           })
         end
