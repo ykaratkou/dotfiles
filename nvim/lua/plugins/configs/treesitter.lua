@@ -26,6 +26,9 @@ return {
     },
     config = function()
       require('nvim-treesitter.configs').setup({
+        sync_install = false,
+        modules = {},
+
         ensure_installed = {
           'ruby',
           'slim',
@@ -68,8 +71,8 @@ return {
           enable = true,
           keymaps = {
             init_selection = false,
-            node_incremental = "<tab>",
-            node_decremental = "<bs>",
+            node_incremental = "+",
+            node_decremental = "_",
             scope_incremental = false,
           },
         },

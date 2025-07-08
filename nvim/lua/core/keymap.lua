@@ -50,15 +50,8 @@ vim.keymap.set('n', '<leader>q',  function()
     return
   end
   if not vim.tbl_isempty(vim.fn.getqflist()) then
-    vim.cmd "copen"
+    vim.cmd [[copen | stopinsert]]
   end
 end, { silent = true })
 
 vim.keymap.set('n', "<leader>u", ':SwitchCase<CR>')
-
---
--- Toggle terminal
---
-vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-vim.keymap.set('n', '<C-t>', require("plugins.toggle_term").toggle_terminal, { desc = 'Toggle terminal' })
-vim.keymap.set('t', '<C-t>', '<C-\\><C-n><cmd>lua require("plugins.toggle_term").toggle_terminal()<CR>', { desc = 'Toggle terminal' })

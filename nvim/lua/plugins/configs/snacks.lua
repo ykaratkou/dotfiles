@@ -111,6 +111,8 @@ return {
 
     { "<leader>re", function() Snacks.explorer.reveal() end},
     { "<leader>rt", function() Snacks.explorer() end},
+
+    { "<leader>go", function() Snacks.gitbrowse() end},
   },
   init = function()
     --
@@ -178,5 +180,11 @@ return {
         })
       end,
     })
+
+    vim.pp = function(_args)
+      Snacks.debug.log(_args)
+    end
+
+    vim.keymap.set({ 't', 'n' }, '<C-t', function() Snacks.terminal() end)
   end
 }

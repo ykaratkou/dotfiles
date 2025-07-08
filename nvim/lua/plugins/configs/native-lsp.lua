@@ -104,5 +104,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 return {
   'williamboman/mason.nvim',
+  event = "VeryLazy",
   opts = {},
 }
