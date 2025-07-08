@@ -44,7 +44,8 @@ local plugins = {
   --
   -- LSP Support
   --
-  require 'plugins.configs.lsp',
+  require 'plugins.configs.native-lsp',
+  require 'plugins.configs.conform',
 
   --
   -- Completion

@@ -20,6 +20,10 @@ return {
           },
         },
         panel = { enabled = false },
+        filetypes = {
+          yaml = true,
+          markdown = true,
+        },
       })
 
       vim.keymap.set('i', '<Tab>', function()
