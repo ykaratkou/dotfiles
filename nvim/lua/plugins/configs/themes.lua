@@ -58,16 +58,16 @@ return {
               BlinkCmpMenu = { bg = colors.bg, fg = colors.fg },
               BlinkCmpMenuBorder = { bg = colors.bg, fg = colors.fg },
 
-              SnacksPickerDir = { fg = colors.cyan },
-              SnacksPickerDirectory = { fg = colors.cyan },
+              SnacksPickerDir = { fg = colors.fg },
+              SnacksPickerDirectory = { fg = colors.fg },
               SnacksPickerBorder = { fg = colors.visual },
               SnacksPickerTree = { fg = colors.visual },
-              SnacksPickerPathHidden = { fg = colors.comment },
               SnacksPickerPathIgnored = { fg = colors.comment },
               SnacksPickerGitStatusUntracked = { fg = colors.bright_green },
               SnacksPickerGitStatusModified = { fg = colors.orange },
               SnacksPickerMatch = { fg = colors.black, bg = colors.orange },
               SnacksPickerBufFlags = { fg = colors.green },
+              SnacksPickerPathHidden = { fg = "#969696" },
             },
           })
         end
