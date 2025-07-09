@@ -55,3 +55,6 @@ vim.keymap.set('n', '<leader>q',  function()
 end, { silent = true })
 
 vim.keymap.set('n', "<leader>u", ':SwitchCase<CR>')
+
+vim.keymap.set('n', ',', require('plugins.bookmark').goto_bookmark, { silent = true })
+vim.keymap.set('n', '<leader>,', require('plugins.bookmark').reset_bookmark, { silent = true })

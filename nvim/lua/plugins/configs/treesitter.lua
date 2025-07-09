@@ -2,7 +2,7 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
-    event = { "BufReadPre", "BufNewFile" },
+    lazy = false,
     dependencies = {
       { 'RRethy/nvim-treesitter-endwise' },
       {
@@ -70,10 +70,10 @@ return {
         incremental_selection = {
           enable = true,
           keymaps = {
-            init_selection = false,
-            node_incremental = "+",
-            node_decremental = "_",
-            scope_incremental = false,
+            init_selection = "<tab>",
+            node_incremental = "<tab>",
+            node_decremental = "<bs>",
+            scope_incremental = "+",
           },
         },
 
