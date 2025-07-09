@@ -3,6 +3,7 @@ return {
   priority = 1000,
   lazy = false,
   version = "v2.22.0",
+  pin = true,
   opts = {
     bigfile = { enabled = false },
     dashboard = { enabled = false },
@@ -54,8 +55,9 @@ return {
         smart = {
           multi = { "buffers", "recent", "files" },
           filter = { cwd = true },
+          current = false,
           sort = {
-            fields = { "source_id" },
+            fields = { "source_id", "score:desc", "#text", "idx" },
           },
           hidden = true,
           win = {
@@ -108,6 +110,7 @@ return {
     { "<leader>fg", function() Snacks.picker.git_status() end },
     { "<leader>fw", function() Snacks.picker.grep_word() end, mode = { "n", "x" } },
     { "<leader>fr", function() Snacks.picker.resume() end },
+    { "<leader>fh", function() Snacks.picker.help() end},
 
     { "<leader>re", function() Snacks.explorer.reveal() end},
     { "<leader>rt", function() Snacks.explorer() end},
