@@ -4,6 +4,7 @@ return {
     formatters_by_ft = {
       json = { "jq" },
       yaml = { "prettier" },
+      eruby = { "erb_format" },
     },
     default_format_opts = {
       lsp_format = "fallback",

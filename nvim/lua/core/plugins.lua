@@ -20,6 +20,9 @@ local plugins = {
   require 'plugins.configs.lualine',
   require 'plugins.configs.snacks',
   require 'plugins.configs.oil',
+  require 'plugins.configs.neotree',
+  require 'plugins.configs.telescope',
+  require 'plugins.configs.grug-far',
 
   --
   -- Coding

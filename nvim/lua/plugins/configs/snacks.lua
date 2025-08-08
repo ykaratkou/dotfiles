@@ -5,142 +5,13 @@ return {
   version = "v2.22.0",
   pin = true,
   opts = {
-    bigfile = { enabled = false },
-    dashboard = { enabled = false },
-    indent = { enabled = false },
-    input = { enabled = false },
-    quickfile = { enabled = false },
-    scope = { enabled = false },
-    scroll = { enabled = false },
-    statuscolumn = { enabled = false },
-    words = { enabled = false },
-
-    notifier = {
-      enabled = true,
-    },
-    image = {
-      enabled = true,
-    },
-    explorer = {
-      enabled = true,
-      replace_netrw = true,
-    },
-
-    picker = {
-      enabled = true,
-      sources = {
-        explorer = {
-          follow_file = false,
-          hidden = true,
-          layout = {
-            min_width = 80,
-          },
-        },
-        grep = {
-          hidden = true,
-          layout = {
-            preview = "main",
-            preset = "ivy",
-          },
-          regex = false,
-        },
-        grep_word = {
-          hidden = true,
-          layout = {
-            preview = "main",
-            preset = "ivy",
-          },
-          regex = false,
-        },
-        smart = {
-          multi = { "buffers", "recent", "files" },
-          filter = { cwd = true },
-          current = false,
-          sort = {
-            fields = { "source_id", "score:desc", "#text", "idx" },
-          },
-          hidden = true,
-          win = {
-            preview = {
-              wo = {
-                number = false,
-                relativenumber = false,
-                signcolumn = "no",
-                wrap = false,
-              },
-            },
-          },
-          layout = {
-            layout = {
-              box = "horizontal",
-              width = 0.8,
-              min_width = 120,
-              height = 0.8,
-              backdrop = false,
-              {
-                box = "vertical",
-                border = "rounded",
-                title = "{title} {live} {flags}",
-                { win = "input", height = 1, border = "bottom" },
-                { win = "list", border = "none" },
-              },
-              {
-                win = "preview",
-                title = "{preview}",
-                border = "rounded",
-                width = 0.6,
-              },
-            }
-          }
-        }
-      },
-      layouts = {
-        default = {
-          layout = {
-            backdrop = false,
-          },
-        },
-      },
-    }
+    bigfile = { enabled = true },
+    notifier = { enabled = true },
   },
   keys = {
-    { "<leader>fo", function() Snacks.picker.smart() end },
-    { "<leader>ff", function() Snacks.picker.buffers() end },
-    { "<leader>fl", function() Snacks.picker.grep() end },
-    { "<leader>fg", function() Snacks.picker.git_status() end },
-    { "<leader>fw", function() Snacks.picker.grep_word() end, mode = { "n", "x" } },
-    { "<leader>fr", function() Snacks.picker.resume() end },
-    { "<leader>fh", function() Snacks.picker.help() end},
-
-    { "<leader>re", function() Snacks.explorer.reveal() end},
-    { "<leader>rt", function() Snacks.explorer() end},
-
     { "<leader>go", function() Snacks.gitbrowse() end},
   },
   init = function()
-    --
-    -- Search by gem paths
-    --
-    require('plenary.job'):new({
-      command = "bundle",
-      args = { "list", "--paths" },
-      on_exit = vim.schedule_wrap(function(job, return_val)
-        if return_val == 0 then
-          local result = job:result()
-
-          vim.keymap.set('n', '<leader>fO', function() Snacks.picker.smart({ dirs = result }) end)
-          vim.keymap.set('n', '<leader>fL', function() Snacks.picker.grep({ dirs = result }) end)
-        end
-      end),
-    }):start()
-
-    vim.api.nvim_create_autocmd('FocusGained', {
-      pattern = '*',
-      callback = function()
-        require("snacks.explorer.watch").refresh()
-      end,
-    })
-
     local progress = vim.defaulttable()
     vim.api.nvim_create_autocmd("LspProgress", {
       ---@param ev {data: {client_id: integer, params: lsp.ProgressParams}}
@@ -188,6 +59,6 @@ return {
       Snacks.debug.log(_args)
     end
 
-    vim.keymap.set({ 't', 'n' }, '<C-t', function() Snacks.terminal() end)
+    vim.keymap.set({ 't', 'n' }, '<C-t>', function() Snacks.terminal() end)
   end
 }
