@@ -31,24 +31,30 @@ return {
         local picker = action_state.get_current_picker(vim.api.nvim_get_current_buf())
         local selections = picker:get_multi_selection()
 
+        local function to_relative(path)
+          return vim.fn.fnamemodify(path, ":.")
+        end
+
         if #selections > 0 then
-          -- Get paths from selections
+          -- Get relative paths from selections
           local paths = {}
           for _, selection in ipairs(selections) do
-            table.insert(paths, selection.path or selection.value or selection[1])
+            local abs_path = selection.path or selection.value or selection[1]
+            table.insert(paths, to_relative(abs_path))
           end
 
           -- Join paths with newlines and copy to clipboard
           local paths_str = table.concat(paths, "\n")
-          vim.fn.setreg('+', paths_str)
-          vim.notify("Copied " .. #paths .. " file path(s) to clipboard", vim.log.levels.INFO)
+          vim.fn.setreg("+", paths_str)
+          vim.notify("Copied " .. #paths .. " relative file path(s) to clipboard", vim.log.levels.INFO)
         else
           -- If no multi-selection, copy the current selection
           local selection = action_state.get_selected_entry()
           if selection then
-            local path = selection.path or selection.value or selection[1]
-            vim.fn.setreg('+', path)
-            vim.notify("Copied file path to clipboard", vim.log.levels.INFO)
+            local abs_path = selection.path or selection.value or selection[1]
+            local rel_path = to_relative(abs_path)
+            vim.fn.setreg("+", rel_path)
+            vim.notify("Copied relative file path to clipboard", vim.log.levels.INFO)
           end
         end
       end
