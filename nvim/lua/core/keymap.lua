@@ -1,4 +1,4 @@
-vim.keymap.set("n", "<leader>a", "ggVG", { desc = "Select all" })
+vim.keymap.set("n", "<leader>va", "ggVG", { desc = "Select all" })
 
 vim.keymap.set({ 'x', 'c' }, '<C-h>', '<Left>')
 vim.keymap.set({ 'x', 'c' }, '<C-l>', '<Right>')

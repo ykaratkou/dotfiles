@@ -43,6 +43,17 @@ vim.filetype.add({
     slim = "slim",
   },
 })
+
+--
+-- Big files - disable syntax highlighting
+--
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "bigfile",
+  callback = function()
+    vim.bo.syntax = 0
+  end,
+})
+
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
     local bufnr = args.buf

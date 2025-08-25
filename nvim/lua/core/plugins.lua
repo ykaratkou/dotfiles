@@ -35,7 +35,7 @@ local plugins = {
     'brenoprata10/nvim-highlight-colors',
     config = true,
   },
-  require 'plugins.configs.codecompanion',
+  require 'plugins.configs.claude',
 
   --
   -- Git

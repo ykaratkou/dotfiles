@@ -169,7 +169,7 @@ return {
               ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
               ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
               ["<C-y>"] = copy_selected_file_pathes,
-              -- ["<esc>"] = actions.close,
+              ["<C-d>"] = actions.delete_buffer,
             }
           },
           file_ignore_patterns = {
