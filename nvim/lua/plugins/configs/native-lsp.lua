@@ -11,6 +11,7 @@ vim.lsp.enable({
   "tailwindcss",
   "tflint",
   "yamlls",
+  "herb_ls",
 })
 
 --
