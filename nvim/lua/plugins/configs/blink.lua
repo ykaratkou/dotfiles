@@ -82,6 +82,13 @@ return {
             )
           end,
         },
+        -- workaround for erb snippets
+        -- https://github.com/Saghen/blink.cmp/issues/1688#issuecomment-3025045064
+        snippets = {
+          override = {
+            get_trigger_characters = function(_) return {'=', '-', '#'} end,
+          },
+        },
       }
     },
 
