@@ -70,6 +70,12 @@ vim.api.nvim_create_autocmd('BufWritePre', {
   end,
 })
 
+-- Automatically replace tabs with spaces when saving
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  command = "retab",
+})
+
 --
 -- Jump to last edit position on opening file
 --

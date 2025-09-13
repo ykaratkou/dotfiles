@@ -86,7 +86,7 @@ return {
         -- https://github.com/Saghen/blink.cmp/issues/1688#issuecomment-3025045064
         snippets = {
           override = {
-            get_trigger_characters = function(_) return {'=', '-', '#'} end,
+            get_trigger_characters = function(_) return {'=', '-', '#', '%'} end,
           },
         },
       }

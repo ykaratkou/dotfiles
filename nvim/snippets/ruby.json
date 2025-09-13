@@ -25,21 +25,29 @@
     ]
   },
   "Class definition": {
-		"prefix": "class",
-		"body": [
-			"class ${1:ClassName}",
-			"\t$0",
-			"end"
-		]
-	},
+    "prefix": "class",
+    "body": [
+      "class ${1:ClassName}",
+      "  $0",
+      "end"
+    ]
+  },
+  "Class definition": {
+    "prefix": "defi",
+    "body": [
+      "def initialize",
+      "  $0",
+      "end"
+    ]
+  },
   "Class definition with initialize": {
-		"prefix": "class init",
-		"body": [
-			"class ${1:ClassName}",
-			"\tdef initialize",
-			"\t\t$0",
-			"\tend",
-			"end"
-		]
-	}
+    "prefix": "class init",
+    "body": [
+      "class ${1:ClassName}",
+      "  def initialize",
+      "    $0",
+      "  end",
+      "end"
+    ]
+  }
 }

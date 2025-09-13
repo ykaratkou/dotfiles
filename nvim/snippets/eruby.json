@@ -4,11 +4,49 @@
     "body": "<%= ${0} %>"
   },
   "erb no insert value": {
-    "prefix": "-",
+    "prefix": "%",
     "body": "<% ${0} %>"
   },
   "erb with comment": {
     "prefix": "#",
     "body": "<%# ${0} %>"
+  },
+  "if": {
+    "prefix": "if",
+    "body": [
+      "<% if ${1:} %>",
+      "  $2",
+      "<% end %>"
+    ],
+    "description": "if .. end"
+  },
+  "else": {
+    "prefix": "else",
+    "body": [
+      "<% else %>"
+    ],
+    "description": "else"
+  },
+  "elsif": {
+    "prefix": "elsif",
+    "body": [
+      "<% elsif ${1:} %>"
+    ],
+    "description": "elsif"
+  },
+  "end": {
+    "prefix": "end",
+    "body": "<% end %>"
+  },
+  "ife": {
+    "prefix": "ife",
+    "body": [
+      "<% if ${1:} %>",
+      "  $2",
+      "<% else %>",
+      "  $3",
+      "<% end %>"
+    ],
+    "description": "if .. else .. end"
   }
 }
