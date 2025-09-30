@@ -1,0 +1,59 @@
+{
+  "print_eggs": false,
+  "snapshot_config": {
+    "theme": "tomorrow",
+    "window": {
+      "mac_window_bar": false,
+      "shadow": {
+        "radius": 0,
+        "color": "#ffffff"
+      },
+      "margin": {
+        "x": 1,
+        "y": 1
+      },
+      "border": {
+        "width": 0,
+        "color": "#ffffff"
+      },
+      "title_config": {
+        "color": "#ffffff",
+        "font_family": "Pacifico"
+      }
+    },
+    "code_config": {
+      "font_family": "CodeNewRoman Nerd Font",
+      "breadcrumbs": {
+        "enable": false,
+        "separator": "/",
+        "color": "#ffffff",
+        "font_family": "CodeNewRoman Nerd Font"
+      }
+    },
+    "watermark": {
+      "content": "",
+      "font_family": "Pacifico",
+      "color": "#ffffff"
+    },
+    "background": {
+      "start": {
+        "x": 0,
+        "y": 0
+      },
+      "end": {
+        "x": "max",
+        "y": 0
+      },
+      "stops": [
+        {
+          "position": 0,
+          "color": "#ffffff"
+        },
+        {
+          "position": 1,
+          "color": "#ffffff"
+        }
+      ]
+    }
+  }
+}

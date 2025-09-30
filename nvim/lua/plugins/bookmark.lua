@@ -1,14 +1,13 @@
-local M = {}
 local bookmarked_bufnr = nil
 
-function M.goto_bookmark()
+local function goto_bookmark()
   if bookmarked_bufnr and vim.api.nvim_buf_is_loaded(bookmarked_bufnr) then
     vim.api.nvim_set_current_buf(bookmarked_bufnr)
     print("Go to buffer " .. bookmarked_bufnr)
   end
 end
 
-function M.reset_bookmark()
+local function reset_bookmark()
   if bookmarked_bufnr and vim.api.nvim_buf_is_loaded(bookmarked_bufnr) then
     bookmarked_bufnr = nil
     print("Reset bookmarked buffer")
@@ -18,4 +17,5 @@ function M.reset_bookmark()
   end
 end
 
-return M
+vim.keymap.set('n', ',', goto_bookmark, { silent = true })
+vim.keymap.set('n', '<leader>,', reset_bookmark, { silent = true })

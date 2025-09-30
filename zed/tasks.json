@@ -20,5 +20,16 @@
     "reveal": "never",
     "allow_concurrent_runs": true,
     "use_new_terminal": true
+  },
+  {
+    "label": "CodeSnap",
+    "command": "codesnap -o clipboard --file-path \"$ZED_RELATIVE_FILE\" --start-line-number $ZED_ROW -c",
+    "args": ["\"$ZED_SELECTED_TEXT\""],
+    "use_new_terminal": true,
+    "allow_concurrent_runs": false,
+    "reveal": "never",
+    "reveal_target": "dock",
+    "hide": "on_success",
+    "shell": "system"
   }
 ]

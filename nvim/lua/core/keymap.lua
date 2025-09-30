@@ -1,4 +1,4 @@
-vim.keymap.set("n", "<leader>va", "ggVG", { desc = "Select all" })
+vim.keymap.set("n", "<leader>a", "ggVG", { desc = "Select all" })
 
 vim.keymap.set({ 'x', 'c' }, '<C-h>', '<Left>')
 vim.keymap.set({ 'x', 'c' }, '<C-l>', '<Right>')
@@ -55,6 +55,3 @@ vim.keymap.set('n', '<leader>q',  function()
 end, { silent = true })
 
 vim.keymap.set('n', "<leader>u", ':SwitchCase<CR>')
-
-vim.keymap.set('n', ',', require('plugins.bookmark').goto_bookmark, { silent = true })
-vim.keymap.set('n', '<leader>,', require('plugins.bookmark').reset_bookmark, { silent = true })
