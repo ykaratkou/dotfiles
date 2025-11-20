@@ -1,17 +1,17 @@
 [color]
-	ui = true
+  ui = true
 
 [user]
-	name = Yauhen Karatkou
-	email = evgn.korotkov@gmail.com
+  name = Yauhen Karatkou
+  email = evgn.korotkov@gmail.com
   signingkey = ~/.ssh/personal.pub
 
 [core]
-	editor = nvim -u ~/.dotfiles/nvim/mini.lua
-	excludesFile = ~/.gitignore
+  editor = nvim -u ~/.dotfiles/nvim/mini.lua
+  excludesFile = ~/.gitignore
 
 [github]
-	user = evkorotkov
+  user = evkorotkov
 
 [gpg]
   format = ssh
