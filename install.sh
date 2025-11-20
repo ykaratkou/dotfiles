@@ -36,9 +36,6 @@ mkdir -p $HOME/.bin
 ln -s $HOME/.dotfiles/bin/tmux-sessionizer $HOME/.bin/
 ln -s $HOME/.dotfiles/bin/op-aws-helper $HOME/.bin/
 
-echo "Install codesnap"
-ln -s $HOME/.dotfiles/CodeSnap $HOME/.config/
-
 echo "Installing mise"
 curl https://mise.run | sh
 echo 'eval "$(~/.local/bin/mise activate bash)"' >> ~/.bashrc

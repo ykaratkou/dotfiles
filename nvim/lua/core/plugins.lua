@@ -15,7 +15,6 @@ vim.opt.rtp:prepend(lazypath)
 -- Custom Plugins
 --
 require 'plugins.bookmark'
-require 'plugins.codesnap'
 
 local plugins = {
   --

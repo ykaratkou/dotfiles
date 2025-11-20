@@ -17,5 +17,5 @@ local function reset_bookmark()
   end
 end
 
-vim.keymap.set('n', ',', goto_bookmark, { silent = true })
-vim.keymap.set('n', '<leader>,', reset_bookmark, { silent = true })
+vim.keymap.set('n', '.', goto_bookmark, { silent = true })
+vim.keymap.set('n', '<leader>.', reset_bookmark, { silent = true })
