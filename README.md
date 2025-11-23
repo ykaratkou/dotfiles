@@ -4,7 +4,7 @@
 
 ### MacOS:
 ```bash
-brew install ~/.dotfiles
+brew bundle --file=~/.dotfiles/Brewfile
 ```
 
 Configure Alacritty:
