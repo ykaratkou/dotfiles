@@ -47,6 +47,7 @@ return {
         ignore_install = {
           'dockerfile',
           'ini',
+          'proto',
         },
 
         auto_install = true,

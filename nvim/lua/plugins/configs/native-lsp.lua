@@ -57,6 +57,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end, opts)
     map('n', '<leader>rn', vim.lsp.buf.rename, opts)
     map({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
+    map('n', '<leader>t', vim.diagnostic.open_float, opts)
 
     local function client_supports_method(client, method, bufnr)
       return client:supports_method(method, bufnr)

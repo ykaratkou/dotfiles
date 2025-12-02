@@ -39,6 +39,7 @@ local plugins = {
     config = true,
   },
   require 'plugins.configs.claude',
+  require 'plugins.configs.done',
 
   --
   -- Git
