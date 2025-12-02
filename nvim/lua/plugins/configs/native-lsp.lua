@@ -103,6 +103,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end
 })
 
+vim.api.nvim_create_user_command("LspRestartAll", function()
+  for _, client in pairs(vim.lsp.get_clients()) do
+    client.stop(false)
+  end
+  vim.defer_fn(function()
+    -- re-open current buffer to reattach
+    vim.cmd("edit")
+  end, 100)
+end, {})
+
 return {
   'williamboman/mason.nvim',
   event = "VeryLazy",

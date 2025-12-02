@@ -14,8 +14,6 @@ vim.opt.rtp:prepend(lazypath)
 --
 -- Custom Plugins
 --
-require 'plugins.bookmark'
-
 local plugins = {
   --
   -- UI
