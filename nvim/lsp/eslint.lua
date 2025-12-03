@@ -34,7 +34,7 @@ return {
     packageManager = nil,
     useESLintClass = false,
     experimental = {
-      useFlatConfig = false,
+      useFlatConfig = true,
     },
     codeActionOnSave = {
       enable = false,
@@ -52,7 +52,7 @@ return {
     -- This path is relative to the workspace folder (root dir) of the server instance.
     nodePath = '',
     -- use the workspace folder location or the file location (if no workspace folder is open) as the working directory
-    workingDirectory = { mode = 'location' },
+    workingDirectory = { mode = 'auto' },
     codeAction = {
       disableRuleComment = {
         enable = true,
@@ -63,4 +63,13 @@ return {
       },
     },
   },
+  before_init = function(params, config)
+    local root = params.rootUri or params.rootPath
+    if not root then return end
+
+    config.settings.workspaceFolder = {
+      uri = root,
+      name = vim.fn.fnamemodify(vim.uri_to_fname(root), ":t"),
+    }
+  end,
 }
