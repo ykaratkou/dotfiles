@@ -11,6 +11,7 @@
 .envrc
 .nvmrc
 .tool-versions
+mise.toml
 
 # Sublime
 *.sublime-project

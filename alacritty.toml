@@ -155,6 +155,9 @@ Action = "None"
 key = "Q"
 mods = "Command"
 
+#
+# TMUX
+#
 [[keyboard.bindings]]
 chars = "\u0002P"
 key = "P"

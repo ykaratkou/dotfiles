@@ -22,6 +22,17 @@ alias rd='reviewdog -diff="git diff master"'
 # shortcut for running using ruby package manager
 alias rspec='bundle exec rspec'
 
+# Run rspec on uncommitted spec files
+function rspec_uncommitted
+  set -l files (git status --porcelain | grep 'spec/.*_spec\.rb' | awk '{print $2}')
+  if test -n "$files"
+    bundle exec rspec $files
+  else
+    echo "No uncommitted spec files found"
+  end
+end
+alias unspec='rspec_uncommitted'
+
 function overmind
   set -l command $argv[1]
   set -l original_overmind (which overmind)
