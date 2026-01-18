@@ -55,9 +55,6 @@ return {
 
               CopilotSuggestion = { fg = "#908caa" },
 
-              BlinkCmpMenu = { bg = colors.bg, fg = colors.fg },
-              BlinkCmpMenuBorder = { bg = colors.bg, fg = colors.fg },
-
               SnacksPickerDir = { fg = colors.fg },
               SnacksPickerDirectory = { fg = colors.fg },
               SnacksPickerBorder = { fg = colors.visual },

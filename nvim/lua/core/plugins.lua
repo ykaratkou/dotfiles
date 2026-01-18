@@ -40,6 +40,7 @@ local plugins = {
   },
   require 'plugins.configs.claude',
   require 'plugins.configs.done',
+  -- require 'plugins.configs.neogit',
 
   --
   -- Git
