@@ -1,9 +1,16 @@
 gui:
   showFileTree: true
   showCommandLog: false
+  nerdFontsVersion: ""
 
 os:
-  editCommand: 'nvim'
-  editCommandTemplate: '{{editor}} --server /tmp/current-neovim-server --remote-send ":e {{filename}}<CR>"'
+  edit: 'nvim --server /tmp/current-neovim-server --remote-send ":e {{filename}}<CR>"'
+
 promptToReturnFromSubprocess: false
 quitOnTopLevelReturn: true
+
+git:
+  pagers:
+    - pager: delta --syntax-theme Dracula --paging=never --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+  autoFetch: false
+  autoRefresh: false
