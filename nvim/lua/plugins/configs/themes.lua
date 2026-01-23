@@ -53,6 +53,11 @@ return {
               DiffChange = { bg = "#5d4c2f" },
               DiffText = { bg = "#5d4c2f" },
 
+              NvimTreeGitFileDirtyHL = { fg = colors.bright_cyan },
+              NvimTreeGitFileDeletedHL = { fg = colors.bright_red },
+              NvimTreeGitFileIgnoredHL = { fg = '#70747f' },
+              NvimTreeGitFileNewHL = { fg = colors.bright_green },
+
               CopilotSuggestion = { fg = "#908caa" },
 
               SnacksPickerDir = { fg = colors.fg },

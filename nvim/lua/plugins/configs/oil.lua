@@ -5,12 +5,20 @@ return {
     view_options = {
       show_hidden = true,
     },
-    float = {
-      max_width = 0.8,
-      max_height = 0.8,
-    },
     keymaps = {
       ["<esc>"] = { "actions.close", mode = "n" },
+    },
+    float = {
+      padding = 2,
+      max_width = 0.7,
+      max_height = 0.7,
+
+      border = "rounded",
+      win_options = {
+        winblend = 0,
+      },
+      -- preview_split: Split direction: "auto", "left", "right", "above", "below".
+      preview_split = "right",
     },
   },
   dependencies = {
