@@ -2,7 +2,7 @@
 
 command=${TMUX_WINDOWIZER_COMMAND:-"find ~ -mindepth 1 -maxdepth 1 -type d"}
 
-if [[ $# -eq 1 ]]; then
+if [[ $# -eq 1 ]] || [[ $# -eq 2 ]]; then
   selected=$1
 else
   sessions=$(tmux ls -F "#S,#{session_activity}")
@@ -41,7 +41,11 @@ if [[ -z $selected ]]; then
   exit 0
 fi
 
-selected_name=$(basename "$selected" | tr . _ | sed 's/ //g')
+if [[ $# -eq 2 ]]; then
+  selected_name=$2
+else
+  selected_name=$(basename "$selected" | tr . _ | sed 's/ //g')
+fi
 tmux_running=$(pgrep tmux)
 
 if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
@@ -58,4 +62,3 @@ if [[ -z $TMUX ]]; then
 else
   tmux switch-client -t $selected_name
 fi
-
