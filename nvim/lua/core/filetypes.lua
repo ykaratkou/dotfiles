@@ -53,15 +53,3 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.bo.syntax = 0
   end,
 })
-
-vim.api.nvim_create_autocmd("LspAttach", {
-  callback = function(args)
-    local bufnr = args.buf
-    local ft = vim.bo[bufnr].filetype
-    local disabled_filetypes = { "slim" }
-
-    if vim.tbl_contains(disabled_filetypes, ft) then
-      vim.diagnostic.enable(false, { bufnr = bufnr })
-    end
-  end,
-})
