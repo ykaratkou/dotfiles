@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+PIDFILE="/tmp/opencode-server.pid"
+PORT=4096
+
+start() {
+  if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
+    echo "opencode-server is already running (pid $(cat "$PIDFILE"))"
+    return 1
+  fi
+
+  opencode web --port $PORT &
+  echo $! > "$PIDFILE"
+  echo "Started opencode web (pid $!)"
+
+  # Give it a moment to bind the port
+  sleep 1
+
+  tailscale serve --bg http://127.0.0.1:$PORT
+  echo "Tailscale serve configured on port $PORT"
+}
+
+status() {
+  if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
+    echo "opencode-server is running (pid $(cat "$PIDFILE"))"
+    echo "Port: $PORT"
+    echo "Tailscale serve configured"
+  else
+    echo "opencode-server is not running"
+    rm -f "$PIDFILE"
+  fi
+}
+
+stop() {
+  if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
+    kill "$(cat "$PIDFILE")"
+    rm -f "$PIDFILE"
+    echo "Stopped opencode web"
+  else
+    echo "opencode-server is not running"
+    rm -f "$PIDFILE"
+  fi
+
+  tailscale serve reset
+  echo "Tailscale serve removed"
+}
+
+open_browser() {
+  open "http://127.0.0.1:$PORT"
+  echo "Opening http://127.0.0.1:$PORT in browser"
+}
+
+case "${1:-start}" in
+  start) start ;;
+  stop)  stop ;;
+  status) status ;;
+  open) open_browser ;;
+  *)
+    echo "Usage: opencode-server [start|stop|status|open]"
+    exit 1
+    ;;
+esac
