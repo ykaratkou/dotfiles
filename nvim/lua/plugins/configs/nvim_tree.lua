@@ -31,7 +31,7 @@ return {
 
         git = {
           enable = true,
-          -- timeout = 10000, -- default 400, git integration turns off after 10 attempts. increased to fix issue with 1password
+          timeout = 10000, -- default 400, git integration turns off after 10 attempts. increased to fix issue with 1password
         },
 
         diagnostics = {
