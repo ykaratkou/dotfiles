@@ -27,5 +27,5 @@ if not string match -q -- $PNPM_HOME $PATH
 end
 # pnpm end
 
-# opencode
-fish_add_path /Users/evgeny/.opencode/bin
+# bins
+fish_add_path ~/.dotfiles/bin

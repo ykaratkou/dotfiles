@@ -58,7 +58,13 @@ function current_branch
 end
 
 function main_branch
-  git branch -r | grep -E -i '^\s.origin\/(master|main)$' | cut -d/ -f2
+  if git show-ref --verify --quiet refs/remotes/origin/main
+    echo main
+  else if git show-ref --verify --quiet refs/remotes/origin/master
+    echo master
+  else
+    echo main
+  end
 end
 
 alias ggpull='git pull origin (current_branch)'

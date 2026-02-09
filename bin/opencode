@@ -1,0 +1,27 @@
+#!/bin/bash
+#
+# temp fix for https://github.com/anomalyco/opencode/issues/10563
+#
+OPENCODE_BIN=/Users/evgeny/.opencode/bin/opencode
+
+cleanup() {
+    get_descendants() {
+        local parent=$1
+        local children=$(pgrep -P $parent 2>/dev/null)
+        for child in $children; do
+            echo $child
+            get_descendants $child
+        done
+    }
+
+    local all_children=$(get_descendants $$)
+
+    if [ -n "$all_children" ]; then
+        echo $all_children | xargs kill 2>/dev/null
+        sleep 0.5
+        echo $all_children | xargs kill -9 2>/dev/null
+    fi
+}
+
+trap cleanup EXIT INT TERM HUP QUIT
+exec "$OPENCODE_BIN" "$@"

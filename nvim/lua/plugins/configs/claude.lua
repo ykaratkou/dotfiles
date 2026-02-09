@@ -1,7 +1,13 @@
 return {
   "coder/claudecode.nvim",
-  dependencies = { "folke/snacks.nvim" },
-  config = true,
+  opts = {
+    terminal = {
+      split_side = "right", -- "left" or "right"
+      split_width_percentage = 0.30,
+      provider = "native", -- "auto", "snacks", "native", "external", "none", or custom provider table
+      auto_close = true,
+    },
+  },
   keys = {
     { "<C-a>", "<cmd>ClaudeCode<cr>", mode = { "t" }, desc = "Toggle Claude" },
     { "<C-a>", "<cmd>ClaudeCodeFocus<cr>", mode = { "n" }, desc = "Focus Claude" },

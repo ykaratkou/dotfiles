@@ -9,7 +9,7 @@ start() {
     return 1
   fi
 
-  opencode web --port $PORT &
+  opencode web --hostname 127.0.0.1 --port $PORT &
   echo $! > "$PIDFILE"
   echo "Started opencode web (pid $!)"
 
@@ -24,7 +24,7 @@ status() {
   if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
     echo "opencode-server is running (pid $(cat "$PIDFILE"))"
     echo "Port: $PORT"
-    echo "Tailscale serve configured"
+    tailscale serve status 2>/dev/null | grep -oE 'https://[^ ]+' | head -1
   else
     echo "opencode-server is not running"
     rm -f "$PIDFILE"

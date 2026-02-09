@@ -2,8 +2,6 @@ return {
   "folke/snacks.nvim",
   priority = 1000,
   lazy = false,
-  version = "v2.22.0",
-  pin = true,
   opts = {
     bigfile = { enabled = true },
     notifier = { enabled = true },

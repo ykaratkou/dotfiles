@@ -1,3 +1,5 @@
+vim.o.shell = "bash"
+
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
 
