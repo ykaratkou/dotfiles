@@ -2,7 +2,7 @@
 #
 # temp fix for https://github.com/anomalyco/opencode/issues/10563
 #
-OPENCODE_BIN=/Users/evgeny/.opencode/bin/opencode
+OPENCODE_BIN=~/.opencode/bin/opencode
 
 cleanup() {
     get_descendants() {

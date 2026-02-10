@@ -24,4 +24,5 @@ function _askclaudequick
   end
 end
 
-alias ??='askclaudequick'
+alias ??='_askclaudequick'
+alias oc='opencode'
