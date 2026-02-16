@@ -30,10 +30,13 @@ tags
 fish/conf.d/custom.fish
 
 Brewfile.lock.json
-.aider*
-.claude
 
 # Zed
 .zed
 
-.playwright-mcp
+# AI
+.playwright-mcp/
+.playwright-cli/
+.opencode
+.aider*
+.claude

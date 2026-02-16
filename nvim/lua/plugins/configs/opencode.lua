@@ -6,7 +6,6 @@ return {
   config = function()
     vim.g.opencode_opts = {
       provider = {
-        cmd = "~/.dotfiles/bin/opencode --port",
         enabled = "snacks",
         snacks = {},
       }
