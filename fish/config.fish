@@ -17,6 +17,10 @@ end
 set fish_greeting
 set fish_color_valid_path
 
+if status is-interactive
+  fish_config theme choose base16-eighties
+end
+
 set -gx RIPGREP_CONFIG_PATH $HOME/.ripgreprc
 set -gx SHELL $(which fish)
 
