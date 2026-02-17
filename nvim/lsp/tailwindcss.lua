@@ -3,7 +3,7 @@ return {
     vim.fn.expand("$MASON/bin/tailwindcss-language-server"),
     "--stdio",
   },
-  filetypes = { 'ruby', 'eruby', 'slim' },
+  filetypes = { 'ruby', 'eruby', 'slim', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
   settings = {
     tailwindCSS = {
       validate = true,
