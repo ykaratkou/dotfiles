@@ -59,7 +59,7 @@ local plugins = {
   -- Completion
   --
   require "plugins.configs.blink",
-  require 'plugins.configs.copilot',
+  -- require 'plugins.configs.copilot',
 }
 
 require("lazy").setup(plugins, {})

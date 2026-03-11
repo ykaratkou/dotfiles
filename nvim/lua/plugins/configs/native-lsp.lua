@@ -12,6 +12,7 @@ vim.lsp.enable({
   "tflint",
   "yamlls",
   "herb_ls",
+  "copilot",
 })
 
 --
@@ -71,8 +72,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     if client and client.server_capabilities.codeLensProvider then
       vim.api.nvim_create_autocmd({ "LspAttach", "InsertLeave" }, {
+        buffer = event.buf,
         callback = function()
-          vim.lsp.codelens.refresh()
+          vim.lsp.codelens.enable(true, { bufnr = event.buf })
         end,
       })
 
