@@ -40,3 +40,4 @@ Brewfile.lock.json
 .opencode
 .aider*
 .claude
+.memo

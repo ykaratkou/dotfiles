@@ -9,7 +9,6 @@ theme = light:solarized_light,dark:alacritty
 adjust-underline-position = 40%
 adjust-underline-thickness = -60%
 
-adjust-cell-width=-1
 adjust-cell-height=3
 
 cursor-style = block
@@ -29,16 +28,16 @@ clipboard-paste-protection = false
 unfocused-split-opacity = 1.0
 
 # Tmux keybindings
-keybind = cmd+1=text:\x021
-keybind = cmd+2=text:\x022
-keybind = cmd+3=text:\x023
-keybind = cmd+4=text:\x024
-keybind = cmd+5=text:\x025
-keybind = cmd+6=text:\x026
-keybind = cmd+7=text:\x027
-keybind = cmd+8=text:\x028
-keybind = cmd+9=text:\x029
-keybind = cmd+0=text:\x020
+keybind = cmd+digit_1=text:\x02\x31
+keybind = cmd+digit_2=text:\x02\x32
+keybind = cmd+digit_3=text:\x02\x33
+keybind = cmd+digit_4=text:\x02\x34
+keybind = cmd+digit_5=text:\x02\x35
+keybind = cmd+digit_6=text:\x02\x36
+keybind = cmd+digit_7=text:\x02\x37
+keybind = cmd+digit_8=text:\x02\x38
+keybind = cmd+digit_9=text:\x02\x39
+keybind = cmd+digit_0=text:\x02\x30
 
 keybind = cmd+shift+d=text:\x02-
 keybind = cmd+d=text:\x02\\
