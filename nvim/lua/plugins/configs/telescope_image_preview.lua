@@ -61,6 +61,62 @@ local function clear_preview_buffer(bufnr)
   vim.bo[bufnr].modifiable = false
 end
 
+local function get_center_position(img, winid)
+  if not vim.api.nvim_win_is_valid(winid) then
+    return 0, 0
+  end
+
+  local ok_term, term = pcall(require, "image/utils/term")
+  local term_size = ok_term and term.get_size() or nil
+  if not term_size then
+    return 0, 0
+  end
+
+  local scale_factor = 1.0
+  if type(vim.g.image_nvim_scale_factor) == "number" then
+    scale_factor = vim.g.image_nvim_scale_factor
+  end
+
+  local image_width = math.floor((img.image_width or 0) / term_size.cell_width * scale_factor)
+  local image_height = math.floor((img.image_height or 0) / term_size.cell_height * scale_factor)
+
+  local win_width = vim.api.nvim_win_get_width(winid)
+  local win_height = vim.api.nvim_win_get_height(winid)
+  image_width = math.min(math.max(image_width, 1), win_width)
+  image_height = math.min(math.max(image_height, 1), win_height)
+
+  local centered_x = math.max(math.floor((win_width - image_width) / 2), 0)
+  local centered_y = math.max(math.floor((win_height - image_height) / 2), 0)
+
+  return centered_x, centered_y
+end
+
+local function recenter_if_needed(img, winid)
+  if not vim.api.nvim_win_is_valid(winid) then
+    return
+  end
+
+  local rendered = img.rendered_geometry or {}
+  if not rendered.width or not rendered.height then
+    return
+  end
+
+  local win_width = vim.api.nvim_win_get_width(winid)
+  local win_height = vim.api.nvim_win_get_height(winid)
+  local target_x = math.max(math.floor((win_width - rendered.width) / 2), 0)
+  local target_y = math.max(math.floor((win_height - rendered.height) / 2), 0)
+
+  if img.geometry.x == target_x and img.geometry.y == target_y then
+    return
+  end
+
+  img.geometry.x = target_x
+  img.geometry.y = target_y
+  pcall(function()
+    img:render()
+  end)
+end
+
 vim.api.nvim_create_autocmd({ "WinClosed", "BufLeave", "TabLeave", "FocusLost", "VimLeavePre" }, {
   group = augroup,
   callback = function()
@@ -109,6 +165,8 @@ function M.wrap_buffer_previewer_maker(original_maker)
         buffer = bufnr,
         x = 0,
         y = 0,
+        max_width_window_percentage = 100,
+        max_height_window_percentage = 100,
       })
 
       if not img then
@@ -120,9 +178,20 @@ function M.wrap_buffer_previewer_maker(original_maker)
         return
       end
 
+      local centered_x, centered_y = get_center_position(img, winid)
+      img.geometry.x = centered_x
+      img.geometry.y = centered_y
+
       pcall(function()
         img:render()
       end)
+
+      if request_id ~= latest_request then
+        clear_all_images()
+        return
+      end
+
+      recenter_if_needed(img, winid)
     end)
   end
 end
