@@ -25,6 +25,7 @@ local plugins = {
   require 'plugins.configs.oil',
   require 'plugins.configs.nvim_tree',
   require 'plugins.configs.telescope',
+  require 'plugins.configs.image',
   require 'plugins.configs.grug-far',
 
   --

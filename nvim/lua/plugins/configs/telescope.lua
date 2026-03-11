@@ -16,10 +16,12 @@ return {
     config = function()
       local builtin = require("telescope.builtin")
       local themes = require("telescope.themes")
+      local previewers = require("telescope.previewers")
       local actions = require("telescope.actions")
       local action_state = require("telescope.actions.state")
       local egrepify = require("telescope").extensions.egrepify.egrepify
       local recent_files = require('telescope').extensions['recent-files'].recent_files
+      local telescope_image_preview = require("plugins.configs.telescope_image_preview")
 
       local function get_visual_selection()
         vim.cmd('noau normal! "vy"')
@@ -139,6 +141,7 @@ return {
           },
         },
         defaults = {
+          buffer_previewer_maker = telescope_image_preview.wrap_buffer_previewer_maker(previewers.buffer_previewer_maker),
           sorting_strategy = "ascending",
           layout_config = {
             horizontal = {
