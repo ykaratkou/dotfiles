@@ -6,9 +6,6 @@ mouse-hide-while-typing = true
 
 theme = light:solarized_light,dark:alacritty
 
-adjust-underline-position = 40%
-adjust-underline-thickness = -60%
-
 adjust-cell-height=3
 
 cursor-style = block
