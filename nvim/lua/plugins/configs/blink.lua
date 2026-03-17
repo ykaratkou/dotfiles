@@ -1,15 +1,43 @@
+-- Abort codestral inline completion for the given buffer.
+-- Uses vim.lsp._capability internals to call completor:abort(), which cancels
+-- in-flight requests and hides ghost text without touching enable/disable state.
+local function get_completor(bufnr)
+  local ok, cap = pcall(require, 'vim.lsp._capability')
+  if not ok or not cap.all then return end
+  local cls = cap.all['inline_completion']
+  if not cls or not cls.active then return end
+  return cls.active[bufnr]
+end
+
+local function abort_inline_completion(bufnr)
+  local completor = get_completor(bufnr)
+  if completor then completor:abort() end
+end
+
 vim.api.nvim_create_autocmd('User', {
   pattern = 'BlinkCmpMenuOpen',
   callback = function()
-    require("copilot.suggestion").dismiss()
-    vim.b.copilot_suggestion_hidden = true
+    vim.b.blink_menu_open = true
+    abort_inline_completion(vim.api.nvim_get_current_buf())
   end,
 })
 
 vim.api.nvim_create_autocmd('User', {
   pattern = 'BlinkCmpMenuClose',
   callback = function()
-    vim.b.copilot_suggestion_hidden = false
+    vim.b.blink_menu_open = false
+    local completor = get_completor(vim.api.nvim_get_current_buf())
+    if completor then completor:automatic_request() end
+  end,
+})
+
+-- Prevent new inline completions from appearing while blink menu is open.
+-- Buffer-local completor autocmds fire first (setting a 200ms timer), then
+-- this global autocmd fires and aborts (cancelling that timer).
+vim.api.nvim_create_autocmd({ 'TextChangedI', 'CursorMovedI' }, {
+  callback = function()
+    if not vim.b.blink_menu_open then return end
+    abort_inline_completion(vim.api.nvim_get_current_buf())
   end,
 })
 
@@ -19,7 +47,6 @@ return {
   version = "v1.*",
   dependencies = {
     "moyiz/blink-emoji.nvim",
-    "fang2hou/blink-copilot",
   },
   opts = {
     keymap = {
