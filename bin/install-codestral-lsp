@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-VERSION="v0.1.2"
+VERSION="v0.2.0"
 REPO="ykaratkou/xpilot"
 BIN_DIR="$HOME/.bin"
 
