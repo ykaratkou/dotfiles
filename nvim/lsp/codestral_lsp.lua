@@ -1,5 +1,5 @@
 return {
-  cmd = { "op", "run", "--", vim.fn.expand('~/projects/xpilot/bin/codestral-lsp') },
+  cmd = { "op", "run", "--", vim.fn.expand('~/.bin/codestral-lsp') },
   cmd_env = {
     CODESTRAL_BACKEND = 'live',
     CODESTRAL_LSP_DEBUG_COMPLETION_LOG = "true",
