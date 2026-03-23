@@ -18,7 +18,7 @@ return {
       vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Tab>', true, true, true), 'n')
     end, { noremap = true, silent = true, buffer = bufnr })
 
-    vim.keymap.set('i', '<C-x>', function()
+    vim.keymap.set('i', '<C-j>', function()
       local Completor = require('vim.lsp._capability').all['inline_completion']
       local completor = Completor and Completor.active[bufnr]
       if completor then
