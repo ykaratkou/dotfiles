@@ -7,6 +7,8 @@ mouse-hide-while-typing = true
 theme = light:solarized_light,dark:alacritty
 
 adjust-cell-height=3
+window-decoration = none
+macos-titlebar-style = hidden
 
 cursor-style = block
 cursor-style-blink = false

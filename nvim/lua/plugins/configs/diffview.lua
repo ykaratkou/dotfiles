@@ -17,5 +17,6 @@ return {
     })
 
     vim.keymap.set('n', '<leader>gh', ':DiffviewFileHistory %<CR>')
+    vim.keymap.set('n', '<leader>gd', ':DiffviewOpen %<CR>')
   end
 }
