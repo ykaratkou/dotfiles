@@ -10,7 +10,6 @@ return {
         'windwp/nvim-ts-autotag',
         config = true,
       },
-      { 'JoosepAlviste/nvim-ts-context-commentstring' },
       {
         'nvim-treesitter/nvim-treesitter-textobjects',
         branch = 'main',
@@ -70,19 +69,17 @@ return {
         'sql',
       })
 
+      vim.keymap.set('n', '<tab>', 'van', { remap = true })
+      vim.keymap.set('x', '<tab>', 'an', { remap = true })
+      vim.keymap.set('x', '<bs>', 'in', { remap = true })
+
       vim.api.nvim_create_autocmd('FileType', {
         callback = function(ev)
           local buf = ev.buf
-          local ft = vim.bo[buf].filetype
-          local ok = pcall(vim.treesitter.start, buf)
-          if not ok then return end
+          if not pcall(vim.treesitter.start, buf) then return end
 
-          if ft ~= 'ruby' then
-            vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-          else
-            -- Keep vim regex highlighting alongside treesitter for ruby
-            vim.bo[buf].syntax = 'on'
-          end
+          vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          vim.bo[buf].syntax = 'on'
         end,
       })
     end,

@@ -19,9 +19,8 @@ ln -s $HOME/.dotfiles/.irbrc $HOME/.irbrc
 ln -s $HOME/.dotfiles/.ripgreprc $HOME/.ripgreprc
 ln -s $HOME/.dotfiles/.gemrc $HOME/.gemrc
 
-echo "Configuring Alacritty"
-mkdir -p $HOME/.config/alacritty
-ln -s $HOME/.dotfiles/alacritty.toml $HOME/.config/alacritty/
+echo "Configure Ghostty"
+ln -s $HOME/.dotfiles/ghostty/ $HOME/.config/ghostty
 
 echo "Configuring Bat"
 mkdir -p $HOME/.config/bat

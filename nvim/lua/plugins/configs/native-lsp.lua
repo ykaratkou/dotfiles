@@ -60,22 +60,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
     map({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
     map('n', '<leader>t', vim.diagnostic.open_float, opts)
 
-    local function client_supports_method(client, method, bufnr)
-      return client:supports_method(method, bufnr)
-    end
-
     local client = vim.lsp.get_client_by_id(event.data.client_id)
 
     if client then
       client.server_capabilities.semanticTokensProvider = nil
     end
 
-    if client and client.server_capabilities.codeLensProvider then
-      vim.lsp.codelens.enable(true, { bufnr = event.buf })
-      vim.keymap.set("n", "<leader>cl", vim.lsp.codelens.run, { buffer = event.buf, silent = true })
-    end
-
-    if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
+    if client and client:supports_method('textDocument/documentHighlight') then
       local highlight_augroup = vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
       vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
         buffer = event.buf,

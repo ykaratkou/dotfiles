@@ -34,7 +34,6 @@ local plugins = {
   require 'plugins.configs.treesitter',
   require 'plugins.configs.autopairs',
   require 'plugins.configs.surround',
-  require 'plugins.configs.comment',
   {
     'brenoprata10/nvim-highlight-colors',
     config = true,
