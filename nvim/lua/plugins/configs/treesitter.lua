@@ -1,6 +1,7 @@
 return {
   {
     'nvim-treesitter/nvim-treesitter',
+    branch = 'main',
     build = ':TSUpdate',
     lazy = false,
     dependencies = {
@@ -10,7 +11,33 @@ return {
         config = true,
       },
       { 'JoosepAlviste/nvim-ts-context-commentstring' },
-      { 'nvim-treesitter/nvim-treesitter-textobjects' },
+      {
+        'nvim-treesitter/nvim-treesitter-textobjects',
+        branch = 'main',
+        config = function()
+          require('nvim-treesitter-textobjects').setup({
+            select = {
+              lookahead = true,
+            },
+          })
+
+          local sel = require('nvim-treesitter-textobjects.select')
+          local keymaps = {
+            ['af'] = { '@function.outer', 'textobjects' },
+            ['if'] = { '@function.inner', 'textobjects' },
+            ['ac'] = { '@class.outer', 'textobjects' },
+            ['ic'] = { '@class.inner', 'textobjects' },
+            ['ib'] = { '@block.inner', 'textobjects' },
+            ['ab'] = { '@block.outer', 'textobjects' },
+            ['as'] = { '@local.scope', 'locals' },
+          }
+          for key, args in pairs(keymaps) do
+            vim.keymap.set({ 'x', 'o' }, key, function()
+              sel.select_textobject(args[1], args[2])
+            end)
+          end
+        end,
+      },
       {
         'Wansmer/treesj',
         config = function()
@@ -25,74 +52,38 @@ return {
       },
     },
     config = function()
-      require('nvim-treesitter.configs').setup({
-        sync_install = false,
-        modules = {},
+      require('nvim-treesitter').setup({})
 
-        ensure_installed = {
-          'ruby',
-          'slim',
-          'lua',
-          'embedded_template',
-          'html',
-          'javascript',
-          'terraform',
-          'markdown',
-          'fish',
-          'gotmpl',
-          'yaml',
-          'sql',
-        },
+      require('nvim-treesitter').install({
+        'ruby',
+        'slim',
+        'lua',
+        'embedded_template',
+        'html',
+        'javascript',
+        'terraform',
+        'markdown',
+        'markdown_inline',
+        'fish',
+        'gotmpl',
+        'yaml',
+        'sql',
+      })
 
-        ignore_install = {
-          'dockerfile',
-          'ini',
-          'proto',
-        },
+      vim.api.nvim_create_autocmd('FileType', {
+        callback = function(ev)
+          local buf = ev.buf
+          local ft = vim.bo[buf].filetype
+          local ok = pcall(vim.treesitter.start, buf)
+          if not ok then return end
 
-        auto_install = true,
-
-        highlight = {
-          enable = true,
-
-          additional_vim_regex_highlighting = { 'ruby' },
-        },
-
-        indent = {
-          enable = true,
-          -- https://github.com/nvim-treesitter/nvim-treesitter/issues/6114
-          disable = { 'ruby' },
-        },
-
-        endwise = {
-          enable = true,
-        },
-
-        incremental_selection = {
-          enable = true,
-          keymaps = {
-            init_selection = false,
-            node_incremental = "<tab>",
-            node_decremental = "<bs>",
-            scope_incremental = false,
-          },
-        },
-
-        textobjects = {
-          select = {
-            enable = true,
-            lookahead = true,
-            keymaps = {
-              ["af"] = "@function.outer",
-              ["if"] = "@function.inner",
-              ["ac"] = "@class.outer",
-              ["ic"] = "@class.inner",
-              ["ib"] = "@block.inner",
-              ["ab"] = "@block.outer",
-              ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
-            },
-          },
-        },
+          if ft ~= 'ruby' then
+            vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          else
+            -- Keep vim regex highlighting alongside treesitter for ruby
+            vim.bo[buf].syntax = 'on'
+          end
+        end,
       })
     end,
   },
