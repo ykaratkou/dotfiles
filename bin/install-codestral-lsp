@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+VERSION="v0.2.0"
+REPO="ykaratkou/codestral-lsp"
+BIN_DIR="$HOME/.bin"
+
+os="$(uname -s | tr '[:upper:]' '[:lower:]')"
+arch="$(uname -m)"
+
+case "$arch" in
+  arm64|aarch64) arch="arm64" ;;
+  x86_64|amd64) arch="amd64" ;;
+  *) echo "Unsupported arch: $arch"; exit 1 ;;
+esac
+case "$os" in
+  darwin|linux) ;;
+  *) echo "Unsupported OS: $os"; exit 1 ;;
+esac
+
+asset="codestral-lsp-${os}-${arch}.tar.gz"
+
+mkdir -p "$BIN_DIR"
+
+gh release download "$VERSION" --repo "$REPO" --pattern "$asset" --dir "$BIN_DIR"
+tar -xzf "$BIN_DIR/$asset" -C "$BIN_DIR"
+rm -f "$BIN_DIR/$asset"
+chmod +x "$BIN_DIR/codestral-lsp"
+
+echo "Installed: $BIN_DIR/codestral-lsp"

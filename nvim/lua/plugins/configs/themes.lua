@@ -59,6 +59,7 @@ return {
               NvimTreeGitFileNewHL = { fg = colors.bright_green },
 
               CopilotSuggestion = { fg = "#908caa" },
+              ComplHint = { fg = "#908caa" },
 
               SnacksPickerDir = { fg = colors.fg },
               SnacksPickerDirectory = { fg = colors.fg },
