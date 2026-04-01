@@ -64,6 +64,7 @@ return {
         'markdown',
         'markdown_inline',
         'fish',
+        'bash',
         'gotmpl',
         'yaml',
         'sql',

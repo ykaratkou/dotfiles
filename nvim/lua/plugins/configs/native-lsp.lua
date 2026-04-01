@@ -57,7 +57,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
       return vim.lsp.buf.signature_help(rounded(_opts))
     end, opts)
     map('n', '<leader>rn', vim.lsp.buf.rename, opts)
-    map({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
+    map({ 'n', 'v' }, '<leader>ca', function()
+      local diags = vim.diagnostic.get(0, { lnum = vim.fn.line('.') - 1 })
+      local lsp_diags = vim.tbl_map(function(d) return d.user_data and d.user_data.lsp or d end, diags)
+      vim.lsp.buf.code_action({ context = { diagnostics = lsp_diags } })
+    end, opts)
     map('n', '<leader>t', vim.diagnostic.open_float, opts)
 
     local client = vim.lsp.get_client_by_id(event.data.client_id)

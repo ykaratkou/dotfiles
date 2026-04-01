@@ -10,7 +10,7 @@ return {
       max_height_window_percentage = 100,
       tmux_show_only_in_active_window = true,
       integrations = {
-        markdown = { enabled = true },
+        markdown = { enabled = false },
         neorg = { enabled = true },
         html = { enabled = false },
         css = { enabled = false },
