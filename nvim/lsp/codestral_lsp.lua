@@ -1,5 +1,5 @@
 return {
-  cmd = { "op", "run", "--", vim.fn.expand('~/.bin/codestral-lsp') },
+  cmd = { vim.fn.expand('~/.bin/codestral-lsp'), "serve" },
   cmd_env = {
     CODESTRAL_BACKEND = 'live',
     CODESTRAL_LSP_DEBUG_COMPLETION_LOG = "true",
@@ -25,5 +25,20 @@ return {
         completor:request(1)  -- triggerKind=1 = Invoked/manual
       end
     end, { buffer = bufnr })
+
+    vim.keymap.set('i', '<C-l>', function()
+      vim.lsp.inline_completion.get({
+        bufnr = bufnr,
+        on_accept = function(item)
+          local text = type(item.insert_text) == 'string' and item.insert_text or ''
+          if text == '' then return item end
+          -- Accept optional leading whitespace + next non-whitespace chunk
+          local word = text:match('^%s*%S+') or text
+          item.insert_text = word
+          item.range = nil
+          return item
+        end,
+      })
+    end, { buffer = bufnr, noremap = true, silent = true })
   end,
 }
