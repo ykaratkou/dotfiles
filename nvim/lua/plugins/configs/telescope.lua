@@ -114,7 +114,7 @@ return {
       vim.keymap.set("n", "<leader>fl", function() egrepify(ivy({})) end)
 
       vim.keymap.set('n', '<leader>fg', builtin.git_status)
-      vim.keymap.set('n', '<leader>h', builtin.help_tags)
+      vim.keymap.set('n', '<leader>fh', builtin.help_tags)
 
       vim.keymap.set('n', '<leader>fo', recent_files)
 

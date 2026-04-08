@@ -27,6 +27,7 @@ local plugins = {
   require 'plugins.configs.telescope',
   require 'plugins.configs.image',
   require 'plugins.configs.grug-far',
+  require 'plugins.configs.undotree',
 
   --
   -- Coding
