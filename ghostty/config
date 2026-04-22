@@ -3,12 +3,14 @@ font-size = 14
 freetype-load-flags = "hinting"
 font-thicken = true
 mouse-hide-while-typing = true
+auto-update-channel = tip
 
 theme = light:solarized_light,dark:alacritty
 
 adjust-cell-height=3
 window-decoration = none
 macos-titlebar-style = hidden
+macos-option-as-alt = true
 
 cursor-style = block
 cursor-style-blink = false
