@@ -1,3 +1,5 @@
 fish/conf.d/custom.fish
 fish/completions/*
 fish/fish_variables
+
+zed/prompts/*

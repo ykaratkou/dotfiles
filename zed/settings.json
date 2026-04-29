@@ -10,23 +10,13 @@
   "icon_theme": "Material Icon Theme",
   "edit_predictions": {
     "mode": "subtle",
-    "enabled_in_text_threads": false
   },
   // "features": {
   //   "edit_prediction_provider": "copilot"
   // },
-  "agent": {
-    "always_allow_tool_actions": true,
-    "default_profile": "write",
-    "default_model": {
-      "provider": "zed.dev",
-      "model": "claude-sonnet-4"
-    },
-    "version": "2"
-  },
   "theme": {
     "mode": "system",
-    "light": "Zed Legacy: Solarized Light",
+    "light": "Ayu Light",
     "dark": "Dracula Mini"
   },
   "project_panel": {
@@ -64,7 +54,6 @@
     "quick_actions": false
   },
   "ui_font_size": 17,
-  "agent_font_size": 17,
   "buffer_font_size": 14,
   "buffer_font_family": "CodeNewRoman Nerd Font Mono",
   "buffer_line_height": {
@@ -96,11 +85,10 @@
   },
 
   // VIM
-  "relative_line_numbers": true,
+  "relative_line_numbers": "enabled",
   "vim_mode": true,
   "vim": {
     "use_system_clipboard": "always",
-    "use_multiline_find": true,
     "use_smartcase_find": true
   },
 
@@ -112,7 +100,6 @@
         "diagnostics": false
       }
     },
-    "helm-ls": {},
     "rubocop": {
       "initialization_options": {
         "safeAutocorrect": false
@@ -154,17 +141,4 @@
       "**/helmfile.d/**/*.yml"
     ]
   },
-  "auto_install_extension": {
-    "material-icon-theme": true,
-    "html": true,
-    "ruby": true,
-    "terraform": true,
-    "scss": true,
-    "lua": true,
-    "swift": true,
-    "slim": true,
-    "sql": true,
-    "toml": true,
-    "fish": true
-  }
 }

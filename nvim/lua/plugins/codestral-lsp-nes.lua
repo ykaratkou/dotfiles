@@ -277,19 +277,21 @@ function M.nes()
     },
   }
 
-  vim.notify('codestral.nes: requesting next edit suggestion…', vim.log.levels.INFO)
+  local start_ns = vim.uv.hrtime()
   clients[1]:request('workspace/executeCommand', params, function(err, result)
+    local elapsed_ms = (vim.uv.hrtime() - start_ns) / 1e6
     if err then
       vim.notify('codestral.nes failed: ' .. tostring(err.message or vim.inspect(err)), vim.log.levels.ERROR)
       return
     end
-    if type(result) ~= 'table' or vim.tbl_count(result) == 0 then
-      vim.notify('codestral.nes: no follow-up changes predicted', vim.log.levels.INFO)
+    local count = (type(result) == 'table') and vim.tbl_count(result) or 0
+    if count == 0 then
+      vim.notify(string.format('codestral.nes: no follow-up changes predicted (%d ms)', elapsed_ms), vim.log.levels.INFO)
       return
     end
     vim.schedule(function()
       render(bufnr, result)
-      vim.notify(string.format('codestral.nes: %d suggested change(s)', #result), vim.log.levels.INFO)
+      vim.notify(string.format('codestral.nes: %d suggested change(s) (%d ms)', count, elapsed_ms), vim.log.levels.INFO)
     end)
   end, bufnr)
 end
