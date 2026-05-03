@@ -5,7 +5,7 @@ font-thicken = true
 mouse-hide-while-typing = true
 auto-update-channel = tip
 
-theme = light:solarized_light,dark:alacritty
+theme = light:Rose Pine Dawn,dark:alacritty
 
 adjust-cell-height=3
 window-decoration = none

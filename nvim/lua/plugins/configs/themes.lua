@@ -29,6 +29,17 @@ return {
       {
         "rose-pine/neovim",
         name = "rose-pine",
+        config = function()
+          require("rose-pine").setup({
+            -- https://github.com/catppuccin/catppuccin#-palette
+            highlight_groups = {
+              NvimTreeGitFileDirtyHL = { fg = "#df8e1d" },
+              NvimTreeGitFileDeletedHL = { fg = "#d20f39" },
+              NvimTreeGitFileIgnoredHL = { fg = "#8c8fa1" },
+              NvimTreeGitFileNewHL = { fg = "#40a02b" },
+            },
+          })
+        end
       },
       {
         'Mofiqul/dracula.nvim',
