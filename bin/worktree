@@ -1,0 +1,227 @@
+#!/usr/bin/env nu
+
+# Manage git worktrees with optional per-project worktree.jsonc config.
+#
+# Usage:
+#   worktree create <name>
+#   worktree delete <name>
+
+def repo-root [] {
+    let result = (do --ignore-errors { ^git rev-parse --show-toplevel } | complete)
+    if $result.exit_code != 0 {
+        error make { msg: "Not inside a git repository" }
+    }
+    $result.stdout | str trim
+}
+
+def parse-jsonc [path: path] {
+    if not ($path | path exists) {
+        return {}
+    }
+    open --raw $path
+        | str replace --all --regex '/\*[\s\S]*?\*/' ''
+        | str replace --all --regex '(?m)//[^\n]*' ''
+        | str replace --all --regex ',(\s*[}\]])' '$1'
+        | from json
+}
+
+def load-config [root: path] {
+    let raw = (parse-jsonc ($root | path join "worktree.jsonc"))
+    {
+        worktreePath: ($raw | get --optional worktreePath)
+        sync: {
+            copyFiles:   ($raw | get --optional sync.copyFiles   | default [])
+            symlinkDirs: ($raw | get --optional sync.symlinkDirs | default [])
+            exclude:     ($raw | get --optional sync.exclude     | default [])
+        }
+        hooks: {
+            postCreate: ($raw | get --optional hooks.postCreate | default [])
+            preDelete:  ($raw | get --optional hooks.preDelete  | default [])
+        }
+    }
+}
+
+def worktree-path [config: record, project: string, name: string] {
+    if ($config.worktreePath | is-empty) {
+        "~/worktrees" | path expand | path join $project $name
+    } else {
+        $config.worktreePath | path expand | path join $name
+    }
+}
+
+def excluded? [path: string, exclude: list] {
+    $exclude | any { |pat| $path == $pat or ($path | str starts-with $"($pat)/") }
+}
+
+def open-tmux-session [path: path, worktree_name: string] {
+    let has_tmux = (do --ignore-errors { ^which tmux } | complete)
+    if $has_tmux.exit_code != 0 {
+        print "  tmux not found, skipping session creation"
+        return
+    }
+
+    let in_tmux = ("TMUX" in $env)
+    let session_name = if $in_tmux {
+        let current = (^tmux display-message -p "#S" | str trim)
+        $"($current) [($worktree_name)]"
+    } else {
+        $worktree_name
+    }
+
+    let exists = (do --ignore-errors { ^tmux has-session -t $"=($session_name)" } | complete)
+    if $exists.exit_code != 0 {
+        print $"\nCreating tmux session '($session_name)'"
+        ^tmux new-session -ds $session_name -c $path
+    } else {
+        print $"\nReusing tmux session '($session_name)'"
+    }
+
+    if $in_tmux {
+        ^tmux switch-client -t $"=($session_name)"
+    } else {
+        ^tmux attach -t $"=($session_name)"
+    }
+}
+
+def close-tmux-sessions [worktree_name: string] {
+    let has_tmux = (do --ignore-errors { ^which tmux } | complete)
+    if $has_tmux.exit_code != 0 { return }
+
+    let list = (do --ignore-errors { ^tmux list-sessions -F "#S" } | complete)
+    if $list.exit_code != 0 { return }
+
+    let all = ($list.stdout | lines)
+    let matches = ($all | where { |s|
+        $s == $worktree_name or ($s | str ends-with $" [($worktree_name)]")
+    })
+
+    if ($matches | is-empty) {
+        print "  no matching tmux session"
+        return
+    }
+
+    let in_tmux = ("TMUX" in $env)
+    let current = if $in_tmux {
+        ^tmux display-message -p "#S" | str trim
+    } else { "" }
+
+    for s in $matches {
+        print $"  killing tmux session '($s)'"
+        if $in_tmux and $s == $current {
+            let fallback = ($all | where { |x| not ($x in $matches) } | first)
+            if ($fallback | is-not-empty) {
+                ^tmux switch-client -t $"=($fallback)"
+            }
+        }
+        ^tmux kill-session -t $"=($s)"
+    }
+}
+
+def run-hooks [cwd: path, commands: list, label: string] {
+    if ($commands | is-empty) { return }
+    print $"\nRunning ($label) hooks in ($cwd)"
+    for cmd in $commands {
+        print $"  $ ($cmd)"
+        cd $cwd
+        ^bash -lc $cmd
+    }
+}
+
+def "main create" [name: string] {
+    let root = (repo-root)
+    let project = ($root | path basename)
+    let config = (load-config $root)
+    let dest = (worktree-path $config $project $name)
+
+    if ($dest | path exists) {
+        error make { msg: $"Worktree path already exists: ($dest)" }
+    }
+
+    print $"Creating worktree '($name)' at ($dest)"
+    mkdir ($dest | path dirname)
+
+    cd $root
+    let branch_check = (do --ignore-errors {
+        ^git show-ref --verify --quiet $"refs/heads/($name)"
+    } | complete)
+
+    if $branch_check.exit_code == 0 {
+        print $"Reusing existing branch '($name)'"
+        ^git worktree add $dest $name
+    } else {
+        print $"Creating new branch '($name)'"
+        ^git worktree add -b $name $dest
+    }
+
+    let exclude = $config.sync.exclude
+
+    for file in $config.sync.copyFiles {
+        if (excluded? $file $exclude) { continue }
+        let src = ($root | path join $file)
+        let dst = ($dest | path join $file)
+        if not ($src | path exists) {
+            print $"  skip copy (missing): ($file)"
+            continue
+        }
+        print $"  copy ($file)"
+        mkdir ($dst | path dirname)
+        ^cp -R $src $dst
+    }
+
+    for dir in $config.sync.symlinkDirs {
+        if (excluded? $dir $exclude) { continue }
+        let src = ($root | path join $dir | path expand)
+        let dst = ($dest | path join $dir)
+        if not ($src | path exists) {
+            print $"  skip symlink (missing): ($dir)"
+            continue
+        }
+        print $"  symlink ($dir) -> ($src)"
+        mkdir ($dst | path dirname)
+        ^ln -s $src $dst
+    }
+
+    run-hooks $dest $config.hooks.postCreate "postCreate"
+
+    print $"\nDone. ($dest)"
+
+    open-tmux-session $dest $name
+}
+
+def "main delete" [name: string] {
+    let root = (repo-root)
+    let project = ($root | path basename)
+    let config = (load-config $root)
+    let dest = (worktree-path $config $project $name)
+
+    if not ($dest | path exists) {
+        error make { msg: $"Worktree path does not exist: ($dest)" }
+    }
+
+    run-hooks $dest $config.hooks.preDelete "preDelete"
+
+    cd $root
+    print $"\nRemoving worktree at ($dest)"
+    let removed = (do --ignore-errors { ^git worktree remove --force $dest } | complete)
+    if $removed.exit_code != 0 {
+        print $"  git worktree remove failed: ($removed.stderr | str trim)"
+        print "  falling back to manual cleanup"
+    }
+
+    if ($dest | path exists) {
+        ^rm -rf $dest
+    }
+
+    ^git worktree prune
+
+    print "\nClosing tmux sessions"
+    close-tmux-sessions $name
+
+    print "\nDone."
+}
+
+def main [] {
+    print "Usage:"
+    print "  worktree create <name>"
+    print "  worktree delete <name>"
+}
