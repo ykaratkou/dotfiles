@@ -1,5 +1,5 @@
 local set_light_theme = function ()
-  vim.cmd("colorscheme solarized")
+  vim.cmd("colorscheme rose-pine")
   vim.api.nvim_set_option_value('background', 'light', {})
 end
 
@@ -14,17 +14,21 @@ return {
     lazy = false,
     priority = 1000,
     dependencies = {
+      -- {
+      --   'maxmx03/solarized.nvim',
+      --   config = function()
+      --     require('solarized').setup({
+      --       highlights = {
+      --         NeoTreeDirectoryName = { fg = "#268bd2" },
+      --         NeoTreeIndentMarker = { fg = "#586e75" },
+      --         NeoTreeDirectoryIcon = { fg = "#268bd2" },
+      --       }
+      --     })
+      --   end,
+      -- },
       {
-        'maxmx03/solarized.nvim',
-        config = function()
-          require('solarized').setup({
-            highlights = {
-              NeoTreeDirectoryName = { fg = "#268bd2" },
-              NeoTreeIndentMarker = { fg = "#586e75" },
-              NeoTreeDirectoryIcon = { fg = "#268bd2" },
-            }
-          })
-        end
+        "rose-pine/neovim",
+        name = "rose-pine",
       },
       {
         'Mofiqul/dracula.nvim',

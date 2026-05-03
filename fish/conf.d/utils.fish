@@ -9,3 +9,7 @@ function curltime
  -------------------------\n\
          total:  %{time_total}s\n" $argv[1]
 end
+
+function reload
+  source ~/.config/fish/config.fish
+end

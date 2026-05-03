@@ -7,15 +7,18 @@ if not set -q macos_theme
   end
 end
 
-function update_theme --on-variable macos_theme
-  if [ "$macos_theme" = "dark" ]
-    sed -i '' 's/light\.toml/dark\.toml/' ~/.dotfiles/alacritty.toml
-  else if [ "$macos_theme" = "light" ]
-    sed -i '' 's/dark\.toml/light\.toml/' ~/.dotfiles/alacritty.toml
+function __apply_fish_theme --description 'Apply fish color theme based on $macos_theme'
+  status is-interactive; or return
+  switch $macos_theme
+    case dark
+      fish_config theme choose base16-eighties
+    case light
+      fish_config theme choose ayu
   end
 end
 
-# Force apply fzf theme in the new tmux pane
-if test -n "$TMUX_PANE"
-  update_theme
+function __on_macos_theme_change --on-variable macos_theme
+  __apply_fish_theme
 end
+
+__apply_fish_theme

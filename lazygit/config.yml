@@ -11,6 +11,6 @@ quitOnTopLevelReturn: true
 
 git:
   pagers:
-    - pager: delta --syntax-theme Dracula --paging=never --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+    - pager: delta --syntax-theme $DELTA_THEME --paging=never --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
   autoFetch: false
   autoRefresh: false
