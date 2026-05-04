@@ -12,6 +12,7 @@
 .nvmrc
 .tool-versions
 mise.toml
+.worktree.json
 
 # Sublime
 *.sublime-project

@@ -1,6 +1,6 @@
 #!/usr/bin/env nu
 
-# Manage git worktrees with optional per-project worktree.jsonc config.
+# Manage git worktrees with optional per-project worktree.json config.
 #
 # Usage:
 #   worktree create <name>
@@ -26,7 +26,7 @@ def parse-jsonc [path: path] {
 }
 
 def load-config [root: path] {
-    let raw = (parse-jsonc ($root | path join "worktree.jsonc"))
+    let raw = (parse-jsonc ($root | path join ".worktree.json"))
     {
         worktreePath: ($raw | get --optional worktreePath)
         sync: {
