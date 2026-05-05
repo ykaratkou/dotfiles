@@ -7,9 +7,7 @@ auto-update-channel = tip
 
 theme = light:Rose Pine Dawn,dark:alacritty
 
-adjust-cell-height=3
-window-decoration = none
-macos-titlebar-style = hidden
+adjust-cell-height = 3
 macos-option-as-alt = true
 
 cursor-style = block
@@ -23,6 +21,9 @@ window-width = 120
 window-height = 45
 window-padding-x = 0
 window-padding-y = 0
+window-padding-balance = true
+window-step-resize = true
+window-padding-color = extend-always
 
 confirm-close-surface = false
 clipboard-paste-protection = false
