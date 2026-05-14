@@ -54,19 +54,10 @@ def excluded? [path: string, exclude: list] {
 }
 
 def open-tmux-session [path: path, worktree_name: string] {
-    let has_tmux = (do --ignore-errors { ^which tmux } | complete)
-    if $has_tmux.exit_code != 0 {
-        print "  tmux not found, skipping session creation"
-        return
-    }
+    if not ("TMUX" in $env) { return }
 
-    let in_tmux = ("TMUX" in $env)
-    let session_name = if $in_tmux {
-        let current = (^tmux display-message -p "#S" | str trim)
-        $"($current) [($worktree_name)]"
-    } else {
-        $worktree_name
-    }
+    let current = (^tmux display-message -p "#S" | str trim)
+    let session_name = $"($current) [($worktree_name)]"
 
     let exists = (do --ignore-errors { ^tmux has-session -t $"=($session_name)" } | complete)
     if $exists.exit_code != 0 {
@@ -76,17 +67,10 @@ def open-tmux-session [path: path, worktree_name: string] {
         print $"\nReusing tmux session '($session_name)'"
     }
 
-    if $in_tmux {
-        ^tmux switch-client -t $"=($session_name)"
-    } else {
-        ^tmux attach -t $"=($session_name)"
-    }
+    ^tmux switch-client -t $"=($session_name)"
 }
 
 def close-tmux-sessions [worktree_name: string] {
-    let has_tmux = (do --ignore-errors { ^which tmux } | complete)
-    if $has_tmux.exit_code != 0 { return }
-
     let list = (do --ignore-errors { ^tmux list-sessions -F "#S" } | complete)
     if $list.exit_code != 0 { return }
 
@@ -94,6 +78,8 @@ def close-tmux-sessions [worktree_name: string] {
     let matches = ($all | where { |s|
         $s == $worktree_name or ($s | str ends-with $" [($worktree_name)]")
     })
+
+    print "\nClosing tmux sessions"
 
     if ($matches | is-empty) {
         print "  no matching tmux session"
@@ -214,7 +200,6 @@ def "main delete" [name: string] {
 
     ^git worktree prune
 
-    print "\nClosing tmux sessions"
     close-tmux-sessions $name
 
     print "\nDone."
