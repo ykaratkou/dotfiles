@@ -120,7 +120,9 @@ def "main create" [name: string] {
     let dest = (worktree-path $config $project $name)
 
     if ($dest | path exists) {
-        error make { msg: $"Worktree path already exists: ($dest)" }
+        print $"Worktree already exists at ($dest), opening tmux session"
+        open-tmux-session $dest $name
+        return
     }
 
     print $"Creating worktree '($name)' at ($dest)"
