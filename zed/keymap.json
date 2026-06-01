@@ -7,63 +7,19 @@
 // from the command palette.
 [
   {
-    "context": "VimControl && !menu",
-    "bindings": {
-      "ctrl-]": "pane::ActivateNextItem",
-      "ctrl-[": "pane::ActivatePreviousItem",
-      "shift-k": "editor::Hover"
-    }
-  },
-  {
-    "context": "GitPanel || ProjectPanel || CollabPanel || OutlinePanel || ChatPanel || VimControl || EmptyPane || SharedScreen || MarkdownPreview || KeyContextView",
-    "bindings": {
-      "space w h": "workspace::ActivatePaneLeft",
-      "space w l": "workspace::ActivatePaneRight",
-      "space w k": "workspace::ActivatePaneUp",
-      "space w j": "workspace::ActivatePaneDown"
-    }
-  },
-  {
     "bindings": {
       "up": "menu::SelectPrevious",
       "down": "menu::SelectNext",
       "ctrl-k": "menu::SelectPrevious",
       "ctrl-j": "menu::SelectNext",
       "cmd-enter": "workspace::ToggleZoom",
-      // "cmd-a": "assistant::ToggleFocus",
-      // "cmd-t": "terminal_panel::ToggleFocus",
-      // "cmd-e": "project_panel::ToggleFocus",
-      // "cmd-g": "git_panel::ToggleFocus",
       "cmd-o": "projects::OpenRecent"
-    }
-  },
-  {
-    "context": "Workspace",
-    "bindings": {
-    }
-  },
-  {
-    "context": "Editor",
-    "bindings": {}
-  },
-  {
-    "context": "Editor && vim_mode == insert",
-    "bindings": {
-      "ctrl-j": "editor::ShowCompletions",
-      "ctrl-k": "editor::ShowCompletions"
     }
   },
   {
     "context": "Editor && vim_mode == normal",
     "bindings": {
-      "space g b": "git::Blame",
-      "space r e": "pane::RevealInProjectPanel",
-      "space f l": "pane::DeploySearch",
-      "space r h": "git::Restore",
-      "space r b": "git::RestoreFile",
-      "space g d": "editor::ExpandAllDiffHunks",
       "space a": "editor::SelectAll",
-      "space f w": ["pane::DeploySearch", { "replace_enabled": true }],
       "space tab": "tab_switcher::Toggle"
     }
   },
@@ -75,20 +31,6 @@
     }
   },
   {
-    "context": "ProjectPanel && not_editing",
-    "bindings": {
-      "space w l": "workspace::ActivatePaneRight",
-      "a": "project_panel::NewFile",
-      "d": "project_panel::Delete",
-      "r": "project_panel::Rename",
-      "x": "project_panel::Cut",
-      "c": "project_panel::Copy",
-      "p": "project_panel::Paste",
-      "shift-j": "menu::SelectNext",
-      "shift-k": "menu::SelectPrevious"
-    }
-  },
-  {
     "context": "Editor && vim_mode == visual",
     "bindings": {
       "tab": "editor::SelectLargerSyntaxNode",
@@ -96,20 +38,8 @@
       "<": "editor::Outdent",
       ">": "editor::Indent",
       "=": "editor::FormatSelections",
-      "space r h": "git::Restore",
       "shift-k": "editor::MoveLineUp",
       "shift-j": "editor::MoveLineDown"
-    }
-  },
-  {
-    "context": "Editor && (showing_code_actions || showing_completions)",
-    "bindings": {
-      // "up": "editor::ContextMenuPrevious",
-      // "down": "editor::ContextMenuNext",
-      "ctrl-k": "editor::ContextMenuPrevious",
-      "ctrl-j": "editor::ContextMenuNext"
-      // "pageup": "editor::ContextMenuFirst",
-      // "pagedown": "editor::ContextMenuLast"
     }
   },
   {
@@ -127,41 +57,4 @@
       "cmd-0": "pane::ActivateLastItem"
     }
   },
-  {
-    "context": "Terminal",
-    "bindings": {
-      // "cmd-j": "workspace::ToggleBottomDock",
-      "cmd-t": "workspace::NewTerminal",
-      "ctrl-]": "pane::ActivateNextItem",
-      "ctrl-[": "pane::ActivatePreviousItem"
-    }
-  },
-  {
-    "context": "ContextEditor > Editor",
-    "bindings": {
-      // need to override zoo
-      "cmd-enter": "assistant::Assist"
-    }
-  },
-  {
-    "context": "AgentPanel",
-    "use_key_equivalents": true,
-    "bindings": {
-      "cmd-t": "agent::NewThread"
-    }
-  },
-  {
-    "context": "Workspace && !Terminal",
-    "use_key_equivalents": true,
-    "bindings": {
-      "cmd-t": "workspace::NewFile"
-    }
-  },
-  {
-    "context": "BufferSearchBar",
-    "use_key_equivalents": true,
-    "bindings": {
-      "ctrl-r": "search::ToggleReplace"
-    }
-  }
 ]

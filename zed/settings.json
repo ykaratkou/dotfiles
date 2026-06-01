@@ -7,17 +7,18 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
-  "icon_theme": "Material Icon Theme",
+  "icon_theme": {
+    "mode": "light",
+    "light": "Material Icon Theme",
+    "dark": "Material Icon Theme"
+  },
   "edit_predictions": {
     "mode": "subtle",
   },
-  // "features": {
-  //   "edit_prediction_provider": "copilot"
-  // },
   "theme": {
-    "mode": "system",
+    "mode": "light",
     "light": "Ayu Light",
-    "dark": "Dracula Mini"
+    "dark": "Ayu Mirage"
   },
   "project_panel": {
     "default_width": 300,
@@ -94,42 +95,10 @@
 
   // Editor
   "format_on_save": "off",
-  "lsp": {
-    "ruby-lsp": {
-      "initialization_options": {
-        "diagnostics": false
-      }
-    },
-    "rubocop": {
-      "initialization_options": {
-        "safeAutocorrect": false
-      }
-    },
-    "tailwindcss-language-server": {
-      "settings": {
-        "includeLanguages": {
-          "erb": "html",
-          "slim": "html",
-          "ruby": "html"
-        },
-        "experimental": {
-          "classRegex": ["\\bclass:\\s*['\"]([^'\"]*)['\"]"]
-        }
-      }
-    }
-  },
   "tab_size": 2,
+  "lsp": {
+  },
   "languages": {
-    "Ruby": {
-      "language_servers": [
-        "ruby-lsp",
-        "tailwindcss-language-server",
-        "!solargraph"
-      ]
-    },
-    "Slim": {
-      "language_servers": ["tailwindcss-language-server"]
-    }
   },
   "file_types": {
     "Ruby": ["rbs", "Dangerfile"],
