@@ -20,6 +20,7 @@ return {
           require("solarized").setup({
             on_highlights = function(h, p)
               h.ComplHint = { link = "Comment" }
+              h.NonText = { link = "Comment" }
 
               h.DiffAdd = { bg = "#dbe6c0" }
               h.DiffDelete = { bg = "#f6d8d3" }

@@ -36,7 +36,6 @@ return {
             gs.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
           end)
           map('n', '<leader>rb', gs.reset_buffer, { desc = '[r]eset buffer' })
-          map('n', '<leader>gl', gs.preview_hunk_inline)
           -- Text object
           map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
         end

@@ -47,7 +47,7 @@ local plugins = {
   --
   require 'plugins.configs.gitsigns',
   require 'plugins.configs.blame',
-  require 'plugins.configs.diffview',
+  require 'plugins.configs.codediff',
 
   --
   -- LSP Support
