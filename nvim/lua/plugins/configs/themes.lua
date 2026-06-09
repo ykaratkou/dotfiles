@@ -14,33 +14,6 @@ return {
     lazy = false,
     priority = 1000,
     dependencies = {
-      -- {
-      --   'maxmx03/solarized.nvim',
-      --   config = function()
-      --     require('solarized').setup({
-      --       on_highlights = function (colors, color)
-      --         return {
-      --           NvimTreeGitFileDirtyHL = { fg = "#df8e1d" },
-      --           NvimTreeGitFileDeletedHL = { fg = "#d20f39" },
-      --           NvimTreeGitFileIgnoredHL = { fg = "#8c8fa1" },
-      --           NvimTreeGitFileNewHL = { fg = "#40a02b" },
-      --
-      --           DiffAdd = { bg = "#dbe6c0" },
-      --           DiffDelete = { bg = "#f6d8d3" },
-      --           DiffChange = { bg = "#f3e3c3" },
-      --           DiffText = { bg = "#ecd2a0" },
-      --
-      --           Identifier = { fg = colors.base00 },
-      --           ComplHint = { link = "Comment" },
-      --
-      --           DiffViewDiffText = { bg = "#ecd2a0" },
-      --           DiffViewDiffAdd = { bg = "#dbe6c0" },
-      --           DiffViewDiffDelete = { bg = "#f6d8d3" },
-      --         }
-      --       end,
-      --     })
-      --   end,
-      -- },
       {
         "ykaratkou/solarized.nvim",
         config = function()
@@ -82,21 +55,6 @@ return {
           })
         end,
       },
-      -- {
-      --   "rose-pine/neovim",
-      --   name = "rose-pine",
-      --   config = function()
-      --     require("rose-pine").setup({
-      --       -- https://github.com/catppuccin/catppuccin#-palette
-      --       highlight_groups = {
-      --         NvimTreeGitFileDirtyHL = { fg = "#df8e1d" },
-      --         NvimTreeGitFileDeletedHL = { fg = "#d20f39" },
-      --         NvimTreeGitFileIgnoredHL = { fg = "#8c8fa1" },
-      --         NvimTreeGitFileNewHL = { fg = "#40a02b" },
-      --       },
-      --     })
-      --   end
-      -- },
       {
         'Mofiqul/dracula.nvim',
         config = function()
@@ -105,9 +63,6 @@ return {
           dracula.setup({
             italic_comment = false,
             overrides = {
-              NeoTreeGitUnstaged = { fg = colors.cyan },
-              NeoTreeGitModified = { fg = colors.cyan },
-
               LspReferenceText = { bg = colors.visual, },
               LspReferenceRead = { bg = colors.visual, },
               LspReferenceWrite = { bg = colors.visual, },
@@ -131,17 +86,6 @@ return {
 
               CopilotSuggestion = { fg = "#908caa" },
               ComplHint = { fg = "#908caa" },
-
-              SnacksPickerDir = { fg = colors.fg },
-              SnacksPickerDirectory = { fg = colors.fg },
-              SnacksPickerBorder = { fg = colors.visual },
-              SnacksPickerTree = { fg = colors.visual },
-              SnacksPickerPathIgnored = { fg = colors.comment },
-              SnacksPickerGitStatusUntracked = { fg = colors.bright_green },
-              SnacksPickerGitStatusModified = { fg = colors.orange },
-              SnacksPickerMatch = { fg = colors.black, bg = colors.orange },
-              SnacksPickerBufFlags = { fg = colors.green },
-              SnacksPickerPathHidden = { fg = "#969696" },
             },
           })
         end
