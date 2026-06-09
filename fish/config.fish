@@ -32,3 +32,6 @@ fish_add_path ~/.dotfiles/bin
 fish_add_path ~/.opencode/bin
 fish_add_path ~/.bun/bin
 fish_add_path /Applications/Obsidian.app/Contents/MacOS
+
+set -Ux ANDROID_HOME $HOME/Library/Android/sdk
+fish_add_path $ANDROID_HOME/platform-tools

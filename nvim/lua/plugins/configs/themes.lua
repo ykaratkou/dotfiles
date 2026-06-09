@@ -1,5 +1,5 @@
 local set_light_theme = function ()
-  vim.cmd("colorscheme rose-pine")
+  vim.cmd("colorscheme solarized")
   vim.api.nvim_set_option_value('background', 'light', {})
 end
 
@@ -14,32 +14,46 @@ return {
     lazy = false,
     priority = 1000,
     dependencies = {
-      -- {
-      --   'maxmx03/solarized.nvim',
-      --   config = function()
-      --     require('solarized').setup({
-      --       highlights = {
-      --         NeoTreeDirectoryName = { fg = "#268bd2" },
-      --         NeoTreeIndentMarker = { fg = "#586e75" },
-      --         NeoTreeDirectoryIcon = { fg = "#268bd2" },
-      --       }
-      --     })
-      --   end,
-      -- },
       {
-        "rose-pine/neovim",
-        name = "rose-pine",
+        "ykaratkou/solarized.nvim",
         config = function()
-          require("rose-pine").setup({
-            -- https://github.com/catppuccin/catppuccin#-palette
-            highlight_groups = {
-              NvimTreeGitFileDirtyHL = { fg = "#df8e1d" },
-              NvimTreeGitFileDeletedHL = { fg = "#d20f39" },
-              NvimTreeGitFileIgnoredHL = { fg = "#8c8fa1" },
-              NvimTreeGitFileNewHL = { fg = "#40a02b" },
-            },
+          require("solarized").setup({
+            on_highlights = function(h, p)
+              h.ComplHint = { link = "Comment" }
+
+              h.DiffAdd = { bg = "#dbe6c0" }
+              h.DiffDelete = { bg = "#f6d8d3" }
+              h.DiffChange = { bg = "#f3e3c3" }
+              h.DiffText = { bg = "#ecd2a0" }
+
+              -- gitsigns.nvim
+              h.GitSignsAdd    = { fg = p.green }
+              h.GitSignsChange = { fg = p.yellow }
+              h.GitSignsDelete = { fg = p.red }
+
+              h.NvimTreeFolderName   = { fg = p.base00 }
+              h.NvimTreeFolderIcon   = { fg = p.blue }
+              h.NvimTreeRootFolder   = { fg = p.orange, bold = true }
+              h.NvimTreeIndentMarker = { fg = p.base01 }
+
+              h.NvimTreeGitFileNewHL     = { fg = p.green }
+              h.NvimTreeGitFileDirtyHL   = { fg = p.yellow }
+              h.NvimTreeGitFileStagedHL  = { fg = p.green }
+              h.NvimTreeGitFileDeletedHL = { fg = p.red }
+              h.NvimTreeGitFileRenamedHL = { fg = p.orange }
+              h.NvimTreeGitFileMergeHL   = { fg = p.orange }
+              h.NvimTreeGitFileIgnoredHL = { fg = p.comment }
+
+              h.NvimTreeGitNewIcon     = { fg = p.green }
+              h.NvimTreeGitDirtyIcon   = { fg = p.yellow }
+              h.NvimTreeGitStagedIcon  = { fg = p.green }
+              h.NvimTreeGitDeletedIcon = { fg = p.red }
+              h.NvimTreeGitRenamedIcon = { fg = p.orange }
+              h.NvimTreeGitMergeIcon   = { fg = p.orange }
+              h.NvimTreeGitIgnoredIcon = { fg = p.comment }
+            end,
           })
-        end
+        end,
       },
       {
         'Mofiqul/dracula.nvim',
@@ -49,9 +63,6 @@ return {
           dracula.setup({
             italic_comment = false,
             overrides = {
-              NeoTreeGitUnstaged = { fg = colors.cyan },
-              NeoTreeGitModified = { fg = colors.cyan },
-
               LspReferenceText = { bg = colors.visual, },
               LspReferenceRead = { bg = colors.visual, },
               LspReferenceWrite = { bg = colors.visual, },
@@ -75,17 +86,6 @@ return {
 
               CopilotSuggestion = { fg = "#908caa" },
               ComplHint = { fg = "#908caa" },
-
-              SnacksPickerDir = { fg = colors.fg },
-              SnacksPickerDirectory = { fg = colors.fg },
-              SnacksPickerBorder = { fg = colors.visual },
-              SnacksPickerTree = { fg = colors.visual },
-              SnacksPickerPathIgnored = { fg = colors.comment },
-              SnacksPickerGitStatusUntracked = { fg = colors.bright_green },
-              SnacksPickerGitStatusModified = { fg = colors.orange },
-              SnacksPickerMatch = { fg = colors.black, bg = colors.orange },
-              SnacksPickerBufFlags = { fg = colors.green },
-              SnacksPickerPathHidden = { fg = "#969696" },
             },
           })
         end

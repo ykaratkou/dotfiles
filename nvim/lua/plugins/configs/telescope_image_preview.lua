@@ -14,6 +14,7 @@ local image_extensions = {
 
 local augroup = vim.api.nvim_create_augroup("TelescopeImagePreview", { clear = true })
 local latest_request = 0
+local image_id_prefix = "telescope-preview-"
 
 local function with_image_api(fn)
   local ok, image_api = pcall(require, "image")
@@ -24,7 +25,17 @@ end
 
 local function clear_all_images()
   with_image_api(function(image_api)
-    image_api.clear()
+    if type(image_api.get_images) ~= "function" then
+      return
+    end
+
+    for _, img in ipairs(image_api.get_images()) do
+      if type(img.id) == "string" and img.id:sub(1, #image_id_prefix) == image_id_prefix then
+        pcall(function()
+          image_api.clear(img.id)
+        end)
+      end
+    end
   end)
 end
 
@@ -160,7 +171,7 @@ function M.wrap_buffer_previewer_maker(original_maker)
 
       local path = vim.fn.fnamemodify(filepath, ":p")
       local img = image_api.from_file(path, {
-        id = "telescope-preview-" .. request_id,
+        id = image_id_prefix .. request_id,
         window = winid,
         buffer = bufnr,
         x = 0,

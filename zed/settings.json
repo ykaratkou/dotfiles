@@ -16,7 +16,7 @@
     "mode": "subtle",
   },
   "theme": {
-    "mode": "light",
+    "mode": "system",
     "light": "Ayu Light",
     "dark": "Ayu Mirage"
   },

@@ -5,13 +5,12 @@ return {
       require('lualine').setup({
         options = {
           icons_enabled = false,
-          disabled_filetypes = {
-            'neo-tree',
-            'NvimTree',
-            'copilot-chat',
-          }
+          disabled_filetypes = { 'NvimTree' }
         },
         sections = {
+          lualine_a = {'mode'},
+          lualine_b = {'branch'},
+          lualine_c = {'filename'},
           lualine_x = {
             {
               function()
@@ -28,12 +27,13 @@ return {
                 end
                 return "󰘧 " .. table.concat(c, ' | ')
               end,
-              color = { fg = '#9ccfd8' },
             },
             'encoding',
             'fileformat',
             'filetype',
           },
+          lualine_y = {'progress'},
+          lualine_z = {'location'}
         },
       })
     end,
