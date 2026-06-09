@@ -19,14 +19,14 @@ function __apply_fish_theme --description 'Apply fish color theme based on $maco
         --color=info:#ffb86c,prompt:#50fa7b,pointer:#ff79c6
         --color=marker:#ff79c6,spinner:#ffb86c,header:#6272a4"
     case light
-      fish_config theme choose ayu
+      fish_config theme choose solarized
 
       set -Ux FZF_DEFAULT_OPTS "
-        --color=fg:#797593,bg:#faf4ed,hl:#d7827e
-        --color=fg+:#575279,bg+:#f2e9e1,hl+:#d7827e
-        --color=border:#dfdad9,header:#286983,gutter:#faf4ed
-        --color=spinner:#ea9d34,info:#56949f
-        --color=pointer:#907aa9,marker:#b4637a,prompt:#797593"
+        --color=fg:#657b83,bg:#fdf6e3,hl:#268bd2
+        --color=fg+:#586e75,bg+:#eee8d5,hl+:#268bd2
+        --color=border:#93a1a1,header:#268bd2,gutter:#fdf6e3
+        --color=spinner:#b58900,info:#2aa198
+        --color=pointer:#6c71c4,marker:#dc322f,prompt:#657b83"
   end
 end
 

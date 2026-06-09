@@ -45,9 +45,6 @@ return {
   "saghen/blink.cmp",
   lazy = false,
   version = "v1.*",
-  dependencies = {
-    "moyiz/blink-emoji.nvim",
-  },
   opts = {
     keymap = {
       preset = "default",
@@ -80,7 +77,7 @@ return {
     },
 
     sources = {
-      default = { "lsp", "buffer", "path", "snippets", "emoji" },
+      default = { "lsp", "buffer", "path", "snippets" },
       providers = {
         lsp = {
           async = true,
@@ -94,20 +91,6 @@ return {
               end, vim.api.nvim_list_bufs())
             end
           },
-        },
-        emoji = {
-          module = "blink-emoji",
-          name = "Emoji",
-          score_offset = 15, -- Tune by preference
-          opts = { insert = true }, -- Insert emoji (default) or complete its name
-          should_show_items = function()
-            return vim.tbl_contains(
-              -- Enable emoji completion only for git commits and markdown.
-              -- By default, enabled for all file-types.
-              { "gitcommit", "markdown" },
-              vim.o.filetype
-            )
-          end,
         },
         -- workaround for erb snippets
         -- https://github.com/Saghen/blink.cmp/issues/1688#issuecomment-3025045064
