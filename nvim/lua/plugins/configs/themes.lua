@@ -58,21 +58,11 @@ return {
               h.GitSignsChange = { fg = p.yellow }
               h.GitSignsDelete = { fg = p.red }
 
-              h.CmpItemAbbr           = { fg = p.fg }
-              h.CmpItemAbbrDeprecated = { fg = p.comment, strikethrough = true }
-              h.CmpItemAbbrMatch      = { fg = p.orange, bold = true }
-              h.CmpItemAbbrMatchFuzzy = { fg = p.orange, bold = true }
-              h.CmpItemKind           = { fg = p.violet }
-              h.CmpItemMenu           = { fg = p.comment }
-
-              -- nvim-tree
               h.NvimTreeFolderName   = { fg = p.base00 }
               h.NvimTreeFolderIcon   = { fg = p.blue }
               h.NvimTreeRootFolder   = { fg = p.orange, bold = true }
-              -- полосочки отступов (и стрелки) — не синие, а приглушённый base
               h.NvimTreeIndentMarker = { fg = p.base01 }
 
-              -- git-статус имён файлов (актуальные имена групп)
               h.NvimTreeGitFileNewHL     = { fg = p.green }
               h.NvimTreeGitFileDirtyHL   = { fg = p.yellow }
               h.NvimTreeGitFileStagedHL  = { fg = p.green }
@@ -81,7 +71,6 @@ return {
               h.NvimTreeGitFileMergeHL   = { fg = p.orange }
               h.NvimTreeGitFileIgnoredHL = { fg = p.comment }
 
-              -- иконки git справа
               h.NvimTreeGitNewIcon     = { fg = p.green }
               h.NvimTreeGitDirtyIcon   = { fg = p.yellow }
               h.NvimTreeGitStagedIcon  = { fg = p.green }
