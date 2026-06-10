@@ -117,6 +117,7 @@ return {
       vim.keymap.set('n', '<leader>fh', builtin.help_tags)
 
       vim.keymap.set('n', '<leader>fo', recent_files)
+      vim.keymap.set('n', '<leader>fi', builtin.highlights)
 
       vim.keymap.set('n', '<leader>ff', function()
         builtin.buffers(themes.get_dropdown({

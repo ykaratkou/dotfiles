@@ -54,7 +54,6 @@ return {
               h.DiffChange = { bg = "#f3e3c3" }
               h.DiffText = { bg = "#ecd2a0" }
 
-              -- gitsigns.nvim
               h.GitSignsAdd    = { fg = p.green }
               h.GitSignsChange = { fg = p.yellow }
               h.GitSignsDelete = { fg = p.red }
@@ -79,6 +78,8 @@ return {
               h.NvimTreeGitRenamedIcon = { fg = p.orange }
               h.NvimTreeGitMergeIcon   = { fg = p.orange }
               h.NvimTreeGitIgnoredIcon = { fg = p.comment }
+
+              h.EgrepifyFile = { fg = p.blue, bold = true }
             end,
           })
         end,
