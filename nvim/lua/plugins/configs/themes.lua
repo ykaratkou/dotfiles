@@ -22,6 +22,33 @@ return {
               h.ComplHint = { link = "Comment" }
               h.NonText = { link = "Comment" }
 
+              h.BlinkCmpKind = { link = "PmenuKind" }
+              h.BlinkCmpKindText = { link = "@markup" }
+              h.BlinkCmpKindMethod = { link = "@function.method" }
+              h.BlinkCmpKindFunction = { link = "@function" }
+              h.BlinkCmpKindConstructor = { link = "@constructor" }
+              h.BlinkCmpKindField = { link = "@variable.member" }
+              h.BlinkCmpKindVariable = { link = "@variable" }
+              h.BlinkCmpKindClass = { link = "@type" }
+              h.BlinkCmpKindInterface = { link = "@type" }
+              h.BlinkCmpKindModule = { link = "@module" }
+              h.BlinkCmpKindProperty = { link = "@property" }
+              h.BlinkCmpKindUnit = { link = "@constant" }
+              h.BlinkCmpKindValue = { link = "@constant" }
+              h.BlinkCmpKindEnum = { link = "@type" }
+              h.BlinkCmpKindKeyword = { link = "@keyword" }
+              h.BlinkCmpKindSnippet = { link = "@markup" }
+              h.BlinkCmpKindColor = { link = "@constant" }
+              h.BlinkCmpKindFile = { link = "@markup.link.url" }
+              h.BlinkCmpKindReference = { link = "@variable.parameter.reference" }
+              h.BlinkCmpKindFolder = { link = "@markup.link.url" }
+              h.BlinkCmpKindEnumMember = { link = "@variable.member" }
+              h.BlinkCmpKindConstant = { link = "@constant" }
+              h.BlinkCmpKindStruct = { link = "@type" }
+              h.BlinkCmpKindEvent = { link = "@constant" }
+              h.BlinkCmpKindOperator = { link = "@operator" }
+              h.BlinkCmpKindTypeParameter = { link = "@variable.parameter" }
+
               h.DiffAdd = { bg = "#dbe6c0" }
               h.DiffDelete = { bg = "#f6d8d3" }
               h.DiffChange = { bg = "#f3e3c3" }
