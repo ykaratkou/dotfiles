@@ -38,20 +38,17 @@ vim.keymap.set("n", '<leader>d', [[*``"_cgn]], { silent = true })
 
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
-vim.keymap.set('n', '<leader>q',  function()
-  local qf_exists = false
-  for _, win in pairs(vim.fn.getwininfo()) do
-    if win["quickfix"] == 1 then
-      qf_exists = true
-    end
-  end
-  if qf_exists == true then
-    vim.cmd "cclose"
-    return
-  end
-  if not vim.tbl_isempty(vim.fn.getqflist()) then
-    vim.cmd [[copen | stopinsert]]
-  end
-end, { silent = true })
+local helpers = require('plugins.helpers')
+
+vim.keymap.set('n', '<leader>q', helpers.toggle_quickfix, { silent = true })
 
 vim.keymap.set('n', "<leader>u", ':SwitchCase<CR>')
+
+-- Copy relative path with line(s) as <path>:Lx[-Ly]
+vim.keymap.set('x', '<C-y>', function()
+  helpers.copy_path_with_lines(vim.fn.line('v'), vim.fn.line('.'))
+end, { silent = true, desc = "Copy relative path with line range" })
+
+vim.keymap.set('n', '<C-y>', function()
+  helpers.copy_path_with_lines()
+end, { silent = true, desc = "Copy relative path with current line" })

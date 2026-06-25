@@ -2,7 +2,7 @@
 -- https://github.com/neovim/nvim-lspconfig/tree/master/lsp
 --
 vim.lsp.enable({
-  "lua_ls",
+  -- "lua_ls",
   "ruby_lsp",
   "sourcekit",
   "eslint",
