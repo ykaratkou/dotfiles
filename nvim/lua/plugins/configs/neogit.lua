@@ -2,9 +2,11 @@ return {
   "NeogitOrg/neogit",
   lazy = true,
   dependencies = {
-    "nvim-lua/plenary.nvim",
-    "sindrets/diffview.nvim",
+    "esmuellert/codediff.nvim",
     "nvim-telescope/telescope.nvim",
+  },
+  opts = {
+    kind = "split_below_all"
   },
   cmd = "Neogit",
   keys = {
