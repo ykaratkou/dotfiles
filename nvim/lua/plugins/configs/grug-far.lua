@@ -4,40 +4,54 @@ return {
     local grug = require('grug-far')
     grug.setup({
       keymaps = {
-        close = { n = '<esc>' },
         openNextLocation = { n = 'j' },
         openPrevLocation = { n = 'k' },
       },
     });
 
-    vim.keymap.set('n', '<leader>fl', function() grug.open() end, { desc = 'grug-far: search' })
+    -- All searches share one named instance so it can be hidden and revealed.
+    local INSTANCE = 'search'
+
+    -- <esc> hides the search (buffer + results kept alive in the background).
+    -- There is no keymap action for "hide" (only "close", which deletes the
+    -- buffer), so it has to be mapped buffer-locally here.
+    vim.api.nvim_create_autocmd('FileType', {
+      group = vim.api.nvim_create_augroup('grug-far-hide', { clear = true }),
+      pattern = 'grug-far',
+      callback = function()
+        vim.keymap.set('n', '<esc>', function() grug.hide_instance(INSTANCE) end,
+          { buffer = true, nowait = true, desc = 'grug-far: hide' })
+      end,
+    })
+
+    -- Start a fresh search, discarding any existing (possibly hidden) one.
+    local function open_search(opts)
+      if grug.has_instance(INSTANCE) then grug.kill_instance(INSTANCE) end
+      opts = opts or {}
+      opts.instanceName = INSTANCE
+      grug.open(opts)
+    end
+
+    vim.keymap.set('n', '<leader>fl', function()
+      open_search({ startInInsertMode = false })
+    end, { desc = 'grug-far: search' })
 
     vim.keymap.set('n', '<leader>fw', function()
-      grug.open({ startInInsertMode = false, prefills = { search = vim.fn.expand('<cword>') } })
+      open_search({ startInInsertMode = false, prefills = { search = vim.fn.expand('<cword>') } })
     end, { desc = 'grug-far: search word under cursor' })
 
     vim.keymap.set('x', '<leader>fw', function()
-      grug.with_visual_selection({ startInInsertMode = false })
+      if grug.has_instance(INSTANCE) then grug.kill_instance(INSTANCE) end
+      grug.with_visual_selection({ startInInsertMode = false, instanceName = INSTANCE })
     end, { desc = 'grug-far: search visual selection' })
 
-    -- Resume last search: reopen with the most recent history entry prefilled.
-    -- History is newest-first on disk, so it survives closing the buffer.
+    -- Reveal the hidden search (or start a fresh one if none exists).
     vim.keymap.set('n', '<leader>fr', function()
-      local file = vim.fn.stdpath('state') .. '/grug-far/history'
-      if vim.fn.filereadable(file) == 0 then return grug.open() end
-
-      local block = {}
-      for _, line in ipairs(vim.fn.readfile(file)) do
-        if line == '' then
-          if #block > 0 then break end -- stop at end of first (newest) entry
-        else
-          table.insert(block, line)
-        end
+      if grug.has_instance(INSTANCE) then
+        grug.get_instance(INSTANCE):open()
+      else
+        open_search({ startInInsertMode = false })
       end
-      if #block == 0 then return grug.open() end
-
-      local entry = require('grug-far.history').getHistoryEntryFromLines(block)
-      grug.open({ startInInsertMode = false, prefills = entry })
-    end, { desc = 'grug-far: resume last search' })
+    end, { desc = 'grug-far: reveal search' })
   end
 }
