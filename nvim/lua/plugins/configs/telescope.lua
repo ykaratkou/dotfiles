@@ -8,7 +8,6 @@ return {
         "nvim-telescope/telescope-fzf-native.nvim",
         build = "make",
       },
-      { "fdschmidt93/telescope-egrepify.nvim" },
       { "nvim-telescope/telescope-ui-select.nvim" },
       { "mollerhoj/telescope-recent-files.nvim" },
       { "nvim-lua/plenary.nvim" },
@@ -19,15 +18,8 @@ return {
       local previewers = require("telescope.previewers")
       local actions = require("telescope.actions")
       local action_state = require("telescope.actions.state")
-      local egrepify = require("telescope").extensions.egrepify.egrepify
       local recent_files = require('telescope').extensions['recent-files'].recent_files
       local telescope_image_preview = require("plugins.configs.telescope_image_preview")
-
-      local function get_visual_selection()
-        vim.cmd('noau normal! "vy"')
-
-        return vim.fn.getreg('v')
-      end
 
       local function copy_selected_file_pathes()
         local picker = action_state.get_current_picker(vim.api.nvim_get_current_buf())
@@ -103,16 +95,6 @@ return {
         end),
       }):start()
 
-      vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[f]ind [r]esume' })
-      vim.keymap.set('n', '<leader>fw', function ()
-        egrepify(ivy({ default_text = vim.fn.expand("<cword>") }))
-      end)
-      vim.keymap.set('v', '<leader>fw', function ()
-        egrepify(ivy({ default_text = get_visual_selection() }))
-      end)
-
-      vim.keymap.set("n", "<leader>fl", function() egrepify(ivy({})) end)
-
       vim.keymap.set('n', '<leader>fg', builtin.git_status)
       vim.keymap.set('n', '<leader>fh', builtin.help_tags)
 
@@ -133,9 +115,6 @@ return {
             override_generic_sorter = true,  -- override the generic sorter
             override_file_sorter = true,     -- override the file sorter
             case_mode = "ignore_case",       -- or "ignore_case" or "respect_case"
-          },
-          egrepify = {
-            results_ts_hl = false,
           },
           ["ui-select"] = {
             require("telescope.themes").get_dropdown({})
@@ -185,7 +164,6 @@ return {
       require('telescope').load_extension('fzf')
       require('telescope').load_extension('ui-select')
       require('telescope').load_extension('recent-files')
-      require('telescope').load_extension('egrepify')
     end,
   },
 }
