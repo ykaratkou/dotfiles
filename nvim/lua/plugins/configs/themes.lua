@@ -78,8 +78,6 @@ return {
               h.NvimTreeGitRenamedIcon = { fg = p.orange }
               h.NvimTreeGitMergeIcon   = { fg = p.orange }
               h.NvimTreeGitIgnoredIcon = { fg = p.comment }
-
-              h.EgrepifyFile = { fg = p.blue, bold = true }
             end,
           })
         end,

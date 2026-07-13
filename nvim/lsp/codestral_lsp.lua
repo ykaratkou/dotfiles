@@ -10,14 +10,14 @@ return {
   on_attach = function(_, bufnr)
     vim.lsp.inline_completion.enable(true, { bufnr = bufnr })
 
-    vim.keymap.set('n', '<Tab>', function()
-      require('plugins.codestral-lsp-nes').tab()
-    end, { buffer = bufnr, desc = 'Codestral NES: request / accept-and-next / next' })
-
-    vim.keymap.set('n', '<ESC>', function()
-      require('plugins.codestral-lsp-nes').clear()
-      vim.cmd('nohlsearch')
-    end, { buffer = bufnr, silent = true, desc = 'Codestral NES: dismiss overlay (+ :nohlsearch)' })
+    -- vim.keymap.set('n', '<Tab>', function()
+    --   require('plugins.codestral-lsp-nes').tab()
+    -- end, { buffer = bufnr, desc = 'Codestral NES: request / accept-and-next / next' })
+    --
+    -- vim.keymap.set('n', '<ESC>', function()
+    --   require('plugins.codestral-lsp-nes').clear()
+    --   vim.cmd('nohlsearch')
+    -- end, { buffer = bufnr, silent = true, desc = 'Codestral NES: dismiss overlay (+ :nohlsearch)' })
 
     vim.keymap.set('i', '<Tab>', function()
       if vim.lsp.inline_completion.get({ bufnr = bufnr }) then
