@@ -3,6 +3,12 @@ return {
   config = function()
     local grug = require('grug-far')
     grug.setup({
+      -- sort results by file path (ripgrep is unordered/parallel by default)
+      engines = {
+        ripgrep = {
+          extraArgs = '--sort=path',
+        },
+      },
       keymaps = {
         openNextLocation = { n = 'j' },
         openPrevLocation = { n = 'k' },
