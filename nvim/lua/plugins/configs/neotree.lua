@@ -35,6 +35,7 @@ return {
       require("neo-tree").setup({
         -- hide_root_node = true,
         close_if_last_window = false,
+        position = "float",
         filesystem = {
           filtered_items = {
             hide_dotfiles = false,
@@ -95,8 +96,8 @@ return {
         event_handlers = event_handlers,
       })
 
-      vim.keymap.set('n', '<leader>re', ':Neotree reveal<cr>', { silent = true })
-      vim.keymap.set('n', '<leader>rt', ':Neotree toggle<cr>', { silent = true })
+      vim.keymap.set('n', '<leader>e', ':Neotree source=filesystem reveal=true position=float<cr>', { silent = true })
+      vim.keymap.set('n', '<leader>fg', ':Neotree source=git_status reveal=true position=float<cr>', { silent = true })
 
       local autocmd = vim.api.nvim_create_autocmd
 
