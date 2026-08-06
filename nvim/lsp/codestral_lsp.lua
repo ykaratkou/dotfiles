@@ -1,23 +1,15 @@
 return {
-  cmd = { vim.fn.expand('~/.bin/codestral-lsp'), "serve" },
-  cmd_env = {
-    CODESTRAL_BACKEND = 'live',
-    CODESTRAL_LSP_DEBUG_COMPLETION_LOG = "true",
-    CODESTRAL_AUTO_SUFFIX_CHARS = "8000",
-    CODESTRAL_AUTO_EXTRA_CONTEXT_CHARS = "4200",
-    CODESTRAL_RETRIEVAL_SNIPPET_CHARS = "2000",
+  cmd = { vim.fn.expand('codestral-lsp'), 'serve' },
+  root_markers = { '.git' },
+  init_options = {
+    -- API key comes from the macOS Keychain (`codestral-lsp setup`);
+    -- api_key here is only a fallback when the keychain has no entry.
+    debug = true, -- timing in :messages + API traffic in /tmp/codestral-lsp.log
+    -- model = 'codestral-latest',
+    -- max_tokens = 256,
   },
   on_attach = function(_, bufnr)
     vim.lsp.inline_completion.enable(true, { bufnr = bufnr })
-
-    -- vim.keymap.set('n', '<Tab>', function()
-    --   require('plugins.codestral-lsp-nes').tab()
-    -- end, { buffer = bufnr, desc = 'Codestral NES: request / accept-and-next / next' })
-    --
-    -- vim.keymap.set('n', '<ESC>', function()
-    --   require('plugins.codestral-lsp-nes').clear()
-    --   vim.cmd('nohlsearch')
-    -- end, { buffer = bufnr, silent = true, desc = 'Codestral NES: dismiss overlay (+ :nohlsearch)' })
 
     vim.keymap.set('i', '<Tab>', function()
       if vim.lsp.inline_completion.get({ bufnr = bufnr }) then

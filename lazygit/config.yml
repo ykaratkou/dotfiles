@@ -2,15 +2,12 @@ gui:
   showFileTree: true
   showCommandLog: false
   nerdFontsVersion: ""
-
 os:
   edit: 'nvim --server /tmp/current-neovim-server --remote-send ":e {{filename}}<CR>"'
-
 promptToReturnFromSubprocess: false
 quitOnTopLevelReturn: true
-
 git:
-  pagers:
-    - pager: delta --syntax-theme $DELTA_THEME --paging=never --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+  diffRenderers:
+    - command: delta --syntax-theme $DELTA_THEME --paging=never --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
   autoFetch: false
   autoRefresh: false
