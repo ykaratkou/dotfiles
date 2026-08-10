@@ -14,7 +14,7 @@ cursor-style = block
 cursor-style-blink = false
 
 cursor-invert-fg-bg = true
-shell-integration-features = no-cursor
+shell-integration-features = no-cursor,ssh-env,ssh-terminfo
 shell-integration = fish
 
 window-width = 120

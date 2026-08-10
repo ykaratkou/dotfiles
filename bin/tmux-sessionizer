@@ -1,64 +1,216 @@
-#!/usr/bin/env bash
+#!/usr/bin/env nu
 
-command=${TMUX_WINDOWIZER_COMMAND:-"find ~ -mindepth 1 -maxdepth 1 -type d"}
+# Fuzzy-pick a tmux session, project directory, or git worktree and open it.
+#
+# Usage:
+#   tmux-sessionizer                 # fzf picker
+#   tmux-sessionizer <path>          # open <path>, session name derived from it
+#   tmux-sessionizer <path> <name>   # open <path> as session <name>
+#
+# Projects come from ~/.config/tmux-sessionizer/config.json, shared with the
+# Raycast extension in ~/projects/raycast-extensions/tmux-sessionizer:
+#
+#   { "projects": [ { "path": "~/work", "depth": 1 }, { "path": "~/.dotfiles" } ] }
+#
+# `depth` defaults to 0, meaning `path` itself is the project; 1 lists its
+# immediate subdirectories, 2 goes two levels deep. Hidden directories are
+# skipped. Worktrees come from ~/worktrees/<project>/<name> plus any per-project
+# `worktreePath` configured in a project's .worktree.json (see bin/worktree), and
+# are named the way `worktree create` names them: "<project> [<worktree>]".
 
-if [[ $# -eq 1 ]] || [[ $# -eq 2 ]]; then
-  selected=$1
-else
-  sessions=$(tmux ls -F "#S,#{session_activity}")
-  directories=$(eval $command)
-  current_session_name=$(tmux display-message -p "#S")
+const SESSION_ICON = "\u{ebc8}"
+const WORKTREE_ICON = "\u{e725}"
+const CONFIG_PATH = "~/.config/tmux-sessionizer/config.json"
 
-  combined_list=()
+def sanitize [name: string] {
+    $name | str replace --all "." "_" | str replace --all " " ""
+}
 
-  if [ -n "$sessions" ]; then
-    # sort by session activity
-    sorted_sessions=$(echo "$sessions" | tr ' ' '\n' | sort -t, -k2 -nr)
+def parse-jsonc [path: path] {
+    if not ($path | path exists) {
+        return {}
+    }
+    let parsed = (do --ignore-errors {
+        open --raw $path
+            | str replace --all --regex '/\*[\s\S]*?\*/' ''
+            | str replace --all --regex '(?m)//[^\n]*' ''
+            | str replace --all --regex ',(\s*[}\]])' '$1'
+            | from json
+    })
+    if ($parsed | describe | str starts-with "record") { $parsed } else { {} }
+}
 
-    while IFS= read -r session_line; do
-      session_name="${session_line%,*}"
-      session_timestamp="${session_line#*,}"
+# Existing tmux sessions, most recently active first.
+def tmux-sessions [] {
+    let result = (do --ignore-errors { ^tmux list-sessions -F "#{session_activity}|#{session_path}|#S" } | complete)
+    if $result.exit_code != 0 {
+        return []
+    }
+    $result.stdout
+        | lines
+        | parse "{activity}|{path}|{name}"
+        | update activity { |r| $r.activity | into int }
+        | sort-by activity --reverse
+}
 
-      # skip the current session if it is tmux
-      if [[ -n $TMUX ]] && [[ "$current_session_name" = "$session_name" ]]; then
-        continue
-      fi
+def current-session [] {
+    if not ("TMUX" in $env) {
+        return null
+    }
+    let result = (do --ignore-errors { ^tmux display-message -p "#S" } | complete)
+    if $result.exit_code != 0 { null } else { $result.stdout | str trim }
+}
 
-      combined_list+=(" ${session_name}")
-    done <<< "$sorted_sessions"
-  fi
+def dirs-in [root: path] {
+    if not ($root | path exists) {
+        return []
+    }
+    (do --ignore-errors { ls $root | where type == dir | get name } | default [])
+        | where { |dir| not (($dir | path basename) | str starts-with ".") }
+}
 
-  if [ -n "$directories" ]; then
-    while IFS= read -r directory; do
-      combined_list+=("$directory")
-    done <<< "$directories"
-  fi
+# Every directory under `root`, down to `max_depth` levels, all levels included.
+def list-subdirs [root: path, max_depth: int] {
+    mut level = [$root]
+    mut found = []
+    mut remaining = $max_depth
+    while $remaining > 0 and ($level | is-not-empty) {
+        let children = ($level | each { |dir| dirs-in $dir } | flatten)
+        $found = ($found | append $children)
+        $level = $children
+        $remaining = $remaining - 1
+    }
+    $found
+}
 
-  selected=$(printf "%s\n" "${combined_list[@]}" | fzf)
-fi
+def project-dirs [] {
+    let config_path = ($CONFIG_PATH | path expand)
+    if not ($config_path | path exists) {
+        print --stderr $"tmux-sessionizer: config not found at ($config_path)"
+        return []
+    }
 
-if [[ -z $selected ]]; then
-  exit 0
-fi
+    # A homogeneous list of records describes itself as `table<...>`, not `list<...>`.
+    let projects = (parse-jsonc $config_path | get --optional projects)
+    let kind = ($projects | describe)
+    if not (($kind | str starts-with "list") or ($kind | str starts-with "table")) {
+        print --stderr $"tmux-sessionizer: invalid config at ($config_path): missing \"projects\" array"
+        return []
+    }
 
-if [[ $# -eq 2 ]]; then
-  selected_name=$2
-else
-  selected_name=$(basename "$selected" | tr . _ | sed 's/ //g')
-fi
-tmux_running=$(pgrep tmux)
+    $projects | each { |entry|
+        if not (($entry | describe) | str starts-with "record") {
+            print --stderr $"tmux-sessionizer: skipping project entry that is not an object"
+            return []
+        }
+        let configured = ($entry | get --optional path)
+        if ($configured | is-empty) {
+            print --stderr $"tmux-sessionizer: skipping project entry without a \"path\""
+            return []
+        }
 
-if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-  tmux new-session -s $selected_name -c $selected
-  exit 0
-fi
+        let root = ($configured | path expand)
+        let depth = ($entry | get --optional depth | default 0)
+        if $depth > 0 {
+            list-subdirs $root $depth
+        } else if ($root | path type) == "dir" {
+            [$root]
+        } else {
+            print --stderr $"tmux-sessionizer: skipping ($root): not a directory"
+            []
+        }
+    } | flatten | uniq
+}
 
-if ! tmux has-session -t=$selected_name 2> /dev/null; then
-  tmux new-session -ds $selected_name -c $selected
-fi
+# Every worktree, as {project, path} records.
+def worktree-dirs [projects: list<string>] {
+    let default_root = ("~/worktrees" | path expand)
+    let defaults = (dirs-in $default_root | each { |proj|
+        dirs-in $proj | each { |wt| { project: ($proj | path basename), path: $wt } }
+    } | flatten)
 
-if [[ -z $TMUX ]]; then
-  tmux attach -t $selected_name
-else
-  tmux switch-client -t $selected_name
-fi
+    let customs = ($projects | each { |proj|
+        let configured = (parse-jsonc ($proj | path join ".worktree.json") | get --optional worktreePath)
+        if ($configured | is-empty) {
+            []
+        } else {
+            dirs-in ($configured | path expand) | each { |wt| { project: ($proj | path basename), path: $wt } }
+        }
+    } | flatten)
+
+    $defaults | append $customs | uniq-by path
+}
+
+def open-session [path: path, session: string] {
+    let in_tmux = ("TMUX" in $env)
+    let server_running = ((do --ignore-errors { ^pgrep tmux } | complete).exit_code == 0)
+
+    if (not $in_tmux) and (not $server_running) {
+        ^tmux new-session -s $session -c $path
+        return
+    }
+
+    let exists = ((do --ignore-errors { ^tmux has-session -t $"=($session)" } | complete).exit_code == 0)
+    if not $exists {
+        ^tmux new-session -ds $session -c $path
+    }
+
+    if $in_tmux {
+        ^tmux switch-client -t $"=($session)"
+    } else {
+        ^tmux attach -t $"=($session)"
+    }
+}
+
+def main [selected?: string, name?: string] {
+    if $selected != null {
+        let session = if $name != null { $name } else { sanitize ($selected | path basename) }
+        open-session ($selected | path expand) $session
+        return
+    }
+
+    let sessions = (tmux-sessions)
+    let current = (current-session)
+    let taken = ($sessions | get name)
+
+    let session_rows = ($sessions
+        | where name != $current
+        | each { |s| { display: $"($SESSION_ICON) ($s.name)", path: $s.path, session: $s.name } })
+
+    let projects = (project-dirs)
+
+    let project_rows = ($projects
+        | each { |p| { display: $p, path: $p, session: (sanitize ($p | path basename)) } }
+        | where session not-in $taken)
+
+    let worktree_rows = (worktree-dirs $projects
+        | each { |w|
+            let session = $"(sanitize $w.project) [($w.path | path basename)]"
+            { display: $"($WORKTREE_ICON) ($session)", path: $w.path, session: $session }
+        }
+        | where session not-in $taken)
+
+    let rows = ($session_rows | append $project_rows | append $worktree_rows)
+    if ($rows | is-empty) {
+        return
+    }
+
+    let picked = ($rows | get display | str join "\n" | do { ^fzf } | complete)
+    if $picked.exit_code != 0 {
+        return
+    }
+
+    let choice = ($picked.stdout | str trim)
+    if ($choice | is-empty) {
+        return
+    }
+
+    let row = ($rows | where display == $choice | first)
+    if $row == null {
+        # fzf --print-query and friends can return something we never offered
+        open-session ($choice | path expand) (sanitize ($choice | path basename))
+        return
+    }
+
+    open-session $row.path $row.session
+}
