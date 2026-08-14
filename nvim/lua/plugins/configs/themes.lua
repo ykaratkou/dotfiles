@@ -78,6 +78,9 @@ return {
               h.NvimTreeGitRenamedIcon = { fg = p.orange }
               h.NvimTreeGitMergeIcon   = { fg = p.orange }
               h.NvimTreeGitIgnoredIcon = { fg = p.comment }
+
+              -- Match grug-far's file name styling in search results
+              h.EgrepifyFile = { link = "GrugFarResultsPath" }
             end,
           })
         end,
@@ -113,6 +116,9 @@ return {
 
               CopilotSuggestion = { fg = "#908caa" },
               ComplHint = { fg = "#908caa" },
+
+              -- Match grug-far's file name styling in search results
+              EgrepifyFile = { link = "GrugFarResultsPath" },
             },
           })
         end

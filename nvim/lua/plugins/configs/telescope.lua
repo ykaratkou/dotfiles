@@ -8,6 +8,7 @@ return {
         "nvim-telescope/telescope-fzf-native.nvim",
         build = "make",
       },
+      { "fdschmidt93/telescope-egrepify.nvim" },
       { "nvim-telescope/telescope-ui-select.nvim" },
       { "mollerhoj/telescope-recent-files.nvim" },
       { "nvim-lua/plenary.nvim" },
@@ -18,8 +19,15 @@ return {
       local previewers = require("telescope.previewers")
       local actions = require("telescope.actions")
       local action_state = require("telescope.actions.state")
+      local egrepify = require("telescope").extensions.egrepify.egrepify
       local recent_files = require('telescope').extensions['recent-files'].recent_files
       local telescope_image_preview = require("plugins.configs.telescope_image_preview")
+
+      local function get_visual_selection()
+        vim.cmd('noau normal! "vy"')
+
+        return vim.fn.getreg('v')
+      end
 
       local function copy_selected_file_pathes()
         local picker = action_state.get_current_picker(vim.api.nvim_get_current_buf())
@@ -95,6 +103,41 @@ return {
         end),
       }):start()
 
+      -- in the egrepify prompt hands the current query over to grug-far
+      -- (e.g. to run a replace on it). The named instance is reused so
+      -- repeated handoffs don't stack up grug-far windows.
+      local function switch_to_grug_far(prompt_bufnr)
+        local query = action_state.get_current_line()
+        actions.close(prompt_bufnr)
+
+        local grug = require('grug-far')
+        if grug.has_instance('search') then grug.kill_instance('search') end
+        grug.open({
+          instanceName = 'search',
+          startInInsertMode = false,
+          prefills = { search = query },
+        })
+      end
+
+      local function open_egrepify(opts)
+        opts.attach_mappings = function(_, map)
+          map({ 'i', 'n' }, '<c-r>', switch_to_grug_far)
+          return true
+        end
+
+        egrepify(ivy(opts))
+      end
+
+      vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[f]ind [r]esume' })
+      vim.keymap.set('n', '<leader>fw', function ()
+        open_egrepify({ default_text = vim.fn.expand("<cword>") })
+      end)
+      vim.keymap.set('v', '<leader>fw', function ()
+        open_egrepify({ default_text = get_visual_selection() })
+      end)
+
+      vim.keymap.set("n", "<leader>fl", function() open_egrepify({}) end)
+
       vim.keymap.set('n', '<leader>fg', builtin.git_status)
       vim.keymap.set('n', '<leader>fh', builtin.help_tags)
 
@@ -115,6 +158,9 @@ return {
             override_generic_sorter = true,  -- override the generic sorter
             override_file_sorter = true,     -- override the file sorter
             case_mode = "ignore_case",       -- or "ignore_case" or "respect_case"
+          },
+          egrepify = {
+            results_ts_hl = false,
           },
           ["ui-select"] = {
             require("telescope.themes").get_dropdown({})
@@ -164,6 +210,7 @@ return {
       require('telescope').load_extension('fzf')
       require('telescope').load_extension('ui-select')
       require('telescope').load_extension('recent-files')
+      require('telescope').load_extension('egrepify')
     end,
   },
 }
