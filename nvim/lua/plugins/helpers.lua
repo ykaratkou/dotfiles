@@ -23,7 +23,10 @@ function M.copy_path_with_lines(lstart, lend)
     lstart, lend = lend, lstart
   end
 
-  local ref = vim.fn.expand('%') .. ':L' .. lstart
+  local path = vim.api.nvim_buf_get_name(0):match('^codediff:///.-///[^/]+/(.+)$')
+    or vim.fn.fnamemodify(vim.fn.expand('%:p'), ':.')
+
+  local ref = path .. ':L' .. lstart
   if lend ~= lstart then
     ref = ref .. '-L' .. lend
   end
