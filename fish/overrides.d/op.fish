@@ -7,5 +7,4 @@ if command -v op &> /dev/null
   alias bi='op run --no-masking -- bundle install'
   alias bu='op run --no-masking -- bundle update'
   alias gh='op run --no-masking -- gh'
-  alias codex='op run --no-masking -- codex'
 end

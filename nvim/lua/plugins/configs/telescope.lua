@@ -161,6 +161,10 @@ return {
           },
           egrepify = {
             results_ts_hl = false,
+            vimgrep_arguments = vim.list_extend(
+              vim.deepcopy(require("telescope.config").values.vimgrep_arguments),
+              { "--sort=path" }
+            ),
           },
           ["ui-select"] = {
             require("telescope.themes").get_dropdown({})
