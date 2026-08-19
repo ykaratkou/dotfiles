@@ -25,7 +25,11 @@ vim.opt.smartcase = true
 -- Maximum number of items to show in the popup menu
 vim.opt.pumheight = 10
 
--- System clipboard
+-- System clipboard. Inside tmux, use OSC 52 so yanks reach the clipboard of
+-- the attached terminal, including when tmux is running over SSH.
+if vim.env.TMUX then
+  vim.g.clipboard = 'osc52'
+end
 vim.opt.clipboard = 'unnamedplus'
 
 --Line numbers

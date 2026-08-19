@@ -1,4 +1,16 @@
 function fish_prompt
+  # Existing shells do not inherit environment updates when tmux reattaches.
+  if set -q TMUX
+    for name in SSH_CONNECTION SSH_TTY
+      set -l tmux_value (tmux show-environment "$name" 2>/dev/null)
+      if string match -q "$name=*" -- "$tmux_value"
+        set -gx $name (string replace "$name=" '' -- "$tmux_value")
+      else
+        set -e $name
+      end
+    end
+  end
+
   set -l cyan (set_color -o cyan)
   set -l yellow (set_color -o yellow)
   set -l red (set_color -o red)
@@ -10,7 +22,7 @@ function fish_prompt
 
   set_color -o
   if test -n "$SSH_TTY"
-    echo -n $brred"$USER"$white'@'$yellow(prompt_hostname)' '
+    echo -n $brred"[$USER]"' '
   end
 
   echo -n $blue(prompt_pwd)' '
