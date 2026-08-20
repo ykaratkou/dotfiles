@@ -2,7 +2,8 @@
   "packages": [
     "npm:pi-mcp-adapter",
     "npm:pi-web-access",
-    "npm:pi-ask-user"
+    "npm:pi-ask-user",
+    "git:github.com/ykaratkou/cook"
   ],
   "lastChangelogVersion": "0.84.2",
   "theme": "light/light",
