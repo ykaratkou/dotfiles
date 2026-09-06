@@ -5,7 +5,7 @@
     "npm:pi-ask-user",
     "git:github.com/ykaratkou/cook"
   ],
-  "lastChangelogVersion": "0.84.2",
+  "lastChangelogVersion": "0.85.1",
   "theme": "light/light",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.6-sol",

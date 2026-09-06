@@ -42,3 +42,4 @@ Brewfile.lock.json
 .aider*
 .claude
 .memo
+.cook

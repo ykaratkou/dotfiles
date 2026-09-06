@@ -56,6 +56,10 @@ local function open_float(path)
   popup:mount()
 
   vim.keymap.set("n", "q", "<cmd>quit<cr>", { buffer = buf })
+  vim.keymap.set({ "n", "i" }, "<C-a>", "<cmd>write<cr>", {
+    buffer = buf,
+    desc = "Save and close Delta review",
+  })
 
   local group = vim.api.nvim_create_augroup("DeltaReview", { clear = true })
   vim.api.nvim_create_autocmd("BufWritePost", {
@@ -117,8 +121,8 @@ function M.setup()
   vim.api.nvim_create_user_command("DeltaReviewAdd", M.add, { desc = "Add a note to the Delta review session" })
   vim.api.nvim_create_user_command("DeltaReviewOpen", M.open, { desc = "Open the Delta review session" })
 
-  vim.keymap.set({ "n", "x" }, "<C-a>", M.add, { desc = "Delta review add" })
-  vim.keymap.set("n", "<C-r>", M.open, { desc = "Delta review open" })
+  vim.keymap.set("v", "<C-a>", M.add, { desc = "Delta review add" })
+  vim.keymap.set("n", "<C-a>", M.open, { desc = "Delta review open" })
 end
 
 return M
