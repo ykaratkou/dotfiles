@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "dotfiles",
+  "description": "Claude Code plugins that live in this dotfiles repo.",
+  "owner": {
+    "name": "Yauhen Karatkou",
+    "email": "evgn.korotkov@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "op-gate",
+      "source": "./claude/plugins/op-gate",
+      "category": "security",
+      "description": "Routes secret-hungry commands (yarn, pnpm, bundle, terraform, gh, aws, git commit) through `op run`, pausing for human approval first."
+    }
+  ]
+}

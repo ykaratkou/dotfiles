@@ -1,0 +1,10 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "op-gate",
+  "version": "0.2.0",
+  "description": "Routes secret-hungry commands (yarn, pnpm, bundle, terraform, gh, aws, git commit) through `op run`, pausing for human approval first.",
+  "author": {
+    "name": "Yauhen Karatkou",
+    "email": "evgn.korotkov@gmail.com"
+  }
+}
