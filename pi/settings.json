@@ -2,11 +2,21 @@
   "packages": [
     "npm:pi-mcp-adapter",
     "npm:pi-web-access",
-    "npm:pi-ask-user",
-    "git:github.com/ykaratkou/cook"
+    {
+      "source": "git:github.com/ykaratkou/cook",
+      "skills": [
+        "skills/drain/SKILL.md",
+        "skills/plan/SKILL.md",
+        "skills/register/SKILL.md"
+      ]
+    },
+    "npm:@tintinweb/pi-subagents",
+    "npm:pi-input-history",
+    "npm:@aiwayds/pi-model-favorites"
   ],
   "lastChangelogVersion": "0.85.1",
-  "theme": "light/light",
+  "collapseChangelog": true,
+  "theme": "light/dark",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.6-sol",
   "defaultThinkingLevel": "high",

@@ -4,5 +4,6 @@
     "ctrl+j",
     "alt+enter"
   ],
-  "app.message.followUp": []
+  "app.message.followUp": [],
+  "app.session.rename": "ctrl+shift+r"
 }

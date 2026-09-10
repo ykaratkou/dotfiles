@@ -25,8 +25,6 @@ function _askclaudequick
 end
 
 alias ??='_askclaudequick'
-alias oc='opencode'
-alias oca='opencode attach http://localhost:4096'
 
 alias cc="claude --dangerously-skip-permissions"
 set -x CLAUDE_CODE_NO_FLICKER "1"

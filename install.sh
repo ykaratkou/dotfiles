@@ -31,10 +31,11 @@ mkdir -p $HOME/.config/lazygit
 ln -s $HOME/.dotfiles/lazygit/config.yml $HOME/.config/lazygit/
 
 echo "Configuring Pi"
-mkdir -p $HOME/.pi/agent/extensions
+mkdir -p $HOME/.pi/agent
 ln -sfn $HOME/.dotfiles/pi/settings.json $HOME/.pi/agent/settings.json
 ln -sfn $HOME/.dotfiles/pi/keybindings.json $HOME/.pi/agent/keybindings.json
-ln -sfn $HOME/.dotfiles/pi/extensions/compact-footer.ts $HOME/.pi/agent/extensions/compact-footer.ts
+rm -rf $HOME/.pi/agent/extensions
+ln -sfn $HOME/.dotfiles/pi/extensions $HOME/.pi/agent/extensions
 
 echo "Configure Bin"
 mkdir -p $HOME/.bin
