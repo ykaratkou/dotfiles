@@ -33,8 +33,20 @@ vim.keymap.set('n', ']b', ':bnext<CR>', { silent = true })
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set("v", "<leader>s", [[y<ESC>:%s/<C-r>0/<C-r>0/gI<left><left><left>]])
 
-vim.keymap.set("v", '<leader>d', [["zy<cmd>let @/=escape(@z, '/')<cr>"_cgn]], { silent = true })
-vim.keymap.set("n", '<leader>d', [[*``"_cgn]], { silent = true })
+local function add_cursor_and_move(keys)
+  vim.api.nvim_mcursor(0, vim.api.nvim_win_get_cursor(0))
+  return '2q=' .. keys
+end
+
+vim.keymap.set('n', '<leader>d', function()
+  return add_cursor_and_move('*') .. '<Cmd>nohlsearch<CR>'
+end, { expr = true, silent = true, desc = 'Add cursor at next matching word' })
+vim.keymap.set('n', '<M-j>', function()
+  return add_cursor_and_move('j')
+end, { expr = true, desc = 'Add cursor below' })
+vim.keymap.set('n', '<M-k>', function()
+  return add_cursor_and_move('k')
+end, { expr = true, desc = 'Add cursor above' })
 
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
