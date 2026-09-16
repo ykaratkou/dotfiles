@@ -1,0 +1,13 @@
+{
+  "name": "opencode-session-footer",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@opencode/plugin": "2.0.1"
+  },
+  "exports": {
+    ".": "./index.ts",
+    "./rpc": "./rpc.ts",
+    "./tui": "./tui.tsx"
+  }
+}

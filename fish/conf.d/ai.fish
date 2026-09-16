@@ -26,5 +26,6 @@ end
 
 alias ??='_askclaudequick'
 
+alias oc='opencode --auto'
 alias cc="claude --dangerously-skip-permissions"
 set -x CLAUDE_CODE_NO_FLICKER "1"
