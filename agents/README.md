@@ -26,8 +26,9 @@ ln -s ~/.dotfiles/agents/skills/* ~/.claude/skills/
 ## Provenance
 
 Most skills here are copies of [mattpocock/skills](https://github.com/mattpocock/skills),
-taken verbatim at `3cca18b` (2026-09-04) — all of `engineering/`, `productivity/`,
-`misc/`, and `in-progress/`, flattened into `agents/skills/`. To refresh:
+taken verbatim at `3cca18b` (2026-09-04), flattened into `agents/skills/`. Only a curated
+subset is kept — the refresh script below copies in everything upstream has, so prune the
+skills you don't want afterwards.
 
 ```bash
 git clone --depth 1 https://github.com/mattpocock/skills.git /tmp/mp-skills
@@ -38,4 +39,4 @@ for d in /tmp/mp-skills/skills/*/*/; do
 done
 ```
 
-`agent-browser`, `find-skills`, and `tds-jira-ticket` are local, not upstream.
+`agent-browser` and `tds-jira-ticket` are local, not upstream.
