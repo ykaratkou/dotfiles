@@ -5,9 +5,8 @@ const window = {
   properties: {
     used: { type: "number" },
     seconds: { type: "number" },
-    resetsAt: { type: "number" },
   },
-  required: ["used", "seconds", "resetsAt"],
+  required: ["used", "seconds"],
   additionalProperties: false,
 } as const
 

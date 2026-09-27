@@ -8,14 +8,19 @@ const usageColor = (percent: number, theme: Record<string, any>) => {
   return theme.error ?? theme.status?.error ?? "#cf222e"
 }
 
+const windowLabel = (seconds: number) => {
+  if (seconds % 86_400 === 0) return `${seconds / 86_400}d`
+  return `${Math.round(seconds / 3_600)}h`
+}
+
 export default Plugin.define({
   id: "evgeny.session-footer",
   setup(context) {
     const client = context.client.rpc(CodexUsage)
     const [usage, setUsage] = createSignal<{
       available: boolean
-      primary?: { used: number; seconds: number; resetsAt: number }
-      secondary?: { used: number; seconds: number; resetsAt: number }
+      primary?: { used: number; seconds: number }
+      secondary?: { used: number; seconds: number }
     }>({ available: false })
     const refreshUsage = () => void client.get({}).then(setUsage).catch(() => setUsage({ available: false }))
     refreshUsage()
@@ -33,12 +38,12 @@ export default Plugin.define({
           <box flexDirection="row" gap={1} flexShrink={1}>
             {limits.primary ? (
               <text fg={usageColor(limits.primary.used, context.theme)}>
-                {Math.round(limits.primary.seconds / 3600)}h:{Math.round(limits.primary.used)}%
+                {windowLabel(limits.primary.seconds)}:{Math.round(limits.primary.used)}%
               </text>
             ) : null}
             {limits.secondary ? (
               <text fg={usageColor(limits.secondary.used, context.theme)}>
-                {Math.round(limits.secondary.seconds / 86400)}d:{Math.round(limits.secondary.used)}%
+                {windowLabel(limits.secondary.seconds)}:{Math.round(limits.secondary.used)}%
               </text>
             ) : null}
           </box>

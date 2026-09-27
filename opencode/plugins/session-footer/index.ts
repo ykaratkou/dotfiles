@@ -10,7 +10,6 @@ type Credential = {
 type UsageWindow = {
   used_percent?: number
   limit_window_seconds?: number
-  reset_at?: number
 }
 
 type UsagePayload = {
@@ -24,21 +23,19 @@ type UsagePayload = {
 type Usage = {
   available: boolean
   plan?: string
-  primary?: { used: number; seconds: number; resetsAt: number }
-  secondary?: { used: number; seconds: number; resetsAt: number }
+  primary?: { used: number; seconds: number }
+  secondary?: { used: number; seconds: number }
 }
 
 const mapWindow = (window: UsageWindow | null | undefined) => {
   if (
     window?.used_percent === undefined ||
-    window.limit_window_seconds === undefined ||
-    window.reset_at === undefined
+    window.limit_window_seconds === undefined
   )
     return undefined
   return {
     used: window.used_percent,
     seconds: window.limit_window_seconds,
-    resetsAt: window.reset_at,
   }
 }
 
@@ -64,11 +61,13 @@ export default Plugin.define({
         const response = await fetch("https://chatgpt.com/backend-api/wham/usage", { headers })
         if (!response.ok) return { available: false }
         const payload = (await response.json()) as UsagePayload
+        const primary = mapWindow(payload.rate_limit?.primary_window)
+        const secondary = mapWindow(payload.rate_limit?.secondary_window)
         const usage: Usage = {
           available: true,
-          plan: payload.plan_type,
-          primary: mapWindow(payload.rate_limit?.primary_window),
-          secondary: mapWindow(payload.rate_limit?.secondary_window),
+          ...(payload.plan_type === undefined ? {} : { plan: payload.plan_type }),
+          ...(primary === undefined ? {} : { primary }),
+          ...(secondary === undefined ? {} : { secondary }),
         }
         cached = { at: Date.now(), usage }
         return usage
