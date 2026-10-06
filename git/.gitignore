@@ -43,3 +43,5 @@ Brewfile.lock.json
 .claude
 .memo
 .cook
+.humanlayer
+.lavish
