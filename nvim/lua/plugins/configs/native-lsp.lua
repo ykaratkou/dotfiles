@@ -12,7 +12,7 @@ vim.lsp.enable({
   "tflint",
   "yamlls",
   "herb_ls",
-  "codestral_lsp",
+  -- "codestral_lsp",
 })
 
 --

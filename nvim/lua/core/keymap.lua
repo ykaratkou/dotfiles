@@ -16,6 +16,25 @@ vim.keymap.set('n', '<leader>wl', '<C-w>l')
 vim.keymap.set('n', '<leader>wj', '<C-w>j')
 vim.keymap.set('n', '<leader>wk', '<C-w>k')
 
+-- Seamless nvim/tmux navigation: Ghostty sends cmd+hjkl as tmux prefix+hjkl,
+-- tmux forwards it here as <M-H/J/K/L> when the pane runs nvim (see .tmux.conf).
+-- At the edge of nvim's layout, hand the move back to tmux.
+local tmux_directions = { h = 'L', j = 'D', k = 'U', l = 'R' }
+
+local function navigate(dir)
+  if vim.fn.winnr(dir) ~= vim.fn.winnr() then
+    vim.cmd.stopinsert()
+    vim.cmd.wincmd(dir)
+  elseif vim.env.TMUX then
+    vim.system({ 'tmux', 'select-pane', '-' .. tmux_directions[dir] })
+  end
+end
+
+for dir in pairs(tmux_directions) do
+  vim.keymap.set({ 'n', 'i', 'x', 't' }, '<M-' .. dir:upper() .. '>', function() navigate(dir) end,
+    { desc = 'Navigate window/tmux pane ' .. dir })
+end
+
 -- let j and k move up and down lines that have been wrapped
 vim.keymap.set("n", "j", "gj")
 vim.keymap.set("n", "k", "gk")
