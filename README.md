@@ -7,9 +7,7 @@ real files into `~`; the repo is the source of truth.
 | --- | --- |
 | `home/` | chezmoi source state (set by `.chezmoiroot`). `home/dot_config/fish` deploys to `~/.config/fish`, and so on. |
 | `Brewfile` | Homebrew packages and apps. |
-| `.claude-plugin/`, `claude/plugins/` | Claude Code plugin marketplace. |
 | `opencode/plugins/` | opencode plugins, loaded from the repo by path in `~/.config/opencode/opencode.json`. |
-| `assets/` | App icons. |
 | `.obsidian.vimrc` | Vim keymap for Obsidian. Copy it into a vault's root. |
 
 ## Install
@@ -71,31 +69,10 @@ for d in /tmp/mp-skills/skills/*/*/; do
 done
 ```
 
-## Claude Code plugins
-
-The repo root is a Claude Code marketplace
-([`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json)):
-
-```bash
-claude plugin marketplace add ~/.dotfiles
-claude plugin install op-gate@dotfiles
-```
-
-| Plugin | What it does |
-| --- | --- |
-| [`op-gate`](claude/plugins/op-gate) | Gates `yarn`/`pnpm`/`bundle`/`terraform`/`gh`/`aws`/`git commit` behind `op run` plus a human approval, since Claude's Bash tool never sees the fish aliases. |
-
-Installing copies the plugin into `~/.claude/plugins/cache/dotfiles/<plugin>/<version>/`,
-so edits here don't run until you bump `version` in its `plugin.json` and run
-`claude plugin update <plugin>` (a no-op while the version is unchanged). Then restart
-Claude Code or run `/reload-plugins`. `claude plugin details <plugin>` shows what is
-loaded.
-
 ## Manual setup
 
 **Alacritty.** In System Settings → Keyboard → Keyboard Shortcuts → App Shortcuts, remap
-Alacritty's "Hide Alacritty" to `Cmd+Shift+H`. For the icon, open Alacritty's Get Info
-window and drag `assets/Alacritty.icns` onto the small icon at its top left.
+Alacritty's "Hide Alacritty" to `Cmd+Shift+H`.
 
 **AWS through 1Password.** One section per profile in `~/.aws/credentials`:
 
