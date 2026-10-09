@@ -30,3 +30,8 @@ credential_process = <path-to op-aws-helper> <vault> <secret>
 ```bash
 ln -s $HOME/.dotfiles/.ssh/rc $HOME/.ssh
 ```
+
+Use the rules in `.ssh/config.sample` after any includes or host-specific SSH
+settings. SSH sessions use the forwarded agent via `~/.ssh/ssh_auth_sock`;
+local sessions keep using 1Password. Git's `git/ssh-sign` wrapper makes the
+same choice for commit signing, so remote commits remain signed.
