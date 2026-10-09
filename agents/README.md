@@ -23,6 +23,17 @@ mkdir -p ~/.claude/skills
 ln -s ~/.dotfiles/agents/skills/* ~/.claude/skills/
 ```
 
+## Install the subagents
+
+The `lavish` skill hands HTML authoring to a `lavish-author` subagent, so the page and the
+lavish CLI guidance stay out of the main context. Each tool keeps its own definition:
+
+```bash
+mkdir -p ~/.claude/agents ~/.config/opencode/agents
+ln -s ~/.dotfiles/claude/agents/lavish-author.md ~/.claude/agents/
+ln -s ~/.dotfiles/opencode/agents/lavish-author.md ~/.config/opencode/agents/
+```
+
 ## Provenance
 
 Most skills here are copies of [mattpocock/skills](https://github.com/mattpocock/skills),
@@ -39,4 +50,4 @@ for d in /tmp/mp-skills/skills/*/*/; do
 done
 ```
 
-`agent-browser` and `tds-jira-ticket` are local, not upstream.
+`agent-browser`, `tds-jira-ticket` and `lavish-code-review` are local, not upstream.
