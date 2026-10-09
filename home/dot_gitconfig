@@ -7,7 +7,7 @@
   signingkey = ~/.ssh/personal.pub
 
 [core]
-  editor = nvim -u ~/.dotfiles/nvim/mini.lua
+  editor = nvim -u ~/.config/nvim/mini.lua
   excludesFile = ~/.gitignore
 
 [github]
@@ -17,7 +17,7 @@
   format = ssh
 
 [gpg "ssh"]
-  program = ~/.dotfiles/git/ssh-sign
+  program = ~/.config/git/ssh-sign
 
 [commit]
   gpgsign = true
