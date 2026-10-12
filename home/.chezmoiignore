@@ -1,0 +1,3 @@
+# Eval tooling runs from the repo; the deployed skill does not need it.
+.agents/skills/auto-grill/evals
+.agents/skills/auto-grill/evals/**
