@@ -1,6 +1,10 @@
 local function ruby_lsp_cmd()
-  vim.fn.system({ "bundle", "check" })
   local base = { "mise", "exec", "--", "ruby-lsp" }
+  if vim.fn.executable("bundle") == 0 then
+    return base
+  end
+
+  vim.fn.system({ "bundle", "check" })
   if vim.v.shell_error == 0 then
     return base
   end

@@ -74,34 +74,36 @@ return {
       --
       -- Search by gem paths
       --
-      local Job = require('plenary.job')
-      Job:new({
-        command = "bundle",
-        args = { "list", "--paths" },
-        on_exit = vim.schedule_wrap(function(job, return_val)
-          if return_val == 0 then
-            local result = job:result()
+      if vim.fn.executable("bundle") == 1 then
+        local Job = require('plenary.job')
+        Job:new({
+          command = "bundle",
+          args = { "list", "--paths" },
+          on_exit = vim.schedule_wrap(function(job, return_val)
+            if return_val == 0 then
+              local result = job:result()
 
-            vim.keymap.set('n', '<leader>fL', function()
-              builtin.live_grep(
-                ivy({
+              vim.keymap.set('n', '<leader>fL', function()
+                builtin.live_grep(
+                  ivy({
+                    search_dirs = result,
+                    debounce = 200,
+                    path_display = { "smart" },
+                  })
+                )
+              end, { silent = true })
+
+              vim.keymap.set('n', '<leader>fO', function()
+                builtin.find_files({
                   search_dirs = result,
                   debounce = 200,
                   path_display = { "smart" },
                 })
-              )
-            end, { silent = true })
-
-            vim.keymap.set('n', '<leader>fO', function()
-              builtin.find_files({
-                search_dirs = result,
-                debounce = 200,
-                path_display = { "smart" },
-              })
-            end, { silent = true })
-          end
-        end),
-      }):start()
+              end, { silent = true })
+            end
+          end),
+        }):start()
+      end
 
       -- in the egrepify prompt hands the current query over to grug-far
       -- (e.g. to run a replace on it). The named instance is reused so

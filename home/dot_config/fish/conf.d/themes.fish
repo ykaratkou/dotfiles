@@ -1,6 +1,6 @@
 # initiate the theme if macos_theme was not set
 if not set -q macos_theme
-  if defaults read -g AppleInterfaceStyle &>/dev/null
+  if command -q defaults; and defaults read -g AppleInterfaceStyle &>/dev/null
     set -Ux macos_theme dark
   else
     set -Ux macos_theme light
