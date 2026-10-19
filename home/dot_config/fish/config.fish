@@ -19,6 +19,7 @@ set fish_color_valid_path
 
 set -gx RIPGREP_CONFIG_PATH $HOME/.ripgreprc
 set -gx SHELL $(which fish)
+set -gx OP_BIOMETRIC_UNLOCK_ENABLED true
 
 # pnpm
 set -gx PNPM_HOME "$HOME/Library/pnpm"
