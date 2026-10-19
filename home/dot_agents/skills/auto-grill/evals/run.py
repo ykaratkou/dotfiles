@@ -2,9 +2,18 @@
 """Run the auto-grill answerer over the eval cases and grade the Status labels.
 
 Usage:
+  export AUTO_GRILL_COMMAND='llm-wrapper --read-only'
   evals/run.py                  # every case, once
-  evals/run.py -n 3             # every case, 3 runs each (labels can flip between runs)
-  evals/run.py 002-chat-edges   # only these cases (dir names under evals/cases/)
+  evals/run.py -n 3             # every case, 3 runs each
+  evals/run.py 002-chat-edges    # selected cases under evals/cases/
+  evals/run.py --command 'llm-wrapper --read-only'  # override the environment
+
+Supply a CLI or adapter for your runtime/provider. It must read the prompt from
+stdin, emit only the answer as Markdown on stdout, and use cwd for repository
+reads. Configure its model and permissions in the command or adapter: allow
+repository reads and web research, deny writes and further delegation, and disable
+session persistence and unrelated integrations. No provider or model is assumed.
+The command is split into arguments, not executed through a shell.
 
 A case is a folder under evals/cases/:
   handoff.md    what /auto-grill handed the answerer (text after "=== HANDOFF ===")
@@ -20,7 +29,9 @@ Exit code is 0 only when every graded label matches in every run.
 import argparse
 import concurrent.futures as cf
 import datetime as dt
+import os
 import re
+import shlex
 import shutil
 import subprocess
 import sys
@@ -57,19 +68,12 @@ def parse_statuses(text: str) -> dict[int, str]:
     return out
 
 
-def run_once(case: Path, prompt: str, out: Path) -> str:
+def run_once(case: Path, prompt: str, out: Path, command: list[str]) -> str:
     with tempfile.TemporaryDirectory(prefix=f"auto-grill-{case.name}-") as tmp:
         if (case / "context").is_dir():
             shutil.copytree(case / "context", tmp, dirs_exist_ok=True)
         proc = subprocess.run(
-            [
-                "claude", "-p",
-                "--model", "sonnet",
-                "--no-session-persistence",
-                "--strict-mcp-config",
-                "--allowedTools", "Read", "Grep", "Glob", "WebSearch", "WebFetch",
-                "--disallowedTools", "Edit", "Write", "NotebookEdit", "Bash", "Agent",
-            ],
+            command,
             input=prompt, cwd=tmp, capture_output=True, text=True, timeout=900,
         )
     text = proc.stdout if proc.returncode == 0 else f"ERROR {proc.returncode}\n{proc.stderr}\n{proc.stdout}"
@@ -81,7 +85,17 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("cases", nargs="*")
     ap.add_argument("-n", type=int, default=1, help="runs per case")
+    ap.add_argument("--command", default=os.environ.get("AUTO_GRILL_COMMAND"),
+                    help="CLI/adapter command; prompt on stdin, Markdown on stdout (or AUTO_GRILL_COMMAND)")
     args = ap.parse_args()
+    if not args.command:
+        ap.error("set --command or AUTO_GRILL_COMMAND to a read-only CLI/adapter")
+    try:
+        command = shlex.split(args.command)
+    except ValueError as exc:
+        ap.error(f"invalid command: {exc}")
+    if not command:
+        ap.error("command must not be empty")
 
     cases = [CASES / c for c in args.cases] if args.cases else sorted(p for p in CASES.iterdir() if p.is_dir())
     answerer = (SKILL / "ANSWERER.md").read_text()
@@ -94,7 +108,7 @@ def main() -> int:
             (outdir / case.name).mkdir(parents=True, exist_ok=True)
             prompt = answerer + "\n=== HANDOFF ===\n" + (case / "handoff.md").read_text() + EVAL_NOTE
             for k in range(1, args.n + 1):
-                jobs[pool.submit(run_once, case, prompt, outdir / case.name / f"run{k}.md")] = (case, k)
+                jobs[pool.submit(run_once, case, prompt, outdir / case.name / f"run{k}.md", command)] = (case, k)
         texts = {jobs[f]: f.result() for f in cf.as_completed(jobs)}
 
     ok_all, total, passed = True, 0, 0

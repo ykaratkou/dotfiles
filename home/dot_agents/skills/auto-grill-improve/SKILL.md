@@ -19,7 +19,7 @@ Input: $ARGUMENTS
 
 ## 2. Baseline
 
-Run `evals/run.py -n 3` (all cases, 3 runs each, since labels can flip between runs). It runs `claude -p` on Sonnet and takes a few minutes; run it in the background and wait for it. Record the table.
+Configure `AUTO_GRILL_COMMAND` or `--command` with a read-only CLI/adapter for the active runtime and provider; follow `evals/run.py`'s command contract. Run `evals/run.py -n 3` (all cases, 3 runs each, since labels can flip). Use tracked background execution if available and wait for completion. Record the table.
 
 ## 3. Improve
 

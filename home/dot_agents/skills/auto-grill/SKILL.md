@@ -1,34 +1,33 @@
 ---
 name: auto-grill
-description: Let a subagent answer the open domain-modeling questions instead of you
+description: Delegate open domain-modeling questions to a read-only answerer; apply supported answers and escalate judgement calls.
 argument-hint: [optional hints, e.g. "treat edge-snap as one idea"]
 disable-model-invocation: true
 ---
 
-Take the questions you asked in your previous message in this domain-modeling session.
+Use the open questions from your previous message in the domain-modeling session.
 
-1. Build the handoff. The subagent starts with no memory of this conversation, so include:
+1. Build a handoff for an agent without conversation history:
    - the repo path;
-   - the user's original request for this session, verbatim;
-   - every decision already settled this session (one line each), including ones not yet in CONTEXT.md;
-   - each open question verbatim, with the suggestion you made and the code facts you cited, as a numbered list;
-   - these user hints, if any: $ARGUMENTS
-2. Read [ANSWERER.md](ANSWERER.md) fresh (never from memory: it changes between runs). Launch a `general-purpose` subagent with `model: sonnet` whose prompt is the full ANSWERER.md text, then a line `=== HANDOFF ===`, then the handoff. Tell it to look up anything external (products, services, APIs) on the web rather than leaving it to me.
-3. When it returns, log the run before anything else, so it can become an eval case later:
+   - the user's original request, verbatim;
+   - each settled decision (one line each), including those not yet in CONTEXT.md;
+   - each open question verbatim, numbered, with your recommendation and cited code facts;
+   - user hints from `$ARGUMENTS` or the invoking message, if supplied.
+2. Read [ANSWERER.md](ANSWERER.md) on each run. Use the runtime's delegation tool and general-purpose agent with its default model. Honor an explicit user model/provider choice using runtime discovery; otherwise omit model overrides. Do not hard-code provider, model, tool, or agent identifiers. If delegation is unavailable, report the missing capability and stop. Give the agent the full ANSWERER.md text, then `=== HANDOFF ===`, then the handoff. Restrict it to repository reads and web research using runtime permissions where supported.
+3. Log the returned report before applying answers, for later evaluation:
    - Create `~/.local/state/auto-grill/runs/<YYYYMMDD-HHMMSS>-<repo dir name>/`.
-   - Write `handoff.md` (exactly the text after `=== HANDOFF ===`) and `answers.md` (the subagent's report, verbatim).
+   - Write `handoff.md` (the exact text after `=== HANDOFF ===`) and `answers.md` (the agent's report, verbatim).
    - Copy `CONTEXT.md` (or `CONTEXT-MAP.md` and the contexts it lists) and `docs/adr/` into `context/` there, if they exist.
-   - Do this silently: one Bash call, no narration.
-4. Then:
-   - Apply every ANSWERED answer exactly as if I had typed it: update CONTEXT.md and continue your normal domain-modeling process.
-   - Do NOT apply JUDGEMENT answers. Wait for "ok", "ok except 2", or corrections on those.
-   - If nothing is JUDGEMENT, don't wait: carry straight on.
-   - End your message with a summary: one line per question, in question order, with the answer as a fact of at most 5 words. Mark applied answers `✓` and JUDGEMENT ones `?`, followed by what would change it, also in at most 5 words. No URLs, sources or notes (they're in the run log):
+4. Apply answers:
+   - Treat ANSWERED answers as user replies: update CONTEXT.md and continue domain-modeling.
+   - Leave JUDGEMENT answers unapplied until the user confirms or corrects them.
+   - If no answers are JUDGEMENT, continue without confirmation.
+   - End with one line per question, in order: an answer of at most 5 words, `✓` for applied or `?` for JUDGEMENT, and what would change a JUDGEMENT answer in at most 5 words. Keep URLs, sources and notes in the run log:
      ```
      Q1 ✓ TypeSafe: decision-model API
      Q3 ✓ Token in Keychain
      Q5 ? Leave Voice out · unless same release
      ```
-5. After I confirm, carry on with the next batch of terms as usual.
+5. After confirmation, continue with the next batch of terms.
 
-If an answer looks wrong to me, I'll run `/auto-grill-improve` in a new session with the run folder and my feedback.
+Use `/auto-grill-improve` with the run folder and user feedback to correct bad answers.
