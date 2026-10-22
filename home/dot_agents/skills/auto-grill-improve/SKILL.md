@@ -11,7 +11,7 @@ Input: $ARGUMENTS
 
 ## 1. Capture the case
 
-- Find the run. If the input names a folder, use it. If the user pasted questions and answers, match them to a folder in `~/.local/state/auto-grill/runs/` (newest first, compare question titles). If nothing matches, build the case from the paste alone: write the handoff from the pasted questions, and ask for the repo path so you can snapshot `CONTEXT.md` and `docs/adr/`.
+- Find the run. If the input names a folder, use it. If the user pasted questions and answers, match them to a folder in `~/.local/state/auto-grill/runs/` (newest first, compare question titles). If nothing matches, build the case from the paste alone: write the handoff from the pasted questions, and ask for the repo path so you can snapshot `GLOSSARY.md` (or `GLOSSARY-MAP.md` and the glossaries it lists) and `docs/adr/`.
 - Create `evals/cases/<NNN>-<slug>/` (next free number, slug from the topic). Copy in `handoff.md`, `answers.md` and `context/` from the run.
 - Write `feedback.md`: the user's words verbatim, plus one line on what went wrong.
 - Write `expected.md`: one line per question, `Q<n>: ANSWERED | JUDGEMENT | any  # why`. Take the labels from the feedback. Questions the feedback doesn't mention are `any`, unless the answer was plainly fine as given (then keep its label). Ask the user only when the feedback leaves a label truly unclear, and ask all unclear ones in one message.

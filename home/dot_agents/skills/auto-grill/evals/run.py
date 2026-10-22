@@ -20,7 +20,8 @@ A case is a folder under evals/cases/:
   expected.md   one line per question: "Q<n>: ANSWERED | JUDGEMENT | any  # why"
   feedback.md   the user's words about what went wrong (read by /auto-grill-improve, not graded)
   answers.md    optional: the answers that prompted the case
-  context/      snapshot of CONTEXT.md and docs/adr/; the answerer runs with this as its cwd
+  context/      snapshot of GLOSSARY.md (legacy CONTEXT.md also works) and docs/adr/;
+                the answerer runs with this as its cwd
 
 Outputs go to evals/results/<timestamp>/<case>/run<k>.md, and a summary is printed.
 Exit code is 0 only when every graded label matches in every run.
@@ -44,7 +45,8 @@ RESULTS = SKILL / "evals" / "results"
 
 EVAL_NOTE = (
     "\n\n(Eval mode: the repo is snapshotted in the current directory, which holds only its "
-    "CONTEXT.md and docs/adr/. Ignore any repo path in the handoff and read files here. "
+    "GLOSSARY.md (CONTEXT.md in older snapshots) and docs/adr/. "
+    "Ignore any repo path in the handoff and read files here. "
     "Code facts you'd normally look up are in the handoff.)\n"
 )
 

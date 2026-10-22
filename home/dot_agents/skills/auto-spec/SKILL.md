@@ -17,7 +17,7 @@ Resolve dependent skills through the runtime's skill loader or installed skill d
 
 - Work from the git root of the current directory.
 - Pick an unused kebab-case `<feature-slug>` under `.scratch/`. The feature folder is `.scratch/<feature-slug>/`; reuse the slug in skills and tracker docs.
-- Find the tracker in `docs/agents/issue-tracker.md` or the `## Agent skills` block of the repository's agent instructions (e.g. `AGENTS.md`, `CLAUDE.md`). If absent, follow `setup-matt-pocock-skills/issue-tracker-local.md`; do not run setup. Read triage labels from `docs/agents/triage-labels.md` (default `ready-for-agent`) and the domain layout from `docs/agents/domain.md` (default root `CONTEXT.md` and `docs/adr/`).
+- Find the tracker in `docs/agents/issue-tracker.md` or the `## Agent skills` block of the repository's agent instructions (e.g. `AGENTS.md`, `CLAUDE.md`). If absent, follow `setup-matt-pocock-skills/issue-tracker-local.md`; do not run setup. Read triage labels from `docs/agents/triage-labels.md` (default `ready-for-agent`) and the domain layout from `docs/agents/domain.md` (default root `GLOSSARY.md` and `docs/adr/`).
 
 ## 1. Grill (at most 5 rounds)
 
@@ -30,7 +30,7 @@ Each round:
 3. Save the same handoff, report and context snapshot to `grill/round-<NN>/` in the feature folder as an auto-grill eval case:
    - `handoff.md`: the handoff, exactly (the text after `=== HANDOFF ===`);
    - `answers.md`: the answerer's report, verbatim;
-   - `context/`: snapshot before applying answers, preserving paths (`context/CONTEXT.md`, `context/docs/adr/…`); omit if empty;
+   - `context/`: snapshot before applying answers, preserving paths (`context/GLOSSARY.md`, `context/docs/adr/…`); omit if empty;
    - `expected.md`: one line per question, `Q<n>: <Status from answers.md>  # answerer's label; flip it if it was wrong`;
    - `feedback.md`: the single line `TODO: what went wrong, in your words.`
 4. Apply every answer:
