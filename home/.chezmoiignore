@@ -1,3 +1,7 @@
 # Eval tooling runs from the repo; the deployed skill does not need it.
 .agents/skills/auto-grill/evals
 .agents/skills/auto-grill/evals/**
+# Skill docs and sync notes for the repo; not deployed.
+.agents/AGENTS.md
+.agents/CLAUDE.md
+.agents/skills/UPSTREAM.md

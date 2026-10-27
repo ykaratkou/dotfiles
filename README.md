@@ -44,37 +44,6 @@ File names under `home/` use chezmoi's
 `dot_` becomes `.`, `executable_` sets `+x`, `private_` drops group and world access,
 `symlink_` holds a link target, and `create_` writes the file only if it is missing.
 
-## Agent skills
-
-Skills live in `home/dot_agents/skills/` and deploy to `~/.agents/skills/`. Claude Code
-reads `~/.claude/skills/`, so every skill also needs a link there:
-`home/dot_claude/skills/symlink_<name>`, containing `../../.agents/skills/<name>`.
-
-The `lavish` skill hands HTML authoring to a `lavish-author` subagent, defined per tool in
-`home/dot_claude/agents/` and `home/dot_config/opencode/agents/`. `agent-browser` needs
-its CLI: `brew install agent-browser && agent-browser install`.
-
-`agent-browser`, `auto-grill`, `auto-grill-improve`, `auto-spec`, `lavish` and
-`lavish-code-review` are local or locally maintained. Upstream imports:
-
-- The 12 other skills are a curated subset of
-  [mattpocock/skills](https://github.com/mattpocock/skills), copied verbatim at
-  [`5beb35b`](https://github.com/mattpocock/skills/commit/5beb35b040e3de97e54fa9e386d7e42d15c295c2)
-  (2026-10-19).
-- `unslop` is copied verbatim from
-  [cursor/plugins, `pstack/skills/unslop`](https://github.com/cursor/plugins/tree/eb4db2b55b2b7dec3d9282754cddf0a56bf4ff10/pstack/skills/unslop)
-  at `eb4db2b`.
-
-To refresh, clone the upstream repos into a temporary directory and compare against
-these revisions. Update only the installed subset, including bundled references and
-renames; preserve local skills and adaptations. Add Claude Code links for any new
-skills, then update the revisions above. Preview with `chezmoi diff` before applying.
-
-Matt Pocock's domain docs now use `GLOSSARY.md` / `GLOSSARY-MAP.md`, not
-`CONTEXT.md` / `CONTEXT-MAP.md`. Existing projects need those files renamed and their
-pointers updated. The local auto-grill/auto-spec skills use the new names; old eval
-snapshots remain readable.
-
 ## Manual setup
 
 **Alacritty.** In System Settings → Keyboard → Keyboard Shortcuts → App Shortcuts, remap
