@@ -1,6 +1,6 @@
 {
+  "$schema": "https://pi.dev/schemas/settings.schema.json",
   "packages": [
-    "npm:pi-mcp-adapter",
     "npm:pi-web-access",
     {
       "source": "git:github.com/ykaratkou/cook",
@@ -14,7 +14,7 @@
     "npm:pi-input-history",
     "npm:@aiwayds/pi-model-favorites"
   ],
-  "lastChangelogVersion": "0.85.1",
+  "lastChangelogVersion": "1.1.0",
   "collapseChangelog": true,
   "theme": "light/dark",
   "defaultProvider": "openai-codex",

@@ -1,0 +1,17 @@
+{{- /* chezmoi:modify-template */ -}}
+{{- /* Sets $schema and plugins; MCP servers and everything else stay local to this machine. */ -}}
+{{- $managed := `
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugins": [
+    {
+      "package": "/Users/evgeny/.dotfiles/opencode/plugins/session-footer"
+    }
+  ]
+}
+` | fromJson -}}
+{{- $local := dict -}}
+{{- if .chezmoi.stdin | trim -}}
+{{-   $local = .chezmoi.stdin | fromJson -}}
+{{- end -}}
+{{- mergeOverwrite $local $managed | toPrettyJson -}}

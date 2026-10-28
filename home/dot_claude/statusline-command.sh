@@ -18,11 +18,18 @@ color_pct() {
   printf '\033[%sm%s\033[0m' "$color" "$label"
 }
 
-# Derive context window label from display_name (fall back to 200K)
-case "$display_name" in
-  *1M*|*1m*) ctx_label="1M" ;;
-  *) ctx_label="200K" ;;
-esac
+# Context window label from the reported window size (fall back to display_name)
+ctx_size=$(echo "$input" | jq -r '.context_window.context_window_size // empty')
+if [ -n "$ctx_size" ] && [ "$ctx_size" -ge 1000000 ]; then
+  ctx_label="$(( ctx_size / 1000000 ))M"
+elif [ -n "$ctx_size" ]; then
+  ctx_label="$(( ctx_size / 1000 ))K"
+else
+  case "$display_name" in
+    *1M*|*1m*) ctx_label="1M" ;;
+    *) ctx_label="?" ;;
+  esac
+fi
 
 # Derive short model family name from display_name
 case "$display_name" in

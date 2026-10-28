@@ -1,7 +1,6 @@
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { truncateToWidth } from "@earendil-works/pi-tui";
 
-const MCP_STATUS_EVENT = "pi-mcp-adapter/status/v1";
 const QUOTA_REFRESH_INTERVAL_MS = 60_000;
 const QUOTA_REQUEST_TIMEOUT_MS = 10_000;
 const CODEX_USAGE_URL = "https://chatgpt.com/backend-api/wham/usage";
@@ -16,13 +15,6 @@ type SubscriptionQuota = {
 	weeklyUsed?: number;
 };
 
-type McpStatusSnapshot = {
-	version: 1;
-	servers: unknown[];
-	connectedCount: number;
-	disabledCount: number;
-};
-
 function formatTokens(count: number): string {
 	if (count < 1_000) return `${count}`;
 	if (count < 10_000) return `${(count / 1_000).toFixed(1)}k`;
@@ -33,17 +25,6 @@ function formatTokens(count: number): string {
 
 function formatWindow(tokens: number): string {
 	return formatTokens(tokens).replace(/\.0(?=[kM])/, "").replace("k", "K");
-}
-
-function isMcpStatusSnapshot(value: unknown): value is McpStatusSnapshot {
-	if (!value || typeof value !== "object") return false;
-	const snapshot = value as Partial<McpStatusSnapshot>;
-	return (
-		snapshot.version === 1 &&
-		Array.isArray(snapshot.servers) &&
-		typeof snapshot.connectedCount === "number" &&
-		typeof snapshot.disabledCount === "number"
-	);
 }
 
 function fallbackMcpCount(status: string | undefined): string | undefined {
@@ -165,7 +146,6 @@ function formatPercent(used: number | undefined): string {
 }
 
 export default function (pi: ExtensionAPI) {
-	let mcpStatus: McpStatusSnapshot | undefined;
 	let requestRender: (() => void) | undefined;
 	let sessionAbort: AbortController | undefined;
 	let quotaRefreshTimer: ReturnType<typeof setInterval> | undefined;
@@ -207,12 +187,6 @@ export default function (pi: ExtensionAPI) {
 		}
 	};
 
-	const unsubscribe = pi.events.on(MCP_STATUS_EVENT, (data) => {
-		if (!isMcpStatusSnapshot(data)) return;
-		mcpStatus = data;
-		requestRender?.();
-	});
-
 	pi.on("session_start", (_event, ctx) => {
 		if (ctx.mode !== "tui") return;
 
@@ -232,18 +206,19 @@ export default function (pi: ExtensionAPI) {
 					const contextWindow = context?.contextWindow ?? ctx.model?.contextWindow ?? 0;
 					const percent = context?.percent ?? undefined;
 
-					const filled = percent === undefined ? 0 : Math.min(10, Math.max(0, Math.floor(percent / 10)));
+					// Match home/dot_claude/statusline-command.sh: normal bar/text, ANSI-colored percentage only.
+					const roundedPercent = percent === undefined ? undefined : Math.round(percent);
+					const filled = roundedPercent === undefined ? 0 : Math.min(10, Math.max(0, Math.floor(roundedPercent / 10)));
 					const bar = `[${"█".repeat(filled)}${"░".repeat(10 - filled)}]`;
-					const contextText = `${bar} ${percent === undefined ? "?" : Math.round(percent)}%`;
-					const contextColor = percent !== undefined && percent > 90
-						? "error"
-						: percent !== undefined && percent > 70 ? "warning" : "dim";
+					const percentColor = roundedPercent !== undefined && roundedPercent < 50 ? 32
+						: roundedPercent !== undefined && roundedPercent < 80 ? 33 : 31;
+					const contextText = roundedPercent === undefined ? "--%" : `\x1b[${percentColor}m${roundedPercent}%\x1b[0m`;
 
 					const modelName = ctx.model?.id ?? "no-model";
 					const effort = ctx.model?.reasoning ? `, ${ctx.thinkingLevel ?? "off"}` : "";
-					const header = `${contextText} (${formatWindow(contextWindow)}, ${modelName}${effort})`;
+					const header = `${bar} ${contextText} (${formatWindow(contextWindow)}, ${modelName}${effort})`;
 
-					const parts = [theme.fg(contextColor, header)];
+					const parts = [header];
 
 					const provider = ctx.model?.provider;
 					if (isSubscriptionProvider(provider)) {
@@ -255,12 +230,7 @@ export default function (pi: ExtensionAPI) {
 						parts.push(theme.fg(quotaColor, quotaText));
 					}
 
-					const enabledMcpCount = mcpStatus
-						? Math.max(0, mcpStatus.servers.length - mcpStatus.disabledCount)
-						: undefined;
-					const mcpCount = enabledMcpCount !== undefined && enabledMcpCount > 0
-						? `MCP ${mcpStatus!.connectedCount}/${enabledMcpCount}`
-						: fallbackMcpCount(footerData.getExtensionStatuses().get("mcp"));
+					const mcpCount = fallbackMcpCount(footerData.getExtensionStatuses().get("mcp"));
 					if (mcpCount) parts.push(theme.fg("dim", mcpCount));
 
 					return [truncateToWidth(parts.join(theme.fg("dim", " | ")), width, theme.fg("dim", "…"))];
@@ -286,6 +256,5 @@ export default function (pi: ExtensionAPI) {
 		if (quotaRefreshTimer) clearInterval(quotaRefreshTimer);
 		quotaRefreshTimer = undefined;
 		requestRender = undefined;
-		unsubscribe();
 	});
 }

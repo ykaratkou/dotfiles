@@ -37,7 +37,8 @@ commands need no `--source`.
 | Open a shell in the repo | `chezmoi cd` |
 
 These apps write to their own config, so they drift and need `chezmoi re-add`:
-`~/.config/nvim/lazy-lock.json`, `~/.pi/agent/settings.json`, `~/.config/zed/settings.json`.
+`~/.config/nvim/lazy-lock.json`, `~/.pi/agent/settings.json`, `~/.config/zed/settings.json`,
+`~/.claude/settings.json`, `~/.config/opencode/cli.json`.
 
 File names under `home/` use chezmoi's
 [source state attributes](https://www.chezmoi.io/reference/source-state-attributes/):
