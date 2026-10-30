@@ -10,6 +10,7 @@ own pin, so a single skill can be added or updated without touching the rest.
 | --- | --- |
 | `mattpocock` | https://github.com/mattpocock/skills |
 | `cursor` | https://github.com/cursor/plugins |
+| `glebglazov` | https://github.com/glebglazov/dotfiles |
 
 ## Skills
 
@@ -29,6 +30,8 @@ own pin, so a single skill can be added or updated without touching the rest.
 | `to-tickets` | `mattpocock` | `skills/engineering/to-tickets` | `59db609` | 2026-10-27 |
 | `wayfinder` | `mattpocock` | `skills/engineering/wayfinder` | `59db609` | 2026-10-27 |
 | `unslop` | `cursor` | `pstack/skills/unslop` | `eb4db2b` | 2026-10-22 |
+| `handoff-and-continue` | `glebglazov` | `home/dot_agents/skills/handoff-and-continue` | `f319dad` | 2026-10-29 |
+| `spawn-agent` | `glebglazov` | `home/dot_agents/skills/spawn-agent` | `f319dad` | 2026-10-29 |
 
 `Pinned` is the upstream commit the local copy is based on. `Synced` is the date it was
 last ported.
@@ -41,7 +44,16 @@ Not synced from anywhere, so no pin: `agent-browser`, `auto-grill`, `auto-grill-
 Local changes to upstream skills. A port keeps these changes, and the reason given here
 is what you go by when an upstream change conflicts with one.
 
-None yet. Record each one as:
+### handoff-and-continue
+
+- `SKILL.md`: Keep only the tmux route; remove T3 Code launching and monitoring as requested.
+- `SKILL.md`: Default to a new tmux window, pass through an explicit pane request, and report both window and pane IDs.
+
+### spawn-agent
+
+- `SKILL.md`: Create a new window in the target session by default; split a pane only when explicitly requested. Keep focus unchanged and report both IDs.
+
+Record each override as:
 
 ```markdown
 ### <skill>
