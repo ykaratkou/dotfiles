@@ -2,14 +2,6 @@
   "$schema": "https://pi.dev/schemas/settings.schema.json",
   "packages": [
     "npm:pi-web-access",
-    {
-      "source": "git:github.com/ykaratkou/cook",
-      "skills": [
-        "skills/drain/SKILL.md",
-        "skills/plan/SKILL.md",
-        "skills/register/SKILL.md"
-      ]
-    },
     "npm:@tintinweb/pi-subagents",
     "npm:pi-input-history",
     "npm:@aiwayds/pi-model-favorites"

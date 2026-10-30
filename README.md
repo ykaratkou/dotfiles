@@ -10,6 +10,10 @@ real files into `~`; the repo is the source of truth.
 | `opencode/plugins/` | opencode plugins, loaded from the repo by path in `~/.config/opencode/opencode.json`. |
 | `.obsidian.vimrc` | Vim keymap for Obsidian. Copy it into a vault's root. |
 
+`~/.config/opencode/opencode.json` also installs [cook](https://github.com/ykaratkou/cook) from
+GitHub (`github:ykaratkou/cook`). opencode checks it for new commits on startup; run
+`opencode plugin update` to install them.
+
 ## Install
 
 ```bash
