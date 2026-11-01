@@ -3,7 +3,6 @@ font-size = 14
 freetype-load-flags = "hinting"
 font-thicken = true
 mouse-hide-while-typing = true
-auto-update-channel = tip
 
 theme = light:solarized_light,dark:alacritty
 
