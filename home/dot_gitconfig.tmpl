@@ -20,4 +20,4 @@
   program = ~/.config/git/ssh-sign
 
 [commit]
-  gpgsign = true
+  gpgsign = {{ ne .chezmoi.os "linux" }}

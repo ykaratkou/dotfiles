@@ -27,6 +27,12 @@ with 1Password CLI**: the first apply reads the commit-signing key `~/.ssh/perso
 from 1Password. It also installs [mise](https://mise.jdx.dev) into `~/.local/bin` if it is
 missing.
 
+On Linux, chezmoi skips the 1Password-backed `~/.ssh/personal.pub` template, so
+`op` is not required, and automatic commit signing is disabled. To sign commits
+over a forwarded SSH agent, copy your public signing key to
+`~/.ssh/personal.pub` separately and use `git -c commit.gpgsign=true commit`;
+the private key stays on the machine forwarding the agent.
+
 `init` writes `~/.config/chezmoi/chezmoi.toml` pointing at `~/.dotfiles`, so later
 commands need no `--source`.
 
