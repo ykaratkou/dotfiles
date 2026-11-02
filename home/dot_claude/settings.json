@@ -118,7 +118,7 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "sh /Users/evgeny/.claude/statusline-command.sh"
+    "command": "sh \"$HOME/.claude/statusline-command.sh\""
   },
   "enabledPlugins": {
     "cook@cook": true
