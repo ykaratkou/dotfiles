@@ -25,10 +25,12 @@ own pin, so a single skill can be added or updated without touching the rest.
 | `improve-codebase-architecture` | `mattpocock` | `skills/engineering/improve-codebase-architecture` | `59db609` | 2026-10-27 |
 | `pr` | `mattpocock` | `skills/engineering/pr` | `59db609` | 2026-10-27 |
 | `prototype` | `mattpocock` | `skills/engineering/prototype` | `59db609` | 2026-10-27 |
+| `retro` | `mattpocock` | `skills/engineering/retro` | `4ae2317` | 2026-11-04 |
 | `setup-matt-pocock-skills` | `mattpocock` | `skills/engineering/setup-matt-pocock-skills` | `59db609` | 2026-10-27 |
 | `to-spec` | `mattpocock` | `skills/engineering/to-spec` | `59db609` | 2026-10-27 |
 | `to-tickets` | `mattpocock` | `skills/engineering/to-tickets` | `59db609` | 2026-10-27 |
 | `wayfinder` | `mattpocock` | `skills/engineering/wayfinder` | `59db609` | 2026-10-27 |
+| `writing-for-agents` | `mattpocock` | `skills/productivity/writing-for-agents` | `4ae2317` | 2026-11-04 |
 | `unslop` | `cursor` | `pstack/skills/unslop` | `eb4db2b` | 2026-10-22 |
 | `handoff-and-continue` | `glebglazov` | `home/dot_agents/skills/handoff-and-continue` | `f319dad` | 2026-10-29 |
 | `spawn-agent` | `glebglazov` | `home/dot_agents/skills/spawn-agent` | `f319dad` | 2026-10-29 |
