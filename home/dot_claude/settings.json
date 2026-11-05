@@ -1,5 +1,8 @@
 {
   "includeCoAuthoredBy": false,
+  "env": {
+    "CLAUDE_CODE_DISABLE_AGENT_PROGRESS_SUMMARIES": "1"
+  },
   "permissions": {
     "defaultMode": "auto"
   },
