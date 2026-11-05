@@ -1,0 +1,14 @@
+#!/usr/bin/ruby
+require 'yaml'
+
+# chezmoi supplies the current destination file on stdin (empty on a new machine).
+current = YAML.safe_load(STDIN.read) || {}
+abort 'Muxify config must be a YAML mapping' unless current.is_a?(Hash)
+
+shared = <<'MUXIFY_SHARED_CONFIG'
+{{ includeTemplate "muxify.yaml" . }}
+MUXIFY_SHARED_CONFIG
+
+puts shared
+puts "\n# Machine-local: preserved by chezmoi; edit this section here."
+puts({ 'remote_environments' => current.fetch('remote_environments', []) }.to_yaml.sub(/\A---\s*\n/, ''))

@@ -1,0 +1,130 @@
+# Muxify Config. Muxify reloads it when it changes.
+# diagnostics:
+#   enabled: true
+
+#
+# ghostty:
+#   # Muxify-only overrides, loaded after your normal Ghostty config.
+#   config_file: ghostty.conf
+#
+# keybindings:
+#   # An action maps to one trigger or a list of them, spelled as in
+#   # Ghostty. Naming an action replaces its defaults, and [] leaves it
+#   # with no keybinding. A trigger listed here is taken from the
+#   # defaults of other actions. The defaults:
+#   toggle_sidebar: [cmd+s, ctrl+cmd+s]
+#   toggle_browser: cmd+b
+ui:
+  header_height: 32
+
+git_view:
+  # The Git View (toggle_git_view, cmd+g) shows the current Window's
+  # repository: popup over the App Window, or fullscreen in the
+  # terminal's place.
+  # display: fullscreen
+  display: popup
+  width: 80%
+  height: 80%
+  # e opens the file in the running nvim server, at the line.
+  editor: >-
+    nvim --server /tmp/current-neovim-server --remote {file} &&
+    nvim --server /tmp/current-neovim-server --remote-send '<C-\><C-N>{line}G'
+  # Run it in the background: no tmux Window, the Git View stays.
+  editor_in_window: false
+
+# Switch Windows in the current Session, including while the Browser has focus.
+keybindings:
+  toggle_focus: []
+  select_window_1: cmd+1
+  select_window_2: cmd+2
+  select_window_3: cmd+3
+  select_window_4: cmd+4
+  select_window_5: cmd+5
+  select_window_6: cmd+6
+  select_window_7: cmd+7
+  select_window_8: cmd+8
+  select_window_9: cmd+9
+
+  # select_prev_session: cmd+shift+9
+  # select_next_session: cmd+shift+0
+
+  select_prev_topic: cmd+shift+9
+  select_next_topic: cmd+shift+0
+
+  # Leave Cmd-J to Ghostty/tmux pane navigation.
+  toggle_terminal: []
+  # While a Command Palette is open (these are the defaults).
+  command_palette:
+    copy_folder: cmd+c
+    jump_to: enter
+  find:
+    next: [enter, ctrl+n]
+    prev: [shift+enter, ctrl+shift+n]
+    close: escape
+
+# Folders the Command Palette offers as Sessions; replaces
+# ~/.config/tmux-sessionizer/config.json.
+sessions:
+  paths:
+    - path: ~/projects
+      depth: 1
+    - path: ~/work
+      depth: 1
+    - path: ~/work/gems
+      depth: 1
+    - path: ~/projects/Defold/
+      depth: 1
+    - path: ~/.dotfiles
+
+command_palettes:
+  - name: Sessions
+    keybinding: cmd+p
+    sources: [topics, sessions]
+  - name: Commands
+    keybinding: cmd+shift+p
+    sources: [commands]
+  # - name: Topics
+  #   keybinding: cmd+.
+  #   sources: [topics]
+  - name: Agents
+    keybinding: cmd+o
+    sources: [agents]
+
+hints:
+  hold_delay: false
+#   cards: { always: true }
+#   tabs: { always: true }
+
+notifications:
+  manual_read: false
+  done_enabled: true
+  failed_enabled: true
+  blocked_enabled: true
+
+browser:
+  vim_keys: true
+
+# sidebar:
+#   panes: true
+#   agents:
+#     topics: true
+#     sessions: false
+#   agents_scope:
+#     topics: window
+#     sessions: all
+
+sidebar:
+  titles:
+    wrap: false
+  formats:
+    session:
+      title: "#{session_name}"
+    # window:
+    #   left: '#{symbol:macwindow}'
+    #   title: '#{window_index}:#{window_name}'
+    #   summary: ''
+
+  agents_scope:
+    topics: active
+    # topics: active
+    sessions: all

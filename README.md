@@ -55,6 +55,22 @@ File names under `home/` use chezmoi's
 `dot_` becomes `.`, `executable_` sets `+x`, `private_` drops group and world access,
 `symlink_` holds a link target, and `create_` writes the file only if it is missing.
 
+### Muxify
+
+Shared settings for `~/.config/muxify/config.yaml` live in
+`home/.chezmoitemplates/muxify.yaml`. Edit that file, then run:
+
+```bash
+chezmoi diff ~/.config/muxify/config.yaml
+chezmoi apply ~/.config/muxify/config.yaml
+```
+
+The `modify_config.yaml.tmpl` script preserves the destination file's
+`remote_environments`; edit that section locally on each machine. New machines
+start with an empty list. The script uses macOS's built-in Ruby YAML parser.
+Use the shared source file for other settings rather than `chezmoi re-add` or
+`chezmoi add` on this config, which would replace the merge script.
+
 ## Manual setup
 
 **Alacritty.** In System Settings → Keyboard → Keyboard Shortcuts → App Shortcuts, remap
