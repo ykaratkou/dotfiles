@@ -16,7 +16,7 @@ its CLI: `brew install agent-browser && agent-browser install`.
 
 Matt Pocock's domain docs now use `GLOSSARY.md` / `GLOSSARY-MAP.md`, not
 `CONTEXT.md` / `CONTEXT-MAP.md`. Existing projects need those files renamed and their
-pointers updated. The local auto-grill/auto-spec skills use the new names; old eval
+pointers updated. The local auto-spec skill and cook's auto-grill use the new names; old eval
 snapshots remain readable.
 
 This file, `CLAUDE.md` and `skills/UPSTREAM.md` are not deployed.

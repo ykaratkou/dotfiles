@@ -38,8 +38,9 @@ own pin, so a single skill can be added or updated without touching the rest.
 `Pinned` is the upstream commit the local copy is based on. `Synced` is the date it was
 last ported.
 
-Not synced from anywhere, so no pin: `agent-browser`, `auto-grill`, `auto-grill-improve`,
-`auto-spec`, `lavish`, `lavish-code-review`.
+Not synced from anywhere, so no pin: `agent-browser`, `auto-grill-improve`, `auto-spec`,
+`lavish`, `lavish-code-review`. `auto-grill` ships with the cook plugin
+(`~/projects/cook/skills/auto-grill`).
 
 ## Local overrides
 

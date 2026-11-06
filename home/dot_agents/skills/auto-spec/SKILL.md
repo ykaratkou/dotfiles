@@ -11,7 +11,7 @@ If `$ARGUMENTS` is empty or unexpanded, use the invoking message's request, then
 
 Run the grilling and domain-modeling workflow, then to-spec and to-tickets, with auto-grill answering for the user. Do not ask the user questions or wait for confirmation; this overrides dependent skills' interview and confirmation steps. Planning only: write only domain context files, ADRs, the feature folder and tracker issues.
 
-Resolve dependent skills through the runtime's skill loader or installed skill directories (siblings of this skill). Use runtime tools and default models, not provider-specific commands or identifiers. Follow auto-grill's delegation and model-selection rules.
+Resolve dependent skills through the runtime's skill loader or installed skill directories (siblings of this skill). auto-grill ships with the cook plugin: `cook:auto-grill` (`cook/auto-grill` on opencode, or read `skills/auto-grill/SKILL.md` in the cook plugin by path). Use runtime tools and default models, not provider-specific commands or identifiers. Follow auto-grill's delegation and model-selection rules.
 
 ## 0. Set up
 

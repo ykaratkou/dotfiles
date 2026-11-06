@@ -5,7 +5,7 @@ argument-hint: [run folder, or paste the questions + answers + your feedback]
 disable-model-invocation: true
 ---
 
-The skill under improvement is `~/.dotfiles/home/dot_agents/skills/auto-grill/` (the chezmoi source; run `chezmoi apply` after editing it). The prompt being tuned is its `ANSWERER.md`. Evals live in its `evals/` (read the docstring at the top of `evals/run.py` for the case format).
+The skill under improvement is `~/projects/cook/skills/auto-grill/` (the cook plugin's source checkout; the installed plugin is a cached copy, so edit the checkout and update the plugin after committing). The prompt being tuned is its `ANSWERER.md`. Evals live in its `evals/` (read the docstring at the top of `evals/run.py` for the case format).
 
 Input: $ARGUMENTS
 
@@ -35,4 +35,4 @@ Show:
 - the `ANSWERER.md` diff;
 - any `SKILL.md` change.
 
-Don't commit. The user reviews and commits the dotfiles.
+Don't commit. The user reviews and commits the cook repo.
