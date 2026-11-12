@@ -57,16 +57,13 @@ Read changed files from the working tree. Use the old side for comparison: `git 
 - Map every API contract the change touches: request and response fields per endpoint, including other endpoints that share a changed presenter, plus generated docs (swagger/OpenAPI) that should match the code.
 - Every claim cites `path:line` at the reviewed sha. Re-check line numbers before writing them. Label unverified reasoning as a question.
 
-## 3. Brief the author
+## 3. Build the page
 
-Load the `lavish` skill first: it covers delegating to the `lavish-author` subagent, the poll loop and feedback rounds. You don't build the page: you send the author a page spec. The author's layout rules are in `references/page-rules.md`; don't read them or the template yourself.
-
-The brief:
+Load the `lavish` skill first: it covers the CLI guidance, opening the session through Muxify and the review loop. Then read [`references/page-rules.md`](references/page-rules.md) for the layout and start from [`references/lanes-template.html`](references/lanes-template.html).
 
 - **Path**: `.lavish/<pr-N | branch>-review.html` in the repo (`.lavish` is globally gitignored).
-- **Kind**: code review page. Tell the author to read `~/.agents/skills/lavish-code-review/references/page-rules.md` and to start from `lanes-template.html` in the same folder.
-- **Design source**: the subject project's styling, for example "copy `node_modules/bootstrap/dist/css/bootstrap.min.css` next to the HTML" when the project uses Bootstrap. Otherwise "none - use lavish design".
-- **Page spec**: compact text, in the order below. Every item carries a status: `new`, `changed`, `deleted` or `unchanged`.
+- **Design source**: the subject project's styling, for example copy `node_modules/bootstrap/dist/css/bootstrap.min.css` next to the HTML when the project uses Bootstrap. Otherwise use lavish design.
+- **Content**, in the order below. Every item carries a status: `new`, `changed`, `deleted` or `unchanged`.
 
 1. **Header**:
    - PR link (or branch vs base), ticket link if found in the PR body or branch, author, +/−, file count, head sha;
@@ -109,4 +106,4 @@ Only meaningful information. No intro, no restating the PR body file by file, no
 
 ## 5. Deliver
 
-The author opens the page through the `lavish` skill flow, with the Tailscale URL in Muxify, and returns the URL. Wait for feedback with a tracked background poll and route each round as the `lavish` skill's Feedback rounds describe. In the terminal, give the link plus one line per finding.
+Open the page through the `lavish` skill flow, with the Tailscale URL in Muxify. Wait for feedback with a tracked background poll and handle each round as the CLI's review-loop workflow describes. In the terminal, give the link plus one line per finding.

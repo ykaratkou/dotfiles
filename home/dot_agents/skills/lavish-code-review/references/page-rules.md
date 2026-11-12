@@ -1,10 +1,10 @@
 # Page rules
 
-For the author building the lavish-code-review page from the main agent's page spec. Follow `~/.agents/skills/lavish/references/authoring.md` for guidance, opening and revisions. This file adds the page layout.
+Layout for the lavish-code-review page. The `lavish` skill covers CLI guidance, opening and revisions; this file adds the page layout.
 
 Start from `lanes-template.html` in this folder: it holds the CSS, arrow markers, legend, lane, node, edge and badge patterns, plus the data, API and findings skeletons. Design source: the subject project's styling as named in the spec, for example `bootstrap.min.css` copied next to the HTML. Otherwise use the lavish CDN fallback.
 
-The page spec gives the content. Your job is layout and rendering, not analysis. If the spec is missing something a rule needs, list it under `questions:` rather than inventing it.
+The content comes from the analysis in `SKILL.md`. If it lacks something a rule needs, go back to the code for it rather than inventing it.
 
 Sections, in order:
 

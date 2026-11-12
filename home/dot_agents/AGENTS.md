@@ -10,9 +10,7 @@ Most skills are copied from [mattpocock/skills](https://github.com/mattpocock/sk
 editing a skill, read [`skills/UPSTREAM.md`](skills/UPSTREAM.md). It lists each skill's
 source, pinned commit and local overrides, and explains how to change them.
 
-The `lavish` skill hands HTML authoring to a `lavish-author` subagent, defined per tool in
-`home/dot_claude/agents/` and `home/dot_config/opencode/agents/`. `agent-browser` needs
-its CLI: `brew install agent-browser && agent-browser install`.
+`agent-browser` needs its CLI: `brew install agent-browser && agent-browser install`.
 
 Matt Pocock's domain docs now use `GLOSSARY.md` / `GLOSSARY-MAP.md`, not
 `CONTEXT.md` / `CONTEXT-MAP.md`. Existing projects need those files renamed and their

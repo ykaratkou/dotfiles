@@ -11,6 +11,7 @@ own pin, so a single skill can be added or updated without touching the rest.
 | `mattpocock` | https://github.com/mattpocock/skills |
 | `cursor` | https://github.com/cursor/plugins |
 | `glebglazov` | https://github.com/glebglazov/dotfiles |
+| `kunchenguid` | https://github.com/kunchenguid/lavish-axi |
 
 ## Skills
 
@@ -34,12 +35,13 @@ own pin, so a single skill can be added or updated without touching the rest.
 | `unslop` | `cursor` | `pstack/skills/unslop` | `eb4db2b` | 2026-10-22 |
 | `handoff-and-continue` | `glebglazov` | `home/dot_agents/skills/handoff-and-continue` | `f319dad` | 2026-10-29 |
 | `spawn-agent` | `glebglazov` | `home/dot_agents/skills/spawn-agent` | `f319dad` | 2026-10-29 |
+| `lavish` | `kunchenguid` | `skills/lavish` | `69bf309` | 2026-11-12 |
 
 `Pinned` is the upstream commit the local copy is based on. `Synced` is the date it was
 last ported.
 
 Not synced from anywhere, so no pin: `agent-browser`, `auto-grill-improve`, `auto-spec`,
-`lavish`, `lavish-code-review`. `auto-grill` ships with the cook plugin
+`lavish-code-review`. `auto-grill` ships with the cook plugin
 (`~/projects/cook/skills/auto-grill`).
 
 ## Local overrides
@@ -51,6 +53,10 @@ is what you go by when an upstream change conflicts with one.
 
 - `SKILL.md`: Keep only the tmux route; remove T3 Code launching and monitoring as requested.
 - `SKILL.md`: Default to a new tmux window, pass through an explicit pane request, and report both window and pane IDs.
+
+### lavish
+
+- `SKILL.md`: Start sessions with `--no-open` and open them through Muxify on the Tailscale MagicDNS URL (the "Local browser preferences" section), so review links work across the tailnet and open in the user's workspace.
 
 ### spawn-agent
 
