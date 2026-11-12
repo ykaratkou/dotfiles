@@ -1,4 +1,5 @@
 # Muxify Config. Muxify reloads it when it changes.
+override: config.override.yaml
 # diagnostics:
 #   enabled: true
 
@@ -67,20 +68,6 @@ keybindings:
     next: [enter, ctrl+n]
     prev: [shift+enter, ctrl+shift+n]
     close: escape
-
-# Folders the Command Palette offers as Sessions; replaces
-# ~/.config/tmux-sessionizer/config.json.
-sessions:
-  paths:
-    - path: ~/projects
-      depth: 1
-    - path: ~/work
-      depth: 1
-    - path: ~/work/gems
-      depth: 1
-    - path: ~/projects/Defold/
-      depth: 1
-    - path: ~/.dotfiles
 
 command_palettes:
   - name: Sessions

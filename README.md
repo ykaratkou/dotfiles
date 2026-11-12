@@ -58,18 +58,18 @@ File names under `home/` use chezmoi's
 ### Muxify
 
 Shared settings for `~/.config/muxify/config.yaml` live in
-`home/.chezmoitemplates/muxify.yaml`. Edit that file, then run:
+`home/dot_config/muxify/config.yaml`. Edit that file, then run:
 
 ```bash
 chezmoi diff ~/.config/muxify/config.yaml
 chezmoi apply ~/.config/muxify/config.yaml
 ```
 
-The `modify_config.yaml.tmpl` script preserves the destination file's
-`remote_environments`; edit that section locally on each machine. New machines
-start with an empty list. The script uses macOS's built-in Ruby YAML parser.
-Use the shared source file for other settings rather than `chezmoi re-add` or
-`chezmoi add` on this config, which would replace the merge script.
+Muxify loads machine-specific `remote_environments` and `sessions` from
+`~/.config/muxify/config.override.yaml`, named by the shared config's `override`
+key. Edit that file locally on each machine; chezmoi ignores it. On a new machine,
+create the override file with those sections as needed. Muxify skips a missing
+override file.
 
 ## Manual setup
 

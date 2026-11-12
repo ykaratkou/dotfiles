@@ -3,6 +3,9 @@
 .agents/CLAUDE.md
 .agents/skills/UPSTREAM.md
 
+# Muxify settings specific to each machine stay local.
+.config/muxify/config.override.yaml
+
 {{ if eq .chezmoi.os "linux" }}
 # Linux uses a forwarded SSH agent and does not have the 1Password CLI.
 .ssh/personal.pub
