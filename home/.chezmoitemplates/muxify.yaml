@@ -14,8 +14,14 @@
 #   # defaults of other actions. The defaults:
 #   toggle_sidebar: [cmd+s, ctrl+cmd+s]
 #   toggle_browser: cmd+b
+update:
+  channel: tip
+
 ui:
   header_height: 32
+
+topics:
+  in_play: 5
 
 git_view:
   # The Git View (toggle_git_view, cmd+g) shows the current Window's
