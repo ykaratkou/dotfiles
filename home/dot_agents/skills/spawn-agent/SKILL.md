@@ -14,30 +14,30 @@ argument-hint: "[window|pane] [harness] [directory] [task or handoff path]"
    authorize a permissions bypass.
 2. Put a long task in a unique OS temporary file, or use the supplied handoff
    file. Pass a short prompt with its absolute path. Prefer CLI prompt options;
-   otherwise wait for the input prompt and paste through a tmux buffer. Quote
-   shell arguments; keep task text out of shell code.
+   otherwise wait for the input prompt and paste through a tmux buffer.
 3. Use tmux directly. Create a new **window** by default; split a **pane** only
-   when the user explicitly requests a pane. Resolve the target by running
-   `python3 <this-skill-directory>/scripts/resolve_target.py`, adding
-   `--target <target>` only for an explicit user-supplied tmux target. Read the
-   returned JSON's `session_id` and `pane_id` as `target_session` and
-   `target_pane`. Codex's shared daemon can carry a stale `TMUX_PANE`, even
-   one belonging to another session; the helper matches `CODEX_THREAD_ID`
-   (or `CODEX_SESSION_ID`) against `muxify agent list --json` instead. Other
-   harnesses use their live `TMUX_PANE`. On failure, report the error and ask
-   for an explicit target. Keep focus unchanged:
-   - **Window (default):** run
-     `tmux new-window -d -P -F '#{window_id} #{pane_id}' -t "$target_session:" -c "$directory"`.
-     Capture the returned window and pane IDs.
-   - **Pane (explicit request):** run
-     `tmux split-window -h -d -P -F '#{window_id} #{pane_id}' -t "$target_pane" -c "$directory"`.
-     Capture the returned window and pane IDs.
-   If creation fails, report the error rather than switching layout or session.
-   Wait for the new pane's shell to be ready, then send the quoted launch
-   command with one leading space, so shell history skips it:
-   `tmux send-keys -l -t "$pane_id" " $launch_command"`. Submit with
-   `tmux send-keys -t "$pane_id" Enter`. Use the pane ID for all
-   later operations; titles can change.
+   when the user explicitly requests a pane. Write a JSON launch specification
+   in a unique OS temporary directory, using a file-writing tool or JSON encoder:
+
+   ```json
+   {"directory": "/absolute/project", "layout": "window", "argv": ["codex", "Read /absolute/task.md"]}
+   ```
+
+   `argv` holds the executable and each argument separately, including the
+   entire prompt as one string. For a fork, use the caller's fork argv instead
+   of a fresh-session command. Run
+   `python3 <this-skill-directory>/scripts/launch.py <absolute-spec-file>`, adding
+   `--target <target>` only for an explicit user-supplied tmux target. This helper
+   launches the argv directly through tmux without shell interpretation or
+   typing a command into fish. Keep prompt text in the JSON file, including
+   apostrophes and shell metacharacters, rather than building a shell command
+   string from the prompt.
+   The helper uses `resolve_target.py`: Codex targets are matched by thread ID
+   through Muxify because its daemon can carry a stale `TMUX_PANE`; other
+   harnesses use their live pane. Read the returned JSON for session, window,
+   and pane IDs. Focus stays unchanged. On failure, inspect tmux and report the
+   error before retrying or asking for an explicit target. Use the returned
+   pane ID for later operations; titles can change.
 4. Check startup for up to two minutes, with waits of at most ten seconds.
    Require a task-specific response or the caller's acknowledgement file. For
    an empty session, require a ready input prompt. An echoed command is not

@@ -1,59 +1,74 @@
 ---
 name: fork-and-continue
-description: Fork the current Claude Code conversation and continue its task in a new tmux window, or a split pane when explicitly requested.
+description: Open a fork of the current Codex or Claude Code conversation in a new tmux window, waiting for user input unless an explicit task is supplied.
 ---
 
 # Fork and continue
 
-1. Use the requested next task or the unfinished objective. Ask only if neither
-   exists. Keep the current working directory. Read **spawn-agent** for tmux
-   targeting, shell readiness, quoting, and startup checks. Use a new window by
-   default, or a split pane only when explicitly requested. Confirm that the
-   installed `claude --help` supports `--resume` and `--fork-session`.
-2. Identify the exact source conversation. In Claude Code, the invoking session
-   ID is `${CLAUDE_SESSION_ID}` (skill substitution, not a shell variable).
-   If unavailable or unexpanded, read the caller's pane metadata:
-   `tmux show-options -p -v -t "$TMUX_PANE" @muxify_agent_conversation`,
-   checking that `@muxify_agent` is `claude`. Use an explicit user-supplied
-   Claude session ID when forking from another harness. If no reliable ID is
-   available, ask for it. Use the exact ID rather than the most recent session.
+1. Default to an interactive fork waiting for the user's next message. Supply
+   an initial prompt only when the user explicitly gives a task for the fork.
+   An unfinished objective or the word "continue" in the skill name is not a
+   request to start work automatically. Keep the current directory and harness.
+   Read **spawn-agent** for tmux targeting and launch mechanics. Use a new window
+   by default, or a split pane only when explicitly requested. Check
+   `codex fork --help` or `claude --help` for the selected harness.
+2. Identify the exact source conversation for the chosen harness:
+
+   - **Codex:** read `CODEX_THREAD_ID` from the current tool environment, falling
+     back to `CODEX_SESSION_ID`. Resolve the tmux target through **spawn-agent**'s
+     helper, which matches the thread ID through Muxify. Codex's shared daemon
+     can carry a stale `TMUX_PANE`; use the helper's returned pane ID.
+   - **Claude Code:** the invoking session ID is `${CLAUDE_SESSION_ID}` (skill
+     substitution, not a shell variable). If unavailable or unexpanded, read
+     the caller's pane metadata:
+     `tmux show-options -p -v -t "$TMUX_PANE" @muxify_agent_conversation`,
+     checking that `@muxify_agent` is `claude`.
+
+   Use an explicit user-supplied source ID when forking a conversation from
+   another harness. If the harness or source ID is unknown, ask. Use the exact
+   ID rather than the most recent session.
 3. Stop this session's writes, including workers and background commands that
-   change shared files. Inspect the working tree and note active processes for
-   the recipient. Forking copies conversation history; both sessions share the
-   same files and branch. Keep this session's writes stopped after launch.
-4. Create a unique OS temporary directory and choose an absent acknowledgement
-   file inside it. Prepare a short continuation prompt with absolute paths,
-   the source session ID, the next task, and any active-process notes:
+   change shared files. Forking copies conversation history; both sessions
+   share the same files and branch. Keep this session's writes stopped after
+   launch and leave the original window open.
+4. Use **spawn-agent**'s JSON launch specification and `scripts/launch.py`, with
+   the matching argv in place of its fresh-session command. Replace SOURCE_ID
+   with the exact source ID:
 
-   > You are the recipient of a completed fork-and-continue launch. The source
-   > agent has stopped editing. Check the repository instructions, working
-   > directory, and working tree. Obtain your current session ID from your own
-   > runtime metadata or your pane's @muxify_agent_conversation option, rather
-   > than the source ID in the inherited conversation. Before changing project
-   > files, write <acknowledgement-file> with your session ID, source session ID
-   > <source-id>, absolute working directory, and concrete next action. Then
-   > continue <next-task> within the existing authorization. This transfer is
-   > complete; continue the task directly without invoking fork-and-continue
-   > again.
+   **Codex:**
 
-5. Follow **spawn-agent**'s window or pane creation and launch mechanics, using
-   this interactive command in place of its fresh-session command:
-
-   ```sh
-   env -u CLAUDECODE claude --resume "$source_session" --fork-session "$prompt"
+   ```json
+   ["codex", "fork", "SOURCE_ID"]
    ```
 
-   Quote each argument for the new pane's shell. The environment change applies
-   only to the child command and removes Claude Code's nested-session marker.
-   Preserve explicitly requested model and permission settings; otherwise use
-   CLI defaults. This single command creates the fork and opens it interactively
-   in the new window; no separate background session or attach step is needed.
-   Keep focus unchanged unless requested, and retain the original window.
-6. Within two minutes, inspect the acknowledgement and the new pane for startup
-   errors, waiting at most ten seconds per check. Require a session ID different
-   from the source, the expected directory, and a matching next action. Report
-   the new session ID, tmux window and pane IDs, acknowledgement path, and next
-   action, then end this turn.
-7. If startup or acknowledgement fails, report the transfer as unconfirmed with
-   its IDs and saved paths. Retain the new window or pane. Inspect or stop that
-   instance before resuming writes or launching a replacement.
+   **Claude Code:**
+
+   ```json
+   ["env", "-u", "CLAUDECODE", "claude", "--resume", "SOURCE_ID", "--fork-session"]
+   ```
+
+   For the default idle fork, use these arrays as written: omit the initial
+   prompt entirely. Verify startup from the terminal and runtime metadata;
+   create no acknowledgement task and send no synthetic user message.
+   If the user explicitly supplied a task, append one prompt argument containing
+   that task and a short note that this is the fork recipient, so it should do
+   the task rather than repeat the fork operation.
+
+   Write the argv using a JSON encoder or file-writing tool, then pass the
+   specification to the launcher. Keep any task text out of shell command
+   strings and `tmux send-keys`. For Claude Code, the environment change applies
+   only to the child and removes its nested-session marker. Preserve explicitly
+   requested model and permission settings; otherwise use CLI defaults. Keep
+   focus unchanged unless requested.
+5. Inspect the new pane for up to two minutes, waiting at most ten seconds per
+   check. For an idle fork, require the interactive input prompt with the
+   inherited conversation loaded. For an explicit task, require a response to
+   that task. Use Muxify's conversation mapping or the new pane's runtime
+   metadata to verify a session ID different from the source when available.
+   If the new ID is not yet exposed, report startup as observed with identity
+   unconfirmed; leave the fork waiting for input instead of sending a message
+   just to obtain an ID. Report the harness, window and pane IDs, directory,
+   observed session ID, and whether the fork is waiting or running a supplied
+   task. End this turn.
+6. If startup fails, report the transfer as unconfirmed with its IDs and saved
+   paths. Inspect that instance before resuming writes or launching a replacement.

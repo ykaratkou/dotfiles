@@ -63,6 +63,7 @@ is what you go by when an upstream change conflicts with one.
 
 - `SKILL.md`: Create a new window in the target session by default; split a pane only when explicitly requested. Keep focus unchanged and report both IDs.
 - `SKILL.md`, `scripts/resolve_target.py`: Resolve Codex's pane through Muxify's conversation ID mapping because its shared daemon can retain a stale `TMUX_PANE`. Validate the resolved target before creating a window.
+- `SKILL.md`, `scripts/launch.py`: Launch argument arrays from JSON directly through tmux so prompts containing apostrophes or shell syntax work with fish; share this launcher with fork-and-continue.
 
 Record each override as:
 

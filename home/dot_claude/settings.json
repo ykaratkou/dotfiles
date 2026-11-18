@@ -150,6 +150,6 @@
   },
   "skipDangerousModePermissionPrompt": true,
   "theme": "auto",
-  "switchModelsOnFlag": false,
+  "tui": "fullscreen",
   "skipAutoPermissionPrompt": true
 }
