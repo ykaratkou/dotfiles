@@ -52,6 +52,11 @@ vim.keymap.set('n', ']b', ':bnext<CR>', { silent = true })
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set("v", "<leader>s", [[y<ESC>:%s/<C-r>0/<C-r>0/gI<left><left><left>]])
 
+-- Native multicursor keys (Normal mode; :help multicursor):
+-- Ctrl+l clears all extra cursors; gQ restores them; Q toggles a cursor here.
+-- <leader>d adds a cursor and jumps to the next matching word.
+-- Alt+j / Alt+k add a cursor and move down / up.
+-- Use i/a to edit, then Esc to return to Normal mode and Ctrl+l to finish.
 local multicursor_ns = vim.api.nvim_create_namespace('nvim.multicursor')
 
 local function add_cursor_and_move(keys)
