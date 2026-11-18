@@ -41,7 +41,7 @@ own pin, so a single skill can be added or updated without touching the rest.
 last ported.
 
 Not synced from anywhere, so no pin: `agent-browser`, `auto-grill-improve`, `auto-spec`,
-`lavish-code-review`. `auto-grill` ships with the cook plugin
+`fork-and-continue`, `lavish-code-review`. `auto-grill` ships with the cook plugin
 (`~/projects/cook/skills/auto-grill`).
 
 ## Local overrides
