@@ -57,6 +57,7 @@ is what you go by when an upstream change conflicts with one.
 ### lavish
 
 - `SKILL.md`: Start sessions with `--no-open` and open them through Muxify on the Tailscale MagicDNS URL (the "Local browser preferences" section), so review links work across the tailnet and open in the user's workspace.
+- `SKILL.md`: Make generated HTML follow the OS light/dark setting, including live changes and DaisyUI theme sync, so artifacts stay readable in either mode.
 
 ### spawn-agent
 

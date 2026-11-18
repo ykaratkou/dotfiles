@@ -16,7 +16,7 @@ Reach for it when a plan, comparison, diagram, table, code view, report, prototy
 
 ## Current guidance lives in the CLI
 
-Get current upstream workflow, design, and playbook guidance from the CLI - installed copies go stale. The local browser preferences below override the CLI's default URL and browser-opening behavior:
+Get current upstream workflow, design, and playbook guidance from the CLI - installed copies go stale. The local theme and browser preferences below take precedence over CLI guidance:
 
 - `npx -y lavish-axi --help` for commands and the review-loop workflow
 - `npx -y lavish-axi reply --help` to post an agent reply and exit once the server accepts it, when you are not about to long-poll
@@ -25,6 +25,25 @@ Get current upstream workflow, design, and playbook guidance from the CLI - inst
 
 You do not need lavish-axi installed globally - invoke it with `npx -y lavish-axi <html-file> --no-open`, then open the session through Muxify as described below.
 If lavish-axi output shows a follow-up command starting with `lavish-axi`, run it as `npx -y lavish-axi ...` instead.
+
+## Local theme preferences
+
+Make generated HTML follow the OS light/dark setting, including changes while the page is open. Put `<meta name="color-scheme" content="light dark">` in `<head>` and define light and dark CSS variables with `@media (prefers-color-scheme: dark)`. Use those variables for page, component, and diagram colours.
+
+When using DaisyUI, sync `data-theme` with the OS in `<head>`:
+
+```html
+<script>
+  const themeQuery = matchMedia('(prefers-color-scheme: dark)');
+  const syncTheme = () => {
+    document.documentElement.dataset.theme = themeQuery.matches ? 'dark' : 'light';
+  };
+  syncTheme();
+  themeQuery.addEventListener('change', syncTheme);
+</script>
+```
+
+Use a fixed theme only when the user requests one or the page depicts a product with only one theme. Check readability in both light and dark modes before delivering an adaptive page.
 
 ## Local browser preferences
 
