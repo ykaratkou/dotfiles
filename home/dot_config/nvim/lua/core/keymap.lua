@@ -52,8 +52,11 @@ vim.keymap.set('n', ']b', ':bnext<CR>', { silent = true })
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set("v", "<leader>s", [[y<ESC>:%s/<C-r>0/<C-r>0/gI<left><left><left>]])
 
+local multicursor_ns = vim.api.nvim_create_namespace('nvim.multicursor')
+
 local function add_cursor_and_move(keys)
-  vim.api.nvim_mcursor(0, vim.api.nvim_win_get_cursor(0))
+  local cursor = vim.api.nvim_win_get_cursor(0)
+  vim.api.nvim_buf_set_extmark(0, multicursor_ns, cursor[1] - 1, cursor[2], {})
   return '2q=' .. keys
 end
 
