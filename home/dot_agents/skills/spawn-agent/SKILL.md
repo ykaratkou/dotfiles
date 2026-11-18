@@ -17,14 +17,19 @@ argument-hint: "[window|pane] [harness] [directory] [task or handoff path]"
    otherwise wait for the input prompt and paste through a tmux buffer. Quote
    shell arguments; keep task text out of shell code.
 3. Use tmux directly. Create a new **window** by default; split a **pane** only
-   when the user explicitly requests a pane. Target the caller's `$TMUX_PANE`,
-   or an explicit tmux target supplied by the user. If neither exists, ask for
-   a target rather than choosing an unrelated session. Keep focus unchanged:
-   - **Window (default):** resolve the target session with
-     `tmux display-message -p -t "$target" '#{session_id}'`, then run
+   when the user explicitly requests a pane. Resolve the target by running
+   `python3 <this-skill-directory>/scripts/resolve_target.py`, adding
+   `--target <target>` only for an explicit user-supplied tmux target. Read the
+   returned JSON's `session_id` and `pane_id` as `target_session` and
+   `target_pane`. Codex's shared daemon can carry a stale `TMUX_PANE`, even
+   one belonging to another session; the helper matches `CODEX_THREAD_ID`
+   (or `CODEX_SESSION_ID`) against `muxify agent list --json` instead. Other
+   harnesses use their live `TMUX_PANE`. On failure, report the error and ask
+   for an explicit target. Keep focus unchanged:
+   - **Window (default):** run
      `tmux new-window -d -P -F '#{window_id} #{pane_id}' -t "$target_session:" -c "$directory"`.
      Capture the returned window and pane IDs.
-   - **Pane (explicit request):** resolve a target pane if necessary, then run
+   - **Pane (explicit request):** run
      `tmux split-window -h -d -P -F '#{window_id} #{pane_id}' -t "$target_pane" -c "$directory"`.
      Capture the returned window and pane IDs.
    If creation fails, report the error rather than switching layout or session.
